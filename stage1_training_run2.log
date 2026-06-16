@@ -1,0 +1,31 @@
+================================================================================
+STAGE 1 MURA PRETRAINING
+Device: cpu
+================================================================================
+Train size: 34004 | Val size: 6001
+[*] Frozen lower layers: only layer3, layer4, and fc head are trainable.
+Applying class weights for imbalance: [0.8475151062011719, 1.219393253326416]
+[*] Resuming from checkpoint: checkpoints\mura_pretrained.pth
+[*] Successfully loaded checkpoint. Resuming from Epoch 4 with best val loss 0.4256
+D:\X-ray ML Model\venv\Lib\site-packages\torch\optim\lr_scheduler.py:143: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  warnings.warn("Detected call of `lr_scheduler.step()` before `optimizer.step()`. "
+
+--- Epoch 4/10 ---
+  Batch 100/1063 | Loss: 0.4525 | Acc: 85.66%
+  Batch 200/1063 | Loss: 0.3606 | Acc: 85.67%
+  Batch 300/1063 | Loss: 0.5570 | Acc: 85.39%
+  Batch 400/1063 | Loss: 0.1725 | Acc: 85.57%
+  Batch 500/1063 | Loss: 0.2398 | Acc: 85.19%
+  Batch 600/1063 | Loss: 0.1971 | Acc: 85.06%
+  Batch 700/1063 | Loss: 0.3735 | Acc: 85.07%
+  Batch 800/1063 | Loss: 0.1980 | Acc: 85.03%
+  Batch 900/1063 | Loss: 0.4328 | Acc: 85.06%
+  Batch 1000/1063 | Loss: 0.3044 | Acc: 84.92%
+  Batch 1063/1063 | Loss: 0.4218 | Acc: 84.95%
+  -> Train Loss: 0.3588 | Train Acc: 84.95%
+  -> Val Loss:   0.4052 | Val Acc:   83.77%
+  *** Val Loss improved! Saved best stage 1 model to: mura_pretrained.pth ***
+
+--- Epoch 5/10 ---
+  Batch 100/1063 | Loss: 0.3676 | Acc: 87.94%
+  Batch 200/1063 | Loss: 0.1485 | Acc: 87.89%

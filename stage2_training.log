@@ -1,0 +1,23 @@
+================================================================================
+STAGE 2 FINE-TUNING ON UNIFIED DATASET (MULTI-HEAD)
+Device: cpu
+================================================================================
+
+Initializing Stage 2 PyTorch Datasets...
+============================================================
+STAGE 2 DATASET SIZES
+============================================================
+Stage 2 Train size: 10746 images
+Stage 2 Val size:   3517 images
+============================================================
+[*] Initializing ResNet-50 backbone with random weights.
+[*] Loading pre-trained MURA backbone weights from checkpoints\mura_pretrained.pth
+[*] Stage 2 Unfreezing Complete: All layers unfrozen for end-to-end fine-tuning.
+
+--- Epoch 1/8 ---
+  Batch 10/672 - Loss: 1.0049 | Frac Acc: 56.25% | Region Acc: 56.88%
+  Batch 20/672 - Loss: 0.9465 | Frac Acc: 62.50% | Region Acc: 64.38%
+  Batch 30/672 - Loss: 0.6925 | Frac Acc: 65.21% | Region Acc: 66.46%
+  Batch 40/672 - Loss: 0.5983 | Frac Acc: 66.09% | Region Acc: 68.59%
+  Batch 50/672 - Loss: 0.6405 | Frac Acc: 66.88% | Region Acc: 69.50%
+  Batch 60/672 - Loss: 0.5548 | Frac Acc: 69.58% | Region Acc: 69.27%

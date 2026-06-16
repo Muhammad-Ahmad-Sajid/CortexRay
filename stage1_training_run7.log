@@ -1,0 +1,13 @@
+================================================================================
+STAGE 1 MURA PRETRAINING
+Device: cpu
+================================================================================
+Train size: 34004 | Val size: 6001
+[*] Frozen lower layers: only layer3, layer4, and fc head are trainable.
+Applying class weights for imbalance: [0.8475151062011719, 1.219393253326416]
+[*] Resuming from latest checkpoint: checkpoints\mura_latest.pth
+[*] Successfully loaded checkpoint. Resuming from Epoch 6 with best val loss 0.4052
+[*] Unfrozen all layers: entire backbone is now trainable.
+
+--- Epoch 6/10 ---
+[*] Unfrozen all layers: entire backbone is now trainable.

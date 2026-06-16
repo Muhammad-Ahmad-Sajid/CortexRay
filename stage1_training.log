@@ -1,0 +1,68 @@
+================================================================================
+STAGE 1 MURA PRETRAINING (BINARY CLASSIFICATION)
+Device: cpu
+================================================================================
+Train size: 34004 | Val size: 6001
+[*] Frozen lower layers: only layer3, layer4, and fc head are trainable.
+Applying BCEWithLogitsLoss pos_weight: 1.4388
+[*] Resuming from latest checkpoint: checkpoints\mura_latest.pth
+[*] Skipping key backbone.fc.3.weight due to shape mismatch: checkpoint shape torch.Size([2, 512]) vs model shape torch.Size([1, 512])
+[*] Skipping key backbone.fc.3.bias due to shape mismatch: checkpoint shape torch.Size([2]) vs model shape torch.Size([1])
+[*] Successfully loaded model weights (transferred backbone features, skipped mismatched fc head).
+[*] Successfully loaded checkpoint. Resuming from Epoch 10
+[*] Optimizer state loading skipped to prevent shape mismatch runtime errors.
+
+--- Epoch 10/10 ---
+[*] Unfrozen all layers: entire backbone is now trainable.
+  Batch 100/2126 | Loss: 0.4815 | Acc: 73.12%
+  Batch 200/2126 | Loss: 0.3174 | Acc: 80.91%
+  Batch 300/2126 | Loss: 0.4724 | Acc: 84.10%
+  Batch 400/2126 | Loss: 0.3083 | Acc: 85.70%
+  Batch 500/2126 | Loss: 0.3159 | Acc: 86.85%
+  [Checkpoint] Saved mid-epoch state at Batch 500/2126 to: mura_latest.pth
+  Batch 600/2126 | Loss: 0.2657 | Acc: 87.58%
+  Batch 700/2126 | Loss: 0.2683 | Acc: 88.22%
+  Batch 800/2126 | Loss: 0.3989 | Acc: 88.74%
+  Batch 900/2126 | Loss: 0.3761 | Acc: 89.12%
+  Batch 1000/2126 | Loss: 0.1585 | Acc: 89.40%
+  [Checkpoint] Saved mid-epoch state at Batch 1000/2126 to: mura_latest.pth
+  Batch 1100/2126 | Loss: 0.3984 | Acc: 89.66%
+  Batch 1200/2126 | Loss: 0.1551 | Acc: 89.86%
+  Batch 1300/2126 | Loss: 0.5326 | Acc: 90.14%
+  Batch 1400/2126 | Loss: 0.0974 | Acc: 90.29%
+  Batch 1500/2126 | Loss: 0.3256 | Acc: 90.45%
+  [Checkpoint] Saved mid-epoch state at Batch 1500/2126 to: mura_latest.pth
+  Batch 1600/2126 | Loss: 0.1886 | Acc: 90.65%
+  Batch 1700/2126 | Loss: 0.5889 | Acc: 90.79%
+  Batch 1800/2126 | Loss: 0.5666 | Acc: 90.81%
+  Batch 1900/2126 | Loss: 0.1636 | Acc: 90.93%
+  Batch 2000/2126 | Loss: 0.1214 | Acc: 91.02%
+  [Checkpoint] Saved mid-epoch state at Batch 2000/2126 to: mura_latest.pth
+  Batch 2100/2126 | Loss: 0.3434 | Acc: 91.09%
+  Batch 2126/2126 | Loss: 0.3469 | Acc: 91.12%
+  -> Train Loss: 0.2705 | Train Acc: 91.12%
+================================================================================
+STAGE 1 MURA PRETRAINING (BINARY CLASSIFICATION)
+Device: cpu
+================================================================================
+Train size: 34004 | Val size: 6001
+[*] Frozen lower layers: only layer3, layer4, and fc head are trainable.
+Applying BCEWithLogitsLoss pos_weight: 1.4388
+[*] Resuming from latest checkpoint: checkpoints\mura_latest.pth
+[*] Successfully loaded model weights (transferred backbone features, skipped mismatched fc head).
+[*] Successfully loaded mid-epoch checkpoint. Resuming from Epoch 10, Batch 2000
+[*] Successfully loaded optimizer state.
+
+--- Epoch 10/10 ---
+[*] Unfrozen all layers: entire backbone is now trainable.
+  Batch 2100/2126 | Loss: 0.1079 | Acc: 92.75%
+  Batch 2126/2126 | Loss: 0.0796 | Acc: 92.91%
+  -> Train Loss: 0.2242 | Train Acc: 92.91%
+  -> Val Loss:   0.6535 | Val Acc:   80.34%
+  Saved latest model state to: mura_latest.pth
+  Early stopping counter: 1/5
+
+================================================================================
+STAGE 1 PRETRAINING COMPLETED!
+Saved Checkpoint path: checkpoints\mura_pretrained.pth
+================================================================================

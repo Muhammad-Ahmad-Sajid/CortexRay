@@ -1,0 +1,13 @@
+================================================================================
+STAGE 1 MURA PRETRAINING
+Device: cpu
+================================================================================
+Train size: 34004 | Val size: 6001
+[*] Frozen lower layers: only layer3, layer4, and fc head are trainable.
+Applying class weights for imbalance: [0.8475151062011719, 1.219393253326416]
+[*] Resuming from best checkpoint: checkpoints\mura_pretrained.pth
+[*] Successfully loaded checkpoint. Resuming from Epoch 5 with best val loss 0.4052
+D:\X-ray ML Model\venv\Lib\site-packages\torch\optim\lr_scheduler.py:143: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  warnings.warn("Detected call of `lr_scheduler.step()` before `optimizer.step()`. "
+
+--- Epoch 5/10 ---

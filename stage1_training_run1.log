@@ -1,0 +1,117 @@
+================================================================================
+STAGE 1 MURA PRETRAINING
+Device: cpu
+================================================================================
+Train size: 34004 | Val size: 6001
+[*] Frozen lower layers: only layer3, layer4, and fc head are trainable.
+Applying class weights for imbalance: [0.8475151062011719, 1.219393253326416]
+
+--- Epoch 1/10 ---
+  Batch 100/1063 | Loss: 0.7238 | Acc: 66.22%
+  Batch 200/1063 | Loss: 0.7910 | Acc: 70.67%
+  Batch 300/1063 | Loss: 0.4251 | Acc: 72.56%
+  Batch 400/1063 | Loss: 0.4893 | Acc: 73.63%
+  Batch 500/1063 | Loss: 0.4772 | Acc: 74.43%
+  Batch 600/1063 | Loss: 0.4867 | Acc: 74.93%
+  Batch 700/1063 | Loss: 0.4331 | Acc: 75.43%
+  Batch 800/1063 | Loss: 0.5986 | Acc: 75.80%
+  Batch 900/1063 | Loss: 0.6233 | Acc: 76.03%
+  Batch 1000/1063 | Loss: 0.4463 | Acc: 76.26%
+  Batch 1063/1063 | Loss: 0.6089 | Acc: 76.41%
+  -> Train Loss: 0.5037 | Train Acc: 76.41%
+  -> Val Loss:   0.4776 | Val Acc:   79.50%
+  *** Val Loss improved! Saved best stage 1 model to: mura_pretrained.pth ***
+
+--- Epoch 2/10 ---
+  Batch 100/1063 | Loss: 0.5472 | Acc: 79.66%
+  Batch 200/1063 | Loss: 0.5024 | Acc: 80.16%
+  Batch 300/1063 | Loss: 0.5553 | Acc: 80.76%
+  Batch 400/1063 | Loss: 0.3448 | Acc: 80.80%
+  Batch 500/1063 | Loss: 0.4947 | Acc: 80.61%
+  Batch 600/1063 | Loss: 0.3175 | Acc: 80.77%
+  Batch 700/1063 | Loss: 0.4351 | Acc: 80.75%
+  Batch 800/1063 | Loss: 0.3814 | Acc: 80.83%
+  Batch 900/1063 | Loss: 0.4636 | Acc: 80.85%
+  Batch 1000/1063 | Loss: 0.4721 | Acc: 80.78%
+  Batch 1063/1063 | Loss: 0.4550 | Acc: 80.83%
+  -> Train Loss: 0.4407 | Train Acc: 80.83%
+  -> Val Loss:   0.4314 | Val Acc:   82.70%
+  *** Val Loss improved! Saved best stage 1 model to: mura_pretrained.pth ***
+
+--- Epoch 3/10 ---
+  Batch 100/1063 | Loss: 0.3163 | Acc: 82.56%
+  Batch 200/1063 | Loss: 0.3156 | Acc: 82.73%
+  Batch 300/1063 | Loss: 0.4751 | Acc: 82.79%
+  Batch 400/1063 | Loss: 0.3192 | Acc: 83.02%
+  Batch 500/1063 | Loss: 0.4621 | Acc: 82.89%
+  Batch 600/1063 | Loss: 0.1745 | Acc: 82.93%
+  Batch 700/1063 | Loss: 0.6017 | Acc: 82.80%
+  Batch 800/1063 | Loss: 0.3046 | Acc: 82.74%
+  Batch 900/1063 | Loss: 0.4325 | Acc: 82.72%
+  Batch 1000/1063 | Loss: 0.3045 | Acc: 82.78%
+  Batch 1063/1063 | Loss: 0.2967 | Acc: 82.83%
+  -> Train Loss: 0.4041 | Train Acc: 82.83%
+  -> Val Loss:   0.4256 | Val Acc:   82.32%
+  *** Val Loss improved! Saved best stage 1 model to: mura_pretrained.pth ***
+
+--- Epoch 4/10 ---
+  Batch 100/1063 | Loss: 0.4008 | Acc: 86.22%
+  Batch 200/1063 | Loss: 0.3398 | Acc: 85.66%
+  Batch 300/1063 | Loss: 0.4937 | Acc: 85.72%
+  Batch 400/1063 | Loss: 0.5616 | Acc: 85.43%
+  Batch 500/1063 | Loss: 0.2340 | Acc: 85.39%
+  Batch 600/1063 | Loss: 0.3798 | Acc: 85.32%
+  Batch 700/1063 | Loss: 0.2317 | Acc: 85.22%
+  Batch 800/1063 | Loss: 0.1920 | Acc: 85.20%
+  Batch 900/1063 | Loss: 0.2440 | Acc: 85.10%
+  Batch 1000/1063 | Loss: 0.4021 | Acc: 85.00%
+  Batch 1063/1063 | Loss: 0.3163 | Acc: 85.03%
+  -> Train Loss: 0.3614 | Train Acc: 85.03%
+  -> Val Loss:   0.4378 | Val Acc:   82.74%
+
+--- Epoch 5/10 ---
+  Batch 100/1063 | Loss: 0.2549 | Acc: 88.00%
+  Batch 200/1063 | Loss: 0.3286 | Acc: 87.19%
+  Batch 300/1063 | Loss: 0.4318 | Acc: 86.85%
+  Batch 400/1063 | Loss: 0.2977 | Acc: 86.85%
+  Batch 500/1063 | Loss: 0.2834 | Acc: 86.89%
+  Batch 600/1063 | Loss: 0.3748 | Acc: 86.82%
+  Batch 700/1063 | Loss: 0.3596 | Acc: 86.82%
+  Batch 800/1063 | Loss: 0.3282 | Acc: 86.95%
+  Batch 900/1063 | Loss: 0.2106 | Acc: 86.98%
+  Batch 1000/1063 | Loss: 0.2756 | Acc: 87.12%
+  Batch 1063/1063 | Loss: 0.2766 | Acc: 87.06%
+  -> Train Loss: 0.3148 | Train Acc: 87.06%
+  -> Val Loss:   0.4541 | Val Acc:   80.97%
+
+--- Epoch 6/10 ---
+[*] Unfrozen all layers: entire backbone is now trainable.
+================================================================================
+STAGE 1 MURA PRETRAINING
+Device: cpu
+================================================================================
+Train size: 34004 | Val size: 6001
+[*] Frozen lower layers: only layer3, layer4, and fc head are trainable.
+Applying class weights for imbalance: [0.8475151062011719, 1.219393253326416]
+[*] Resuming from checkpoint: checkpoints\mura_pretrained.pth
+[*] Successfully loaded checkpoint. Resuming from Epoch 4 with best val loss 0.4256
+D:\X-ray ML Model\venv\Lib\site-packages\torch\optim\lr_scheduler.py:143: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  warnings.warn("Detected call of `lr_scheduler.step()` before `optimizer.step()`. "
+
+--- Epoch 4/10 ---
+  Batch 100/1063 | Loss: 0.2999 | Acc: 85.00%
+  Batch 200/1063 | Loss: 0.3305 | Acc: 85.23%
+  Batch 300/1063 | Loss: 0.3327 | Acc: 85.26%
+  Batch 400/1063 | Loss: 0.4121 | Acc: 85.29%
+  Batch 500/1063 | Loss: 0.3036 | Acc: 85.31%
+  Batch 600/1063 | Loss: 0.3655 | Acc: 85.19%
+  Batch 700/1063 | Loss: 0.3664 | Acc: 85.18%
+  Batch 800/1063 | Loss: 0.3851 | Acc: 85.22%
+  Batch 900/1063 | Loss: 0.2139 | Acc: 85.26%
+  Batch 1000/1063 | Loss: 0.4280 | Acc: 85.30%
+  Batch 1063/1063 | Loss: 0.3071 | Acc: 85.27%
+  -> Train Loss: 0.3558 | Train Acc: 85.27%
+  -> Val Loss:   0.4286 | Val Acc:   81.89%
+
+--- Epoch 5/10 ---
+  Batch 100/1063 | Loss: 0.1589 | Acc: 87.03%
