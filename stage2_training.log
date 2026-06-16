@@ -15,9 +15,19 @@ Stage 2 Val size:   3517 images
 [*] Stage 2 Unfreezing Complete: All layers unfrozen for end-to-end fine-tuning.
 
 --- Epoch 1/8 ---
-  Batch 10/672 - Loss: 1.0049 | Frac Acc: 56.25% | Region Acc: 56.88%
-  Batch 20/672 - Loss: 0.9465 | Frac Acc: 62.50% | Region Acc: 64.38%
-  Batch 30/672 - Loss: 0.6925 | Frac Acc: 65.21% | Region Acc: 66.46%
-  Batch 40/672 - Loss: 0.5983 | Frac Acc: 66.09% | Region Acc: 68.59%
-  Batch 50/672 - Loss: 0.6405 | Frac Acc: 66.88% | Region Acc: 69.50%
-  Batch 60/672 - Loss: 0.5548 | Frac Acc: 69.58% | Region Acc: 69.27%
+  Batch 10/672 - Loss: 1.0159 | Frac Acc: 60.62% | Region Acc: 31.88%
+  Batch 20/672 - Loss: 0.9483 | Frac Acc: 67.19% | Region Acc: 56.56%
+  Batch 30/672 - Loss: 0.7267 | Frac Acc: 70.62% | Region Acc: 62.71%
+  Batch 40/672 - Loss: 0.5566 | Frac Acc: 71.56% | Region Acc: 64.53%
+  Batch 50/672 - Loss: 0.5494 | Frac Acc: 72.12% | Region Acc: 66.12%
+  Batch 60/672 - Loss: 0.4454 | Frac Acc: 73.12% | Region Acc: 68.65%
+  Batch 70/672 - Loss: 0.4957 | Frac Acc: 74.73% | Region Acc: 70.27%
+  Batch 80/672 - Loss: 0.4121 | Frac Acc: 75.94% | Region Acc: 72.19%
+  Batch 90/672 - Loss: 0.2720 | Frac Acc: 76.67% | Region Acc: 73.33%
+  Batch 100/672 - Loss: 0.2366 | Frac Acc: 77.31% | Region Acc: 74.56%
+  Batch 110/672 - Loss: 0.5178 | Frac Acc: 78.12% | Region Acc: 75.62%
+  Batch 120/672 - Loss: 0.2937 | Frac Acc: 78.91% | Region Acc: 76.88%
+  Batch 130/672 - Loss: 0.3158 | Frac Acc: 79.42% | Region Acc: 77.45%
+  Batch 140/672 - Loss: 0.4489 | Frac Acc: 80.18% | Region Acc: 78.17%
+  Batch 150/672 - Loss: 0.3434 | Frac Acc: 80.50% | Region Acc: 78.83%
+  Batch 160/672 - Loss: 0.4187 | Frac Acc: 81.05% | Region Acc: 79.45%

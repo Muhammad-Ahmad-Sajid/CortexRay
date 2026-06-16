@@ -28,6 +28,7 @@ data/
 FracAtlas1/
 Fracatlas/
 archive/
+Bone_Fracture_Binary_Classification/
 venv/
 *.csv
 
