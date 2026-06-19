@@ -7,7 +7,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.optim.lr_scheduler import CosineAnnealingLR
-from sklearn.metrics import classification_report
+import time
+from sklearn.metrics import classification_report, confusion_matrix
 import numpy as np
 
 # 1. Windows CPU Multithreading Optimization to prevent c10.dll / OpenMP crashes
@@ -223,6 +224,12 @@ def main():
     early_stop_counter = 0
     best_reports = None
     
+    epoch_history = []
+    best_epoch = 1
+    best_fracture_acc = 0.0
+    best_bone_acc = 0.0
+
+    
     # Resume from checkpoint if requested
     if args.resume:
         if latest_checkpoint_path.exists():
@@ -248,6 +255,11 @@ def main():
                     
             best_val_loss = checkpoint.get('best_val_loss', float('inf'))
             early_stop_counter = checkpoint.get('early_stop_counter', 0)
+            best_epoch = checkpoint.get('best_epoch', checkpoint.get('epoch', 1))
+            best_fracture_acc = checkpoint.get('best_fracture_acc', 0.0)
+            best_bone_acc = checkpoint.get('best_bone_acc', 0.0)
+            epoch_history = checkpoint.get('epoch_history', [])
+
             
             # Check if checkpoint was saved mid-epoch
             batch_idx = checkpoint.get('batch_idx', None)
@@ -262,8 +274,11 @@ def main():
         else:
             print(f"[!] Warning: No checkpoint found to resume from. Starting from scratch.")
             
+    start_time = time.time()
+    
     # Training Loop
     for epoch in range(start_epoch, args.epochs + 1):
+
         print(f"\n--- Epoch {epoch}/{args.epochs} ---")
         
         current_start_batch = start_batch if epoch == start_epoch else 0
@@ -301,21 +316,27 @@ def main():
         # Step LR scheduler (CosineAnnealingLR steps on epoch level)
         scheduler.step()
         
-        # Save latest checkpoint at epoch end
-        torch.save({
-            'epoch': epoch,
-            'model_state_dict': model.state_dict(),
-            'optimizer_state_dict': optimizer.state_dict(),
-            'scheduler_state_dict': scheduler.state_dict(),
-            'val_loss': val_loss,
-            'best_val_loss': best_val_loss,
-            'early_stop_counter': early_stop_counter
-        }, latest_checkpoint_path)
-        print(f"  Saved latest model state to: {latest_checkpoint_path.name}")
+        # Get current learning rate
+        current_lr = optimizer.param_groups[0]['lr']
         
+        # Append to history
+        epoch_history.append({
+            'epoch': epoch,
+            'train_loss': train_loss,
+            'train_acc_frac': train_acc_frac * 100.0,
+            'train_acc_region': train_acc_region * 100.0,
+            'val_loss': val_loss,
+            'val_acc_frac': val_acc_frac * 100.0,
+            'val_acc_region': val_acc_region * 100.0,
+            'lr': current_lr
+        })
+
         # Save best model checkpoint & manage early stopping
         if val_loss < best_val_loss:
             best_val_loss = val_loss
+            best_epoch = epoch
+            best_fracture_acc = val_acc_frac * 100.0
+            best_bone_acc = val_acc_region * 100.0
             early_stop_counter = 0
             best_reports = reports
             
@@ -333,36 +354,113 @@ def main():
             early_stop_counter += 1
             print(f"  Early stopping counter: {early_stop_counter}/{early_stop_patience}")
             
+        # Save latest checkpoint at epoch end
+        torch.save({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'scheduler_state_dict': scheduler.state_dict(),
+            'val_loss': val_loss,
+            'best_val_loss': best_val_loss,
+            'early_stop_counter': early_stop_counter,
+            'best_epoch': best_epoch,
+            'best_fracture_acc': best_fracture_acc,
+            'best_bone_acc': best_bone_acc,
+            'epoch_history': epoch_history
+        }, latest_checkpoint_path)
+        print(f"  Saved latest model state to: {latest_checkpoint_path.name}")
+
+            
         if early_stop_counter >= early_stop_patience:
             print(f"\n[!] Early stopping triggered. Validation loss has not improved for {early_stop_patience} epochs.")
             break
             
-    # Print Classification Report using sklearn on final best predictions
-    if best_reports is not None:
-        print("\n" + "=" * 80)
-        print("STAGE 2 FINAL CLASSIFICATION REPORT (VALIDATION SET)")
-        print("=" * 80)
+    # 1. Print the per-epoch history table
+    if len(epoch_history) > 0:
+        print("\n" + "="*88)
+        print("STAGE 2 TRAINING HISTORY PER EPOCH")
+        print("="*88)
+        print(f"{'Epoch':<6} | {'Train Loss':<10} | {'Frac Acc':<10} | {'Region Acc':<10} | {'Val Loss':<10} | {'Val Frac':<10} | {'Val Region':<10} | {'LR':<8}")
+        print("-" * 88)
+        for h in epoch_history:
+            print(f"{h['epoch']:<6} | {h['train_loss']:<10.4f} | {h['train_acc_frac']:<10.2f}% | {h['train_acc_region']:<10.2f}% | {h['val_loss']:<10.4f} | {h['val_acc_frac']:<10.2f}% | {h['val_acc_region']:<10.2f}% | {h['lr']:<8.2e}")
+        print("="*88)
+
+    # Calculate total training time
+    total_training_time = time.time() - start_time
+    hours = int(total_training_time // 3600)
+    minutes = int((total_training_time % 3600) // 60)
+    seconds = int(total_training_time % 60)
+    training_time_str = f"{hours}h {minutes}m {seconds}s" if hours > 0 else f"{minutes}m {seconds}s"
+
+    # 2. Run Final Evaluation using the best model saved
+    if best_checkpoint_path.exists():
+        print(f"\n[*] Loading best model for final evaluation: {best_checkpoint_path}")
+        checkpoint = torch.load(best_checkpoint_path, map_location=device)
+        model.load_state_dict(checkpoint['model_state_dict'])
         
-        print("\n--- FRACTURE HEAD CLASSIFICATION REPORT ---")
+        model.eval()
+        all_severity_preds = []
+        all_severity_labels = []
+        all_bone_preds = []
+        all_bone_labels = []
+
+        with torch.no_grad():
+            for batch in val_loader:
+                images = batch[0].to(device)
+                severity_labels = batch[1].to(device)
+                bone_labels = batch[2].to(device)
+                
+                severity_logits, bone_logits = model(images)
+                
+                severity_preds = torch.argmax(severity_logits, dim=1).cpu().numpy()
+                bone_preds = torch.argmax(bone_logits, dim=1).cpu().numpy()
+                
+                all_severity_preds.extend(severity_preds)
+                all_severity_labels.extend(severity_labels.cpu().numpy())
+                all_bone_preds.extend(bone_preds)
+                all_bone_labels.extend(bone_labels.cpu().numpy())
+
+        severity_classes = FRACTURE_CLASSES
+        bone_classes = REGION_CLASSES
+
+        print("\n" + "="*60)
+        print("STAGE 2 FINAL EVALUATION REPORT")
+        print("="*60)
+
+        print("\n--- FRACTURE DETECTION HEAD ---")
         print(classification_report(
-            best_reports["true_frac"], 
-            best_reports["pred_frac"], 
-            labels=list(range(len(FRACTURE_CLASSES))),
-            target_names=FRACTURE_CLASSES,
+            all_severity_labels, 
+            all_severity_preds, 
+            target_names=severity_classes,
             zero_division=0
         ))
-        
-        print("\n--- REGION HEAD CLASSIFICATION REPORT ---")
+
+        print("\n--- BODY REGION HEAD ---")
         print(classification_report(
-            best_reports["true_region"], 
-            best_reports["pred_region"], 
-            labels=list(range(len(REGION_CLASSES))),
-            target_names=REGION_CLASSES,
+            all_bone_labels, 
+            all_bone_preds, 
+            target_names=bone_classes,
             zero_division=0
         ))
-        print("=" * 80)
+
+        print("\n--- CONFUSION MATRIX (Fracture Detection) ---")
+        print(confusion_matrix(all_severity_labels, all_severity_preds))
+
+        print("\n--- CONFUSION MATRIX (Body Region) ---")
+        print(confusion_matrix(all_bone_labels, all_bone_preds))
+
+        print("\n--- TRAINING SUMMARY ---")
+        print(f"Best Fracture Detection Accuracy : {best_fracture_acc:.2f}%")
+        print(f"Best Body Region Accuracy        : {best_bone_acc:.2f}%")
+        print(f"Best Epoch                       : {best_epoch}")
+        print(f"Best Val Loss                    : {best_val_loss:.4f}")
+        print(f"Checkpoint saved to              : {best_checkpoint_path}")
+        print(f"Total training time              : {training_time_str}")
+        print("="*60)
     else:
-        print("Warning: No validation reports generated.")
+        print(f"[!] Warning: Best checkpoint not found at {best_checkpoint_path} for final evaluation.")
+
 
 if __name__ == "__main__":
     main()

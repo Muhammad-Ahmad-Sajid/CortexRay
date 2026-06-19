@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, ConfigDict, EmailStr
 from uuid import UUID
 from datetime import datetime
 from typing import List, Optional
@@ -7,22 +7,19 @@ from typing import List, Optional
 # Patient Schemas
 # ------------------------------------------------------------------------------
 class PatientCreate(BaseModel):
-    """Schema for registering a new patient."""
-    full_name: str = Field(..., description="Full legal name of the patient", min_length=2, max_length=255)
+    full_name: str = Field(..., description="Full legal name of the patient")
     age: int = Field(..., description="Age in years")
-    gender: str = Field(..., description="Gender of the patient (e.g. Male, Female, Other)", min_length=2, max_length=50)
+    gender: str = Field(..., description="Gender of the patient (e.g. Male, Female, Other)")
     comorbidities: List[str] = Field(default_factory=list, description="Array of health comorbidities")
 
     @field_validator('age')
     @classmethod
     def validate_age(cls, v: int) -> int:
-        """Pydantic V2 validator checking that age is between 1 and 120."""
         if not (1 <= v <= 120):
             raise ValueError("Age must be between 1 and 120")
         return v
 
 class PatientResponse(BaseModel):
-    """Schema returning registered patient details."""
     id: UUID
     full_name: str
     age: int
@@ -30,46 +27,36 @@ class PatientResponse(BaseModel):
     comorbidities: List[str]
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # ------------------------------------------------------------------------------
 # Scan Upload & Inference Schemas
 # ------------------------------------------------------------------------------
 class ScanUploadResponse(BaseModel):
-    """Schema returning the direct diagnostic outputs of an X-ray upload."""
     scan_id: UUID
     fracture_detected: bool
-    severity: str
-    bone_affected: str
-    severity_confidence: float
-    cast_type: str
-    rest_weeks_min: int
-    rest_weeks_max: int
-    plaster_required: bool
-    weight_bearing_status: str
-    referral_flag: str
-    heatmap_url: str
-    original_file_path: str
-
-    @field_validator('severity_confidence')
-    @classmethod
-    def validate_confidence(cls, v: float) -> float:
-        """Pydantic V2 validator checking that model confidence is between 0.0 and 1.0."""
-        if not (0.0 <= v <= 1.0):
-            raise ValueError("Confidence must be between 0.0 and 1.0")
-        return v
+    bone_region: str
+    fracture_confidence: float
+    confidence_flag: str
+    message: str
+    cast_type: Optional[str] = None
+    rest_weeks_min: Optional[int] = None
+    rest_weeks_max: Optional[int] = None
+    plaster_required: Optional[bool] = None
+    weight_bearing_status: Optional[str] = None
+    referral_flag: Optional[str] = None
+    heatmap_url: Optional[str] = None
+    report_url: Optional[str] = None
+    model_version: str
 
 # ------------------------------------------------------------------------------
 # Prognosis Override Schemas
 # ------------------------------------------------------------------------------
 class PrognosisOverrideRequest(BaseModel):
-    """Schema for clinician manual overrides of recovery recommendations."""
-    clinician_override: str = Field(..., description="Name or identifier of the clinician authorizing the override", min_length=2)
-    override_notes: str = Field(..., description="Clinical justification notes for the override", min_length=5)
+    clinician_override: str = Field(..., description="Name or identifier of the clinician authorizing the override")
+    override_notes: str = Field(..., description="Clinical justification notes for the override")
 
 class PrognosisOverrideResponse(BaseModel):
-    """Schema returning the updated prognosis details after override."""
     id: UUID
     prediction_id: UUID
     rest_weeks_min: int
@@ -79,14 +66,13 @@ class PrognosisOverrideResponse(BaseModel):
     weight_bearing_status: str
     referral_flag: str
     clinician_override: bool
-    override_notes: Optional[str]
-    override_timestamp: Optional[datetime]
+    override_notes: Optional[str] = None
+    override_timestamp: Optional[datetime] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # ------------------------------------------------------------------------------
-# Patient History & Diagnostics Detail Schemas
+# Patient History Detail Schemas
 # ------------------------------------------------------------------------------
 class PrognosisDetail(BaseModel):
     id: UUID
@@ -100,8 +86,7 @@ class PrognosisDetail(BaseModel):
     override_notes: Optional[str] = None
     override_timestamp: Optional[datetime] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class PredictionDetail(BaseModel):
     id: UUID
@@ -112,8 +97,7 @@ class PredictionDetail(BaseModel):
     model_version: str
     prognosis: Optional[PrognosisDetail] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class ScanDetail(BaseModel):
     id: UUID
@@ -124,11 +108,9 @@ class ScanDetail(BaseModel):
     dataset_source: str
     prediction: Optional[PredictionDetail] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class PatientHistoryResponse(BaseModel):
-    """Schema returning patient details combined with complete diagnostic scan history."""
     patient_id: UUID
     full_name: str
     age: int
@@ -137,5 +119,4 @@ class PatientHistoryResponse(BaseModel):
     created_at: datetime
     scans: List[ScanDetail]
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

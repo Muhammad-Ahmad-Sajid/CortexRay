@@ -31,3 +31,1367 @@ Stage 2 Val size:   3517 images
   Batch 140/672 - Loss: 0.4489 | Frac Acc: 80.18% | Region Acc: 78.17%
   Batch 150/672 - Loss: 0.3434 | Frac Acc: 80.50% | Region Acc: 78.83%
   Batch 160/672 - Loss: 0.4187 | Frac Acc: 81.05% | Region Acc: 79.45%
+  Batch 170/672 - Loss: 0.5418 | Frac Acc: 81.69% | Region Acc: 79.89%
+  Batch 180/672 - Loss: 0.1454 | Frac Acc: 82.36% | Region Acc: 80.66%
+  Batch 190/672 - Loss: 0.3454 | Frac Acc: 82.93% | Region Acc: 81.32%
+  Batch 200/672 - Loss: 0.1079 | Frac Acc: 83.44% | Region Acc: 81.94%
+  Batch 210/672 - Loss: 0.1121 | Frac Acc: 83.90% | Region Acc: 82.56%
+  Batch 220/672 - Loss: 0.3324 | Frac Acc: 84.26% | Region Acc: 82.98%
+  Batch 230/672 - Loss: 0.2536 | Frac Acc: 84.62% | Region Acc: 83.40%
+  Batch 240/672 - Loss: 0.1850 | Frac Acc: 85.08% | Region Acc: 83.96%
+  Batch 250/672 - Loss: 0.1711 | Frac Acc: 85.28% | Region Acc: 84.42%
+  Batch 260/672 - Loss: 0.1456 | Frac Acc: 85.70% | Region Acc: 84.81%
+  Batch 270/672 - Loss: 0.2361 | Frac Acc: 86.02% | Region Acc: 85.14%
+  Batch 280/672 - Loss: 0.1267 | Frac Acc: 86.38% | Region Acc: 85.47%
+  Batch 290/672 - Loss: 0.1255 | Frac Acc: 86.57% | Region Acc: 85.84%
+  Batch 300/672 - Loss: 0.3142 | Frac Acc: 86.73% | Region Acc: 86.15%
+  [Checkpoint] Saved mid-epoch state at Batch 300/672 to: stage2_latest.pth
+  Batch 310/672 - Loss: 0.2140 | Frac Acc: 86.88% | Region Acc: 86.39%
+  Batch 320/672 - Loss: 0.2506 | Frac Acc: 86.97% | Region Acc: 86.60%
+  Batch 330/672 - Loss: 0.1354 | Frac Acc: 87.14% | Region Acc: 86.80%
+  Batch 340/672 - Loss: 0.2188 | Frac Acc: 87.28% | Region Acc: 86.95%
+  Batch 350/672 - Loss: 0.1111 | Frac Acc: 87.43% | Region Acc: 87.27%
+  Batch 360/672 - Loss: 0.1435 | Frac Acc: 87.73% | Region Acc: 87.55%
+  Batch 370/672 - Loss: 0.0664 | Frac Acc: 87.89% | Region Acc: 87.82%
+  Batch 380/672 - Loss: 0.1033 | Frac Acc: 88.19% | Region Acc: 88.04%
+  Batch 390/672 - Loss: 0.0595 | Frac Acc: 88.32% | Region Acc: 88.22%
+  Batch 400/672 - Loss: 0.0404 | Frac Acc: 88.58% | Region Acc: 88.44%
+  Batch 410/672 - Loss: 0.0770 | Frac Acc: 88.72% | Region Acc: 88.63%
+  Batch 420/672 - Loss: 0.0762 | Frac Acc: 88.93% | Region Acc: 88.82%
+  Batch 430/672 - Loss: 0.1872 | Frac Acc: 89.06% | Region Acc: 88.97%
+  Batch 440/672 - Loss: 0.1693 | Frac Acc: 89.20% | Region Acc: 89.09%
+  Batch 450/672 - Loss: 0.0674 | Frac Acc: 89.32% | Region Acc: 89.25%
+  Batch 460/672 - Loss: 0.1894 | Frac Acc: 89.42% | Region Acc: 89.35%
+  Batch 470/672 - Loss: 0.2083 | Frac Acc: 89.49% | Region Acc: 89.51%
+  Batch 480/672 - Loss: 0.1412 | Frac Acc: 89.57% | Region Acc: 89.69%
+  Batch 490/672 - Loss: 0.2590 | Frac Acc: 89.64% | Region Acc: 89.83%
+  Batch 500/672 - Loss: 0.0869 | Frac Acc: 89.71% | Region Acc: 90.00%
+  Batch 510/672 - Loss: 0.2739 | Frac Acc: 89.79% | Region Acc: 90.11%
+  Batch 520/672 - Loss: 0.1730 | Frac Acc: 89.92% | Region Acc: 90.26%
+  Batch 530/672 - Loss: 0.0307 | Frac Acc: 90.00% | Region Acc: 90.44%
+  Batch 540/672 - Loss: 0.0127 | Frac Acc: 90.15% | Region Acc: 90.59%
+  Batch 550/672 - Loss: 0.1506 | Frac Acc: 90.19% | Region Acc: 90.72%
+  Batch 560/672 - Loss: 0.0808 | Frac Acc: 90.29% | Region Acc: 90.85%
+  Batch 570/672 - Loss: 0.0141 | Frac Acc: 90.41% | Region Acc: 90.96%
+'D:\X-ray ML Model\venv\Scripts\python.exe' was blocked by your organization's Device Guard policy.
+Contact your support person for more info.
+================================================================================
+STAGE 2 FINE-TUNING ON UNIFIED DATASET (MULTI-HEAD)
+Device: cpu
+================================================================================
+
+Initializing Stage 2 PyTorch Datasets...
+============================================================
+STAGE 2 DATASET SIZES
+============================================================
+Stage 2 Train size: 10746 images
+Stage 2 Val size:   3517 images
+============================================================
+[*] Initializing ResNet-50 backbone with random weights.
+[*] Loading pre-trained MURA backbone weights from checkpoints\mura_pretrained.pth
+[*] Stage 2 Unfreezing Complete: All layers unfrozen for end-to-end fine-tuning.
+[*] Resuming from latest checkpoint: checkpoints\stage2_latest.pth
+[*] Successfully loaded optimizer state.
+[*] Successfully loaded scheduler state.
+[*] Successfully loaded mid-epoch checkpoint. Resuming from Epoch 1, Batch 300
+
+--- Epoch 1/8 ---
+[*] Skipping first 300 batches to resume training mid-epoch...
+  Batch 310/672 - Loss: 0.0744 | Frac Acc: 91.25% | Region Acc: 97.50%
+  Batch 320/672 - Loss: 0.1875 | Frac Acc: 91.25% | Region Acc: 95.00%
+  Batch 330/672 - Loss: 0.3789 | Frac Acc: 93.12% | Region Acc: 94.79%
+  Batch 340/672 - Loss: 0.1728 | Frac Acc: 92.66% | Region Acc: 95.31%
+  Batch 350/672 - Loss: 0.0903 | Frac Acc: 93.25% | Region Acc: 95.62%
+  Batch 360/672 - Loss: 0.1513 | Frac Acc: 93.65% | Region Acc: 95.83%
+  Batch 370/672 - Loss: 0.2150 | Frac Acc: 93.39% | Region Acc: 95.27%
+  Batch 380/672 - Loss: 0.0859 | Frac Acc: 93.75% | Region Acc: 95.23%
+  Batch 390/672 - Loss: 0.0696 | Frac Acc: 94.03% | Region Acc: 95.00%
+  Batch 400/672 - Loss: 0.2108 | Frac Acc: 94.19% | Region Acc: 95.25%
+  Batch 410/672 - Loss: 0.0747 | Frac Acc: 94.38% | Region Acc: 95.45%
+  Batch 420/672 - Loss: 0.0574 | Frac Acc: 94.32% | Region Acc: 95.62%
+  Batch 430/672 - Loss: 0.2681 | Frac Acc: 94.23% | Region Acc: 95.62%
+  Batch 440/672 - Loss: 0.2238 | Frac Acc: 94.38% | Region Acc: 95.49%
+  Batch 450/672 - Loss: 0.2005 | Frac Acc: 94.25% | Region Acc: 95.71%
+  Batch 460/672 - Loss: 0.1630 | Frac Acc: 94.34% | Region Acc: 95.70%
+  Batch 470/672 - Loss: 0.0581 | Frac Acc: 94.52% | Region Acc: 95.85%
+  Batch 480/672 - Loss: 0.0678 | Frac Acc: 94.58% | Region Acc: 95.94%
+  Batch 490/672 - Loss: 0.0566 | Frac Acc: 94.64% | Region Acc: 96.05%
+  Batch 500/672 - Loss: 0.1961 | Frac Acc: 94.59% | Region Acc: 96.03%
+  Batch 510/672 - Loss: 0.0774 | Frac Acc: 94.64% | Region Acc: 96.19%
+  Batch 520/672 - Loss: 0.0538 | Frac Acc: 94.72% | Region Acc: 96.31%
+  Batch 530/672 - Loss: 0.0955 | Frac Acc: 94.78% | Region Acc: 96.33%
+  Batch 540/672 - Loss: 0.0596 | Frac Acc: 94.74% | Region Acc: 96.25%
+  Batch 550/672 - Loss: 0.0596 | Frac Acc: 94.70% | Region Acc: 96.30%
+  Batch 560/672 - Loss: 0.1065 | Frac Acc: 94.81% | Region Acc: 96.37%
+  Batch 570/672 - Loss: 0.0329 | Frac Acc: 94.88% | Region Acc: 96.39%
+  Batch 580/672 - Loss: 0.1684 | Frac Acc: 94.91% | Region Acc: 96.41%
+  Batch 590/672 - Loss: 0.0403 | Frac Acc: 95.00% | Region Acc: 96.47%
+  Batch 600/672 - Loss: 0.1963 | Frac Acc: 95.00% | Region Acc: 96.48%
+  [Checkpoint] Saved mid-epoch state at Batch 600/672 to: stage2_latest.pth
+  Batch 610/672 - Loss: 0.1371 | Frac Acc: 95.08% | Region Acc: 96.45%
+  Batch 620/672 - Loss: 0.0267 | Frac Acc: 95.06% | Region Acc: 96.56%
+  Batch 630/672 - Loss: 0.0387 | Frac Acc: 95.13% | Region Acc: 96.59%
+  Batch 640/672 - Loss: 0.0153 | Frac Acc: 95.13% | Region Acc: 96.65%
+  Batch 650/672 - Loss: 0.0802 | Frac Acc: 95.20% | Region Acc: 96.68%
+  Batch 660/672 - Loss: 0.3888 | Frac Acc: 95.12% | Region Acc: 96.63%
+  Batch 670/672 - Loss: 0.2175 | Frac Acc: 95.17% | Region Acc: 96.66%
+  Batch 672/672 - Loss: 0.3368 | Frac Acc: 95.16% | Region Acc: 96.67%
+  -> Train Loss: 0.1282 | Frac Acc: 95.16% | Region Acc: 96.67%
+  -> Val Loss:   0.1048 | Frac Acc: 95.88% | Region Acc: 96.33%
+  Saved latest model state to: stage2_latest.pth
+  *** Val Loss improved! Saved best model to: stage2_best.pth ***
+
+--- Epoch 2/8 ---
+  Batch 10/672 - Loss: 0.0280 | Frac Acc: 96.88% | Region Acc: 97.50%
+  Batch 20/672 - Loss: 0.0234 | Frac Acc: 96.88% | Region Acc: 97.81%
+  Batch 30/672 - Loss: 0.1536 | Frac Acc: 97.71% | Region Acc: 97.71%
+  Batch 40/672 - Loss: 0.1336 | Frac Acc: 97.50% | Region Acc: 97.34%
+  Batch 50/672 - Loss: 0.0415 | Frac Acc: 97.25% | Region Acc: 97.50%
+  Batch 60/672 - Loss: 0.0378 | Frac Acc: 96.88% | Region Acc: 97.71%
+  Batch 70/672 - Loss: 0.0618 | Frac Acc: 96.25% | Region Acc: 97.50%
+  Batch 80/672 - Loss: 0.3505 | Frac Acc: 96.09% | Region Acc: 97.50%
+  Batch 90/672 - Loss: 0.0886 | Frac Acc: 96.04% | Region Acc: 97.50%
+  Batch 100/672 - Loss: 0.0362 | Frac Acc: 95.94% | Region Acc: 97.56%
+  Batch 110/672 - Loss: 0.2081 | Frac Acc: 95.91% | Region Acc: 97.50%
+  Batch 120/672 - Loss: 0.2393 | Frac Acc: 95.89% | Region Acc: 97.60%
+  Batch 130/672 - Loss: 0.0195 | Frac Acc: 96.06% | Region Acc: 97.69%
+  Batch 140/672 - Loss: 0.0226 | Frac Acc: 96.16% | Region Acc: 97.77%
+  Batch 150/672 - Loss: 0.0121 | Frac Acc: 96.17% | Region Acc: 97.88%
+  Batch 160/672 - Loss: 0.0239 | Frac Acc: 96.13% | Region Acc: 97.85%
+  Batch 170/672 - Loss: 0.0096 | Frac Acc: 95.92% | Region Acc: 97.76%
+  Batch 180/672 - Loss: 0.1571 | Frac Acc: 96.01% | Region Acc: 97.81%
+  Batch 190/672 - Loss: 0.0192 | Frac Acc: 96.09% | Region Acc: 97.89%
+  Batch 200/672 - Loss: 0.0421 | Frac Acc: 95.97% | Region Acc: 97.84%
+  Batch 210/672 - Loss: 0.1637 | Frac Acc: 95.98% | Region Acc: 97.80%
+  Batch 220/672 - Loss: 0.0488 | Frac Acc: 96.08% | Region Acc: 97.87%
+  Batch 230/672 - Loss: 0.0320 | Frac Acc: 96.11% | Region Acc: 97.91%
+  Batch 240/672 - Loss: 0.0324 | Frac Acc: 96.09% | Region Acc: 97.92%
+  Batch 250/672 - Loss: 0.2855 | Frac Acc: 96.08% | Region Acc: 97.95%
+  Batch 260/672 - Loss: 0.1474 | Frac Acc: 96.08% | Region Acc: 97.98%
+  Batch 270/672 - Loss: 0.0182 | Frac Acc: 96.09% | Region Acc: 97.96%
+  Batch 280/672 - Loss: 0.0802 | Frac Acc: 96.05% | Region Acc: 98.01%
+  Batch 290/672 - Loss: 0.2774 | Frac Acc: 96.12% | Region Acc: 97.93%
+  Batch 300/672 - Loss: 0.0259 | Frac Acc: 96.15% | Region Acc: 98.00%
+  [Checkpoint] Saved mid-epoch state at Batch 300/672 to: stage2_latest.pth
+  Batch 310/672 - Loss: 0.0303 | Frac Acc: 96.21% | Region Acc: 98.00%
+  Batch 320/672 - Loss: 0.1169 | Frac Acc: 96.25% | Region Acc: 97.93%
+  Batch 330/672 - Loss: 0.0328 | Frac Acc: 96.31% | Region Acc: 97.99%
+  Batch 340/672 - Loss: 0.0783 | Frac Acc: 96.36% | Region Acc: 97.96%
+  Batch 350/672 - Loss: 0.1310 | Frac Acc: 96.36% | Region Acc: 97.95%
+  Batch 360/672 - Loss: 0.0618 | Frac Acc: 96.32% | Region Acc: 97.93%
+  Batch 370/672 - Loss: 0.0910 | Frac Acc: 96.28% | Region Acc: 97.92%
+  Batch 380/672 - Loss: 0.0743 | Frac Acc: 96.22% | Region Acc: 97.93%
+  Batch 390/672 - Loss: 0.0231 | Frac Acc: 96.25% | Region Acc: 97.98%
+  Batch 400/672 - Loss: 0.1013 | Frac Acc: 96.31% | Region Acc: 98.00%
+  Batch 410/672 - Loss: 0.0158 | Frac Acc: 96.33% | Region Acc: 97.99%
+  Batch 420/672 - Loss: 0.1294 | Frac Acc: 96.40% | Region Acc: 97.99%
+  Batch 430/672 - Loss: 0.1594 | Frac Acc: 96.37% | Region Acc: 97.98%
+  Batch 440/672 - Loss: 0.0922 | Frac Acc: 96.35% | Region Acc: 98.00%
+  Batch 450/672 - Loss: 0.0155 | Frac Acc: 96.36% | Region Acc: 98.03%
+  Batch 460/672 - Loss: 0.0428 | Frac Acc: 96.35% | Region Acc: 98.00%
+  Batch 470/672 - Loss: 0.1832 | Frac Acc: 96.28% | Region Acc: 98.01%
+  Batch 480/672 - Loss: 0.0245 | Frac Acc: 96.29% | Region Acc: 97.99%
+  Batch 490/672 - Loss: 0.1669 | Frac Acc: 96.29% | Region Acc: 98.00%
+  Batch 500/672 - Loss: 0.0297 | Frac Acc: 96.29% | Region Acc: 98.01%
+  Batch 510/672 - Loss: 0.0728 | Frac Acc: 96.29% | Region Acc: 98.03%
+  Batch 520/672 - Loss: 0.0846 | Frac Acc: 96.25% | Region Acc: 98.00%
+  Batch 530/672 - Loss: 0.0793 | Frac Acc: 96.27% | Region Acc: 98.02%
+  Batch 540/672 - Loss: 0.0276 | Frac Acc: 96.30% | Region Acc: 98.03%
+  Batch 550/672 - Loss: 0.1039 | Frac Acc: 96.31% | Region Acc: 98.03%
+  Batch 560/672 - Loss: 0.0791 | Frac Acc: 96.33% | Region Acc: 98.05%
+  Batch 570/672 - Loss: 0.1297 | Frac Acc: 96.37% | Region Acc: 98.07%
+  Batch 580/672 - Loss: 0.2447 | Frac Acc: 96.39% | Region Acc: 98.06%
+  Batch 590/672 - Loss: 0.1121 | Frac Acc: 96.41% | Region Acc: 98.07%
+  Batch 600/672 - Loss: 0.0181 | Frac Acc: 96.39% | Region Acc: 98.06%
+  [Checkpoint] Saved mid-epoch state at Batch 600/672 to: stage2_latest.pth
+  Batch 610/672 - Loss: 0.0817 | Frac Acc: 96.41% | Region Acc: 98.07%
+  Batch 620/672 - Loss: 0.0239 | Frac Acc: 96.41% | Region Acc: 98.08%
+  Batch 630/672 - Loss: 0.0582 | Frac Acc: 96.45% | Region Acc: 98.10%
+  Batch 640/672 - Loss: 0.0146 | Frac Acc: 96.46% | Region Acc: 98.11%
+  Batch 650/672 - Loss: 0.0348 | Frac Acc: 96.44% | Region Acc: 98.11%
+  Batch 660/672 - Loss: 0.0068 | Frac Acc: 96.43% | Region Acc: 98.12%
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Prematu  Batch 670/672 - Loss: 0.0235 | Frac Acc: 96.46% | Region Acc: 98.11%
+  Batch 672/672 - Loss: 0.1459 | Frac Acc: 96.46% | Region Acc: 98.11%
+  -> Train Loss: 0.0880 | Frac Acc: 96.46% | Region Acc: 98.11%
+  -> Val Loss:   0.0931 | Frac Acc: 97.41% | Region Acc: 96.10%
+  Saved latest model state to: stage2_latest.pth
+  *** Val Loss improved! Saved best model to: stage2_best.pth ***
+
+--- Epoch 3/8 ---
+  Batch 10/672 - Loss: 0.0235 | Frac Acc: 97.50% | Region Acc: 97.50%
+  Batch 20/672 - Loss: 0.1645 | Frac Acc: 97.19% | Region Acc: 97.50%
+  Batch 30/672 - Loss: 0.0181 | Frac Acc: 96.04% | Region Acc: 97.50%
+  Batch 40/672 - Loss: 0.0740 | Frac Acc: 96.09% | Region Acc: 97.81%
+  Batch 50/672 - Loss: 0.2431 | Frac Acc: 96.00% | Region Acc: 98.12%
+  Batch 60/672 - Loss: 0.0235 | Frac Acc: 96.35% | Region Acc: 98.33%
+  Batch 70/672 - Loss: 0.0729 | Frac Acc: 96.61% | Region Acc: 98.39%
+  Batch 80/672 - Loss: 0.0034 | Frac Acc: 96.80% | Region Acc: 98.59%
+  Batch 90/672 - Loss: 0.0197 | Frac Acc: 96.88% | Region Acc: 98.26%
+  Batch 100/672 - Loss: 0.0101 | Frac Acc: 97.00% | Region Acc: 98.25%
+  Batch 110/672 - Loss: 0.0056 | Frac Acc: 97.16% | Region Acc: 98.41%
+  Batch 120/672 - Loss: 0.0243 | Frac Acc: 97.08% | Region Acc: 98.39%
+  Batch 130/672 - Loss: 0.1280 | Frac Acc: 97.26% | Region Acc: 98.37%
+  Batch 140/672 - Loss: 0.0400 | Frac Acc: 97.37% | Region Acc: 98.39%
+  Batch 150/672 - Loss: 0.0064 | Frac Acc: 97.33% | Region Acc: 98.38%
+  Batch 160/672 - Loss: 0.0505 | Frac Acc: 97.23% | Region Acc: 98.32%
+  Batch 170/672 - Loss: 0.0411 | Frac Acc: 97.32% | Region Acc: 98.31%
+  Batch 180/672 - Loss: 0.0055 | Frac Acc: 97.33% | Region Acc: 98.30%
+  Batch 190/672 - Loss: 0.0352 | Frac Acc: 97.40% | Region Acc: 98.26%
+  Batch 200/672 - Loss: 0.1153 | Frac Acc: 97.50% | Region Acc: 98.22%
+  Batch 210/672 - Loss: 0.0649 | Frac Acc: 97.47% | Region Acc: 98.24%
+  Batch 220/672 - Loss: 0.0098 | Frac Acc: 97.50% | Region Acc: 98.30%
+  Batch 230/672 - Loss: 0.2156 | Frac Acc: 97.47% | Region Acc: 98.29%
+  Batch 240/672 - Loss: 0.1101 | Frac Acc: 97.53% | Region Acc: 98.28%
+  Batch 250/672 - Loss: 0.0596 | Frac Acc: 97.58% | Region Acc: 98.25%
+  Batch 260/672 - Loss: 0.0224 | Frac Acc: 97.48% | Region Acc: 98.29%
+  Batch 270/672 - Loss: 0.0109 | Frac Acc: 97.48% | Region Acc: 98.26%
+  Batch 280/672 - Loss: 0.0128 | Frac Acc: 97.52% | Region Acc: 98.26%
+  Batch 290/672 - Loss: 0.0149 | Frac Acc: 97.46% | Region Acc: 98.25%
+  Batch 300/672 - Loss: 0.1152 | Frac Acc: 97.48% | Region Acc: 98.25%
+  [Checkpoint] Saved mid-epoch state at Batch 300/672 to: stage2_latest.pth
+  Batch 310/672 - Loss: 0.0295 | Frac Acc: 97.48% | Region Acc: 98.27%
+  Batch 320/672 - Loss: 0.0166 | Frac Acc: 97.48% | Region Acc: 98.26%
+  Batch 330/672 - Loss: 0.0705 | Frac Acc: 97.46% | Region Acc: 98.24%
+  Batch 340/672 - Loss: 0.0246 | Frac Acc: 97.44% | Region Acc: 98.27%
+  Batch 350/672 - Loss: 0.0253 | Frac Acc: 97.43% | Region Acc: 98.29%
+  Batch 360/672 - Loss: 0.1067 | Frac Acc: 97.36% | Region Acc: 98.30%
+  Batch 370/672 - Loss: 0.0089 | Frac Acc: 97.35% | Region Acc: 98.26%
+  Batch 380/672 - Loss: 0.0044 | Frac Acc: 97.38% | Region Acc: 98.26%
+  Batch 390/672 - Loss: 0.0079 | Frac Acc: 97.39% | Region Acc: 98.30%
+  Batch 400/672 - Loss: 0.0050 | Frac Acc: 97.45% | Region Acc: 98.33%
+  Batch 410/672 - Loss: 0.0021 | Frac Acc: 97.48% | Region Acc: 98.35%
+  Batch 420/672 - Loss: 0.1303 | Frac Acc: 97.47% | Region Acc: 98.29%
+  Batch 430/672 - Loss: 0.0328 | Frac Acc: 97.53% | Region Acc: 98.27%
+  Batch 440/672 - Loss: 0.0679 | Frac Acc: 97.51% | Region Acc: 98.28%
+  Batch 450/672 - Loss: 0.0060 | Frac Acc: 97.54% | Region Acc: 98.31%
+  Batch 460/672 - Loss: 0.1950 | Frac Acc: 97.54% | Region Acc: 98.33%
+  Batch 470/672 - Loss: 0.3760 | Frac Acc: 97.50% | Region Acc: 98.28%
+  Batch 480/672 - Loss: 0.1892 | Frac Acc: 97.50% | Region Acc: 98.32%
+  Batch 490/672 - Loss: 0.0212 | Frac Acc: 97.49% | Region Acc: 98.33%
+  Batch 500/672 - Loss: 0.0852 | Frac Acc: 97.49% | Region Acc: 98.34%
+  Batch 510/672 - Loss: 0.0253 | Frac Acc: 97.50% | Region Acc: 98.33%
+  Batch 520/672 - Loss: 0.1343 | Frac Acc: 97.54% | Region Acc: 98.33%
+  Batch 530/672 - Loss: 0.0585 | Frac Acc: 97.52% | Region Acc: 98.35%
+  Batch 540/672 - Loss: 0.0381 | Frac Acc: 97.53% | Region Acc: 98.34%
+  Batch 550/672 - Loss: 0.1075 | Frac Acc: 97.47% | Region Acc: 98.35%
+  Batch 560/672 - Loss: 0.0726 | Frac Acc: 97.48% | Region Acc: 98.36%
+  Batch 570/672 - Loss: 0.1015 | Frac Acc: 97.47% | Region Acc: 98.39%
+  Batch 580/672 - Loss: 0.0181 | Frac Acc: 97.48% | Region Acc: 98.41%
+  Batch 590/672 - Loss: 0.0173 | Frac Acc: 97.50% | Region Acc: 98.42%
+  Batch 600/672 - Loss: 0.1213 | Frac Acc: 97.46% | Region Acc: 98.43%
+  [Checkpoint] Saved mid-epoch state at Batch 600/672 to: stage2_latest.pth
+  Batch 610/672 - Loss: 0.0394 | Frac Acc: 97.48% | Region Acc: 98.40%
+  Batch 620/672 - Loss: 0.0630 | Frac Acc: 97.47% | Region Acc: 98.41%
+  Batch 630/672 - Loss: 0.1591 | Frac Acc: 97.46% | Region Acc: 98.42%
+  Batch 640/672 - Loss: 0.0094 | Frac Acc: 97.42% | Region Acc: 98.42%
+  Batch 650/672 - Loss: 0.0058 | Frac Acc: 97.41% | Region Acc: 98.41%
+  Batch 660/672 - Loss: 0.0213 | Frac Acc: 97.45% | Region Acc: 98.42%
+  Batch 670/672 - Loss: 0.1608 | Frac Acc: 97.39% | Region Acc: 98.40%
+  Batch 672/672 - Loss: 0.0149 | Frac Acc: 97.39% | Region Acc: 98.40%
+  -> Train Loss: 0.0650 | Frac Acc: 97.39% | Region Acc: 98.40%
+  -> Val Loss:   0.0726 | Frac Acc: 97.53% | Region Acc: 96.73%
+  Saved latest model state to: stage2_latest.pth
+  *** Val Loss improved! Saved best model to: stage2_best.pth ***
+
+--- Epoch 4/8 ---
+  Batch 10/672 - Loss: 0.0829 | Frac Acc: 96.25% | Region Acc: 97.50%
+  Batch 20/672 - Loss: 0.0298 | Frac Acc: 97.50% | Region Acc: 98.12%
+  Batch 30/672 - Loss: 0.0046 | Frac Acc: 97.92% | Region Acc: 98.12%
+  Batch 40/672 - Loss: 0.1740 | Frac Acc: 97.66% | Region Acc: 98.28%
+  Batch 50/672 - Loss: 0.0242 | Frac Acc: 97.62% | Region Acc: 98.25%
+  Batch 60/672 - Loss: 0.1029 | Frac Acc: 97.40% | Region Acc: 98.12%
+  Batch 70/672 - Loss: 0.0100 | Frac Acc: 97.50% | Region Acc: 97.86%
+  Batch 80/672 - Loss: 0.0070 | Frac Acc: 97.50% | Region Acc: 98.12%
+  Batch 90/672 - Loss: 0.0561 | Frac Acc: 97.29% | Region Acc: 98.19%
+  Batch 100/672 - Loss: 0.0145 | Frac Acc: 97.19% | Region Acc: 98.19%
+  Batch 110/672 - Loss: 0.0072 | Frac Acc: 97.22% | Region Acc: 98.07%
+  Batch 120/672 - Loss: 0.0231 | Frac Acc: 97.19% | Region Acc: 97.92%
+  Batch 130/672 - Loss: 0.0073 | Frac Acc: 97.36% | Region Acc: 97.88%
+  Batch 140/672 - Loss: 0.0090 | Frac Acc: 97.50% | Region Acc: 97.90%
+  Batch 150/672 - Loss: 0.1727 | Frac Acc: 97.54% | Region Acc: 97.96%
+  Batch 160/672 - Loss: 0.0396 | Frac Acc: 97.58% | Region Acc: 97.97%
+  Batch 170/672 - Loss: 0.0247 | Frac Acc: 97.65% | Region Acc: 97.87%
+  Batch 180/672 - Loss: 0.0771 | Frac Acc: 97.71% | Region Acc: 97.88%
+  Batch 190/672 - Loss: 0.0229 | Frac Acc: 97.70% | Region Acc: 97.93%
+  Batch 200/672 - Loss: 0.0038 | Frac Acc: 97.69% | Region Acc: 97.97%
+  Batch 210/672 - Loss: 0.0412 | Frac Acc: 97.59% | Region Acc: 98.04%
+  Batch 220/672 - Loss: 0.1292 | Frac Acc: 97.64% | Region Acc: 97.93%
+  Batch 230/672 - Loss: 0.0125 | Frac Acc: 97.72% | Region Acc: 97.96%
+  Batch 240/672 - Loss: 0.0281 | Frac Acc: 97.71% | Region Acc: 97.89%
+  Batch 250/672 - Loss: 0.0180 | Frac Acc: 97.62% | Region Acc: 97.95%
+  Batch 260/672 - Loss: 0.0478 | Frac Acc: 97.67% | Region Acc: 98.00%
+  Batch 270/672 - Loss: 0.0051 | Frac Acc: 97.69% | Region Acc: 98.01%
+  Batch 280/672 - Loss: 0.0447 | Frac Acc: 97.77% | Region Acc: 98.04%
+  Batch 290/672 - Loss: 0.0176 | Frac Acc: 97.84% | Region Acc: 98.08%
+  Batch 300/672 - Loss: 0.0182 | Frac Acc: 97.90% | Region Acc: 98.10%
+  [Checkpoint] Saved mid-epoch state at Batch 300/672 to: stage2_latest.pth
+  Batch 310/672 - Loss: 0.0066 | Frac Acc: 97.88% | Region Acc: 98.10%
+  Batch 320/672 - Loss: 0.0040 | Frac Acc: 97.93% | Region Acc: 98.16%
+  Batch 330/672 - Loss: 0.0160 | Frac Acc: 97.90% | Region Acc: 98.22%
+  Batch 340/672 - Loss: 0.0125 | Frac Acc: 97.92% | Region Acc: 98.25%
+  Batch 350/672 - Loss: 0.0103 | Frac Acc: 97.88% | Region Acc: 98.29%
+  Batch 360/672 - Loss: 0.0018 | Frac Acc: 97.88% | Region Acc: 98.26%
+re end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file  Batch 370/672 - Loss: 0.0073 | Frac Acc: 97.91% | Region Acc: 98.23%
+  Batch 380/672 - Loss: 0.1125 | Frac Acc: 97.91% | Region Acc: 98.21%
+  Batch 390/672 - Loss: 0.1351 | Frac Acc: 97.93% | Region Acc: 98.24%
+  Batch 400/672 - Loss: 0.0828 | Frac Acc: 97.94% | Region Acc: 98.19%
+  Batch 410/672 - Loss: 0.0220 | Frac Acc: 97.93% | Region Acc: 98.23%
+  Batch 420/672 - Loss: 0.2344 | Frac Acc: 97.96% | Region Acc: 98.24%
+  Batch 430/672 - Loss: 0.1687 | Frac Acc: 97.97% | Region Acc: 98.24%
+  Batch 440/672 - Loss: 0.1150 | Frac Acc: 97.97% | Region Acc: 98.24%
+  Batch 450/672 - Loss: 0.0317 | Frac Acc: 97.97% | Region Acc: 98.26%
+  Batch 460/672 - Loss: 0.0566 | Frac Acc: 97.98% | Region Acc: 98.30%
+  Batch 470/672 - Loss: 0.0102 | Frac Acc: 97.98% | Region Acc: 98.28%
+  Batch 480/672 - Loss: 0.0022 | Frac Acc: 97.97% | Region Acc: 98.29%
+  Batch 490/672 - Loss: 0.0156 | Frac Acc: 97.97% | Region Acc: 98.30%
+  Batch 500/672 - Loss: 0.0825 | Frac Acc: 97.95% | Region Acc: 98.31%
+  Batch 510/672 - Loss: 0.0781 | Frac Acc: 97.93% | Region Acc: 98.32%
+  Batch 520/672 - Loss: 0.0759 | Frac Acc: 97.88% | Region Acc: 98.33%
+  Batch 530/672 - Loss: 0.0327 | Frac Acc: 97.90% | Region Acc: 98.34%
+  Batch 540/672 - Loss: 0.1680 | Frac Acc: 97.87% | Region Acc: 98.34%
+  Batch 550/672 - Loss: 0.0454 | Frac Acc: 97.88% | Region Acc: 98.35%
+  Batch 560/672 - Loss: 0.0220 | Frac Acc: 97.87% | Region Acc: 98.34%
+  Batch 570/672 - Loss: 0.0215 | Frac Acc: 97.89% | Region Acc: 98.34%
+  Batch 580/672 - Loss: 0.0084 | Frac Acc: 97.88% | Region Acc: 98.37%
+  Batch 590/672 - Loss: 0.0214 | Frac Acc: 97.89% | Region Acc: 98.38%
+  Batch 600/672 - Loss: 0.0137 | Frac Acc: 97.91% | Region Acc: 98.40%
+  [Checkpoint] Saved mid-epoch state at Batch 600/672 to: stage2_latest.pth
+  Batch 610/672 - Loss: 0.0854 | Frac Acc: 97.92% | Region Acc: 98.39%
+  Batch 620/672 - Loss: 0.0026 | Frac Acc: 97.90% | Region Acc: 98.41%
+  Batch 630/672 - Loss: 0.1046 | Frac Acc: 97.86% | Region Acc: 98.42%
+  Batch 640/672 - Loss: 0.0231 | Frac Acc: 97.80% | Region Acc: 98.42%
+  Batch 650/672 - Loss: 0.3072 | Frac Acc: 97.78% | Region Acc: 98.42%
+  Batch 660/672 - Loss: 0.1598 | Frac Acc: 97.75% | Region Acc: 98.41%
+  Batch 670/672 - Loss: 0.0233 | Frac Acc: 97.75% | Region Acc: 98.43%
+  Batch 672/672 - Loss: 0.0564 | Frac Acc: 97.74% | Region Acc: 98.44%
+  -> Train Loss: 0.0572 | Frac Acc: 97.74% | Region Acc: 98.44%
+  -> Val Loss:   0.0706 | Frac Acc: 97.92% | Region Acc: 96.79%
+  Saved latest model state to: stage2_latest.pth
+  *** Val Loss improved! Saved best model to: stage2_best.pth ***
+
+--- Epoch 5/8 ---
+  Batch 10/672 - Loss: 0.0039 | Frac Acc: 98.75% | Region Acc: 98.75%
+  Batch 20/672 - Loss: 0.0886 | Frac Acc: 99.06% | Region Acc: 98.44%
+  Batch 30/672 - Loss: 0.0090 | Frac Acc: 98.54% | Region Acc: 98.54%
+  Batch 40/672 - Loss: 0.0044 | Frac Acc: 98.75% | Region Acc: 98.75%
+  Batch 50/672 - Loss: 0.0386 | Frac Acc: 98.62% | Region Acc: 98.62%
+  Batch 60/672 - Loss: 0.0057 | Frac Acc: 98.23% | Region Acc: 98.85%
+  Batch 70/672 - Loss: 0.1038 | Frac Acc: 98.48% | Region Acc: 98.93%
+  Batch 80/672 - Loss: 0.0434 | Frac Acc: 98.36% | Region Acc: 98.83%
+  Batch 90/672 - Loss: 0.0744 | Frac Acc: 98.47% | Region Acc: 98.75%
+  Batch 100/672 - Loss: 0.0517 | Frac Acc: 98.56% | Region Acc: 98.69%
+  Batch 110/672 - Loss: 0.0230 | Frac Acc: 98.07% | Region Acc: 98.69%
+  Batch 120/672 - Loss: 0.0051 | Frac Acc: 98.23% | Region Acc: 98.59%
+  Batch 130/672 - Loss: 0.1287 | Frac Acc: 98.22% | Region Acc: 98.51%
+  Batch 140/672 - Loss: 0.0059 | Frac Acc: 98.12% | Region Acc: 98.62%
+  Batch 150/672 - Loss: 0.0525 | Frac Acc: 98.21% | Region Acc: 98.62%
+  Batch 160/672 - Loss: 0.0153 | Frac Acc: 98.28% | Region Acc: 98.67%
+  Batch 170/672 - Loss: 0.0209 | Frac Acc: 98.12% | Region Acc: 98.71%
+  Batch 180/672 - Loss: 0.0316 | Frac Acc: 98.16% | Region Acc: 98.72%
+  Batch 190/672 - Loss: 0.2701 | Frac Acc: 98.06% | Region Acc: 98.65%
+  Batch 200/672 - Loss: 0.2263 | Frac Acc: 98.06% | Region Acc: 98.62%
+  Batch 210/672 - Loss: 0.0269 | Frac Acc: 98.15% | Region Acc: 98.63%
+  Batch 220/672 - Loss: 0.0296 | Frac Acc: 98.07% | Region Acc: 98.69%
+  Batch 230/672 - Loss: 0.0150 | Frac Acc: 98.10% | Region Acc: 98.72%
+  Batch 240/672 - Loss: 0.0478 | Frac Acc: 98.15% | Region Acc: 98.67%
+  Batch 250/672 - Loss: 0.0667 | Frac Acc: 98.15% | Region Acc: 98.67%
+  Batch 260/672 - Loss: 0.0025 | Frac Acc: 98.20% | Region Acc: 98.70%
+  Batch 270/672 - Loss: 0.0087 | Frac Acc: 98.19% | Region Acc: 98.73%
+  Batch 280/672 - Loss: 0.0453 | Frac Acc: 98.24% | Region Acc: 98.73%
+  Batch 290/672 - Loss: 0.0059 | Frac Acc: 98.30% | Region Acc: 98.71%
+  Batch 300/672 - Loss: 0.0866 | Frac Acc: 98.25% | Region Acc: 98.73%
+  [Checkpoint] Saved mid-epoch state at Batch 300/672 to: stage2_latest.pth
+  Batch 310/672 - Loss: 0.0152 | Frac Acc: 98.27% | Region Acc: 98.73%
+  Batch 320/672 - Loss: 0.0410 | Frac Acc: 98.24% | Region Acc: 98.73%
+  Batch 330/672 - Loss: 0.0736 | Frac Acc: 98.24% | Region Acc: 98.71%
+  Batch 340/672 - Loss: 0.0100 | Frac Acc: 98.27% | Region Acc: 98.75%
+  Batch 350/672 - Loss: 0.0042 | Frac Acc: 98.30% | Region Acc: 98.79%
+  Batch 360/672 - Loss: 0.0041 | Frac Acc: 98.32% | Region Acc: 98.78%
+  Batch 370/672 - Loss: 0.0061 | Frac Acc: 98.31% | Region Acc: 98.78%
+  Batch 380/672 - Loss: 0.0124 | Frac Acc: 98.31% | Region Acc: 98.78%
+  Batch 390/672 - Loss: 0.1201 | Frac Acc: 98.33% | Region Acc: 98.77%
+  Batch 400/672 - Loss: 0.2216 | Frac Acc: 98.33% | Region Acc: 98.77%
+  Batch 410/672 - Loss: 0.1113 | Frac Acc: 98.32% | Region Acc: 98.78%
+  Batch 420/672 - Loss: 0.1170 | Frac Acc: 98.32% | Region Acc: 98.76%
+  Batch 430/672 - Loss: 0.0020 | Frac Acc: 98.30% | Region Acc: 98.78%
+  Batch 440/672 - Loss: 0.0626 | Frac Acc: 98.22% | Region Acc: 98.78%
+  Batch 450/672 - Loss: 0.0373 | Frac Acc: 98.19% | Region Acc: 98.75%
+  Batch 460/672 - Loss: 0.0499 | Frac Acc: 98.18% | Region Acc: 98.76%
+  Batch 470/672 - Loss: 0.0117 | Frac Acc: 98.19% | Region Acc: 98.76%
+  Batch 480/672 - Loss: 0.0757 | Frac Acc: 98.19% | Region Acc: 98.78%
+  Batch 490/672 - Loss: 0.0214 | Frac Acc: 98.18% | Region Acc: 98.78%
+  Batch 500/672 - Loss: 0.0324 | Frac Acc: 98.21% | Region Acc: 98.80%
+  Batch 510/672 - Loss: 0.0160 | Frac Acc: 98.25% | Region Acc: 98.82%
+  Batch 520/672 - Loss: 0.1386 | Frac Acc: 98.25% | Region Acc: 98.76%
+  Batch 530/672 - Loss: 0.0031 | Frac Acc: 98.24% | Region Acc: 98.75%
+  Batch 540/672 - Loss: 0.0197 | Frac Acc: 98.25% | Region Acc: 98.75%
+  Batch 550/672 - Loss: 0.3444 | Frac Acc: 98.26% | Region Acc: 98.73%
+  Batch 560/672 - Loss: 0.0016 | Frac Acc: 98.27% | Region Acc: 98.74%
+  Batch 570/672 - Loss: 0.0120 | Frac Acc: 98.26% | Region Acc: 98.76%
+  Batch 580/672 - Loss: 0.0915 | Frac Acc: 98.27% | Region Acc: 98.77%
+  Batch 590/672 - Loss: 0.0296 | Frac Acc: 98.26% | Region Acc: 98.77%
+  Batch 600/672 - Loss: 0.0723 | Frac Acc: 98.22% | Region Acc: 98.77%
+  [Checkpoint] Saved mid-epoch state at Batch 600/672 to: stage2_latest.pth
+  Batch 610/672 - Loss: 0.0185 | Frac Acc: 98.24% | Region Acc: 98.78%
+  Batch 620/672 - Loss: 0.0266 | Frac Acc: 98.26% | Region Acc: 98.77%
+  Batch 630/672 - Loss: 0.1123 | Frac Acc: 98.25% | Region Acc: 98.78%
+  Batch 640/672 - Loss: 0.0689 | Frac Acc: 98.24% | Region Acc: 98.76%
+  Batch 650/672 - Loss: 0.0304 | Frac Acc: 98.25% | Region Acc: 98.77%
+  Batch 660/672 - Loss: 0.0098 | Frac Acc: 98.27% | Region Acc: 98.77%
+  Batch 670/672 - Loss: 0.0783 | Frac Acc: 98.24% | Region Acc: 98.77%
+  Batch 672/672 - Loss: 0.0049 | Frac Acc: 98.24% | Region Acc: 98.76%
+  -> Train Loss: 0.0462 | Frac Acc: 98.24% | Region Acc: 98.76%
+  -> Val Loss:   0.0804 | Frac Acc: 97.73% | Region Acc: 96.45%
+  Saved latest model state to: stage2_latest.pth
+  Early stopping counter: 1/5
+
+--- Epoch 6/8 ---
+  Batch 10/672 - Loss: 0.0034 | Frac Acc: 99.38% | Region Acc: 99.38%
+  Batch 20/672 - Loss: 0.0073 | Frac Acc: 98.75% | Region Acc: 98.75%
+  Batch 30/672 - Loss: 0.1813 | Frac Acc: 98.54% | Region Acc: 98.33%
+  Batch 40/672 - Loss: 0.0031 | Frac Acc: 98.59% | Region Acc: 98.59%
+  Batch 50/672 - Loss: 0.0304 | Frac Acc: 98.62% | Region Acc: 98.75%
+  Batch 60/672 - Loss: 0.0617 | Frac Acc: 98.75% | Region Acc: 98.85%
+  Batch 70/672 - Loss: 0.0040 | Frac Acc: 98.75% | Region Acc: 98.66%
+  Batch 80/672 - Loss: 0.0199 | Frac Acc: 98.67% | Region Acc: 98.75%
+  Batch 90/672 - Loss: 0.0634 | Frac Acc: 98.68% | Region Acc: 98.82%
+  Batch 100/672 - Loss: 0.0195 | Frac Acc: 98.44% | Region Acc: 98.88%
+  Batch 110/672 - Loss: 0.0320 | Frac Acc: 98.58% | Region Acc: 98.92%
+  Batch 120/672 - Loss: 0.0032 | Frac Acc: 98.70% | Region Acc: 98.85%
+  Batch 130/672 - Loss: 0.0034 | Frac Acc: 98.65% | Region Acc: 98.75%
+  Batch 140/672 - Loss: 0.0101 | Frac Acc: 98.62% | Region Acc: 98.71%
+  Batch 150/672 - Loss: 0.0016 | Frac Acc: 98.54% | Region Acc: 98.75%
+  Batch 160/672 - Loss: 0.0246 | Frac Acc: 98.59% | Region Acc: 98.75%
+  Batch 170/672 - Loss: 0.0578 | Frac Acc: 98.57% | Region Acc: 98.71%
+  Batch 180/672 - Loss: 0.3342 | Frac Acc: 98.51% | Region Acc: 98.61%
+
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of J  Batch 190/672 - Loss: 0.0180 | Frac Acc: 98.55% | Region Acc: 98.55%
+  Batch 200/672 - Loss: 0.0498 | Frac Acc: 98.56% | Region Acc: 98.59%
+  Batch 210/672 - Loss: 0.0878 | Frac Acc: 98.48% | Region Acc: 98.60%
+  Batch 220/672 - Loss: 0.0072 | Frac Acc: 98.49% | Region Acc: 98.66%
+  Batch 230/672 - Loss: 0.0778 | Frac Acc: 98.51% | Region Acc: 98.64%
+  Batch 240/672 - Loss: 0.0202 | Frac Acc: 98.54% | Region Acc: 98.59%
+  Batch 250/672 - Loss: 0.2246 | Frac Acc: 98.58% | Region Acc: 98.53%
+  Batch 260/672 - Loss: 0.0949 | Frac Acc: 98.61% | Region Acc: 98.51%
+  Batch 270/672 - Loss: 0.0166 | Frac Acc: 98.59% | Region Acc: 98.52%
+  Batch 280/672 - Loss: 0.0190 | Frac Acc: 98.57% | Region Acc: 98.55%
+  Batch 290/672 - Loss: 0.0059 | Frac Acc: 98.62% | Region Acc: 98.53%
+  Batch 300/672 - Loss: 0.0198 | Frac Acc: 98.62% | Region Acc: 98.48%
+  [Checkpoint] Saved mid-epoch state at Batch 300/672 to: stage2_latest.pth
+  Batch 310/672 - Loss: 0.0105 | Frac Acc: 98.65% | Region Acc: 98.51%
+  Batch 320/672 - Loss: 0.0405 | Frac Acc: 98.63% | Region Acc: 98.54%
+  Batch 330/672 - Loss: 0.0857 | Frac Acc: 98.58% | Region Acc: 98.52%
+  Batch 340/672 - Loss: 0.1291 | Frac Acc: 98.58% | Region Acc: 98.55%
+  Batch 350/672 - Loss: 0.1063 | Frac Acc: 98.59% | Region Acc: 98.55%
+  Batch 360/672 - Loss: 0.0585 | Frac Acc: 98.59% | Region Acc: 98.54%
+  Batch 370/672 - Loss: 0.0677 | Frac Acc: 98.55% | Region Acc: 98.55%
+  Batch 380/672 - Loss: 0.0023 | Frac Acc: 98.59% | Region Acc: 98.59%
+  Batch 390/672 - Loss: 0.0280 | Frac Acc: 98.57% | Region Acc: 98.59%
+  Batch 400/672 - Loss: 0.0073 | Frac Acc: 98.56% | Region Acc: 98.59%
+  Batch 410/672 - Loss: 0.0574 | Frac Acc: 98.60% | Region Acc: 98.60%
+  Batch 420/672 - Loss: 0.0238 | Frac Acc: 98.60% | Region Acc: 98.62%
+  Batch 430/672 - Loss: 0.0436 | Frac Acc: 98.56% | Region Acc: 98.62%
+  Batch 440/672 - Loss: 0.0074 | Frac Acc: 98.58% | Region Acc: 98.62%
+  Batch 450/672 - Loss: 0.0226 | Frac Acc: 98.54% | Region Acc: 98.65%
+  Batch 460/672 - Loss: 0.0176 | Frac Acc: 98.48% | Region Acc: 98.61%
+  Batch 470/672 - Loss: 0.0023 | Frac Acc: 98.47% | Region Acc: 98.63%
+  Batch 480/672 - Loss: 0.0173 | Frac Acc: 98.48% | Region Acc: 98.61%
+  Batch 490/672 - Loss: 0.1266 | Frac Acc: 98.49% | Region Acc: 98.58%
+  Batch 500/672 - Loss: 0.0419 | Frac Acc: 98.46% | Region Acc: 98.59%
+  Batch 510/672 - Loss: 0.0231 | Frac Acc: 98.47% | Region Acc: 98.59%
+  Batch 520/672 - Loss: 0.0086 | Frac Acc: 98.50% | Region Acc: 98.59%
+  Batch 530/672 - Loss: 0.0227 | Frac Acc: 98.48% | Region Acc: 98.61%
+  Batch 540/672 - Loss: 0.0233 | Frac Acc: 98.50% | Region Acc: 98.61%
+  Batch 550/672 - Loss: 0.0046 | Frac Acc: 98.51% | Region Acc: 98.61%
+  Batch 560/672 - Loss: 0.0092 | Frac Acc: 98.54% | Region Acc: 98.62%
+  Batch 570/672 - Loss: 0.0024 | Frac Acc: 98.51% | Region Acc: 98.63%
+  Batch 580/672 - Loss: 0.0012 | Frac Acc: 98.52% | Region Acc: 98.64%
+  Batch 590/672 - Loss: 0.0452 | Frac Acc: 98.52% | Region Acc: 98.65%
+  Batch 600/672 - Loss: 0.0554 | Frac Acc: 98.52% | Region Acc: 98.67%
+  [Checkpoint] Saved mid-epoch state at Batch 600/672 to: stage2_latest.pth
+  Batch 610/672 - Loss: 0.0213 | Frac Acc: 98.55% | Region Acc: 98.69%
+  Batch 620/672 - Loss: 0.0986 | Frac Acc: 98.54% | Region Acc: 98.70%
+  Batch 630/672 - Loss: 0.0575 | Frac Acc: 98.55% | Region Acc: 98.70%
+  Batch 640/672 - Loss: 0.0351 | Frac Acc: 98.54% | Region Acc: 98.69%
+  Batch 650/672 - Loss: 0.0047 | Frac Acc: 98.54% | Region Acc: 98.70%
+  Batch 660/672 - Loss: 0.0640 | Frac Acc: 98.52% | Region Acc: 98.71%
+  Batch 670/672 - Loss: 0.1490 | Frac Acc: 98.51% | Region Acc: 98.70%
+  Batch 672/672 - Loss: 0.0209 | Frac Acc: 98.51% | Region Acc: 98.70%
+  -> Train Loss: 0.0365 | Frac Acc: 98.51% | Region Acc: 98.70%
+================================================================================
+STAGE 2 FINE-TUNING ON UNIFIED DATASET (MULTI-HEAD)
+Device: cpu
+================================================================================
+
+Initializing Stage 2 PyTorch Datasets...
+============================================================
+STAGE 2 DATASET SIZES
+============================================================
+Stage 2 Train size: 10746 images
+Stage 2 Val size:   3517 images
+============================================================
+[*] Initializing ResNet-50 backbone with random weights.
+[*] Loading pre-trained MURA backbone weights from checkpoints\mura_pretrained.pth
+[*] Stage 2 Unfreezing Complete: All layers unfrozen for end-to-end fine-tuning.
+[*] Resuming from latest checkpoint: checkpoints\stage2_latest.pth
+[*] Successfully loaded optimizer state.
+[*] Successfully loaded scheduler state.
+[*] Successfully loaded mid-epoch checkpoint. Resuming from Epoch 6, Batch 600
+
+--- Epoch 6/8 ---
+[*] Skipping first 600 batches to resume training mid-epoch...
+  Batch 610/672 - Loss: 0.0090 | Frac Acc: 99.38% | Region Acc: 98.12%
+  Batch 620/672 - Loss: 0.0280 | Frac Acc: 99.38% | Region Acc: 98.75%
+  Batch 630/672 - Loss: 0.0407 | Frac Acc: 99.38% | Region Acc: 98.75%
+  Batch 640/672 - Loss: 0.0484 | Frac Acc: 99.22% | Region Acc: 99.06%
+  Batch 650/672 - Loss: 0.0044 | Frac Acc: 98.88% | Region Acc: 99.00%
+  Batch 660/672 - Loss: 0.0170 | Frac Acc: 98.65% | Region Acc: 99.06%
+  Batch 670/672 - Loss: 0.0060 | Frac Acc: 98.66% | Region Acc: 99.02%
+  Batch 672/672 - Loss: 0.0284 | Frac Acc: 98.69% | Region Acc: 98.87%
+  -> Train Loss: 0.0348 | Frac Acc: 98.69% | Region Acc: 98.87%
+  -> Val Loss:   0.0703 | Frac Acc: 97.92% | Region Acc: 96.76%
+  Saved latest model state to: stage2_latest.pth
+  *** Val Loss improved! Saved best model to: stage2_best.pth ***
+
+--- Epoch 7/8 ---
+  Batch 10/672 - Loss: 0.0074 | Frac Acc: 99.38% | Region Acc: 100.00%
+  Batch 20/672 - Loss: 0.0147 | Frac Acc: 98.75% | Region Acc: 99.06%
+  Batch 30/672 - Loss: 0.0162 | Frac Acc: 99.17% | Region Acc: 98.96%
+  Batch 40/672 - Loss: 0.0050 | Frac Acc: 98.91% | Region Acc: 99.06%
+  Batch 50/672 - Loss: 0.0092 | Frac Acc: 98.62% | Region Acc: 99.00%
+  Batch 60/672 - Loss: 0.0123 | Frac Acc: 98.75% | Region Acc: 98.96%
+  Batch 70/672 - Loss: 0.0666 | Frac Acc: 98.66% | Region Acc: 98.84%
+  Batch 80/672 - Loss: 0.1654 | Frac Acc: 98.75% | Region Acc: 98.83%
+  Batch 90/672 - Loss: 0.0069 | Frac Acc: 98.75% | Region Acc: 98.89%
+  Batch 100/672 - Loss: 0.0356 | Frac Acc: 98.75% | Region Acc: 98.94%
+  Batch 110/672 - Loss: 0.0128 | Frac Acc: 98.64% | Region Acc: 98.92%
+  Batch 120/672 - Loss: 0.0496 | Frac Acc: 98.59% | Region Acc: 98.91%
+  Batch 130/672 - Loss: 0.0127 | Frac Acc: 98.61% | Region Acc: 98.94%
+  Batch 140/672 - Loss: 0.0097 | Frac Acc: 98.62% | Region Acc: 98.97%
+  Batch 150/672 - Loss: 0.0252 | Frac Acc: 98.54% | Region Acc: 99.04%
+  Batch 160/672 - Loss: 0.0012 | Frac Acc: 98.59% | Region Acc: 99.02%
+  Batch 170/672 - Loss: 0.0110 | Frac Acc: 98.64% | Region Acc: 99.04%
+  Batch 180/672 - Loss: 0.0224 | Frac Acc: 98.65% | Region Acc: 99.10%
+  Batch 190/672 - Loss: 0.0045 | Frac Acc: 98.72% | Region Acc: 99.05%
+  Batch 200/672 - Loss: 0.0092 | Frac Acc: 98.78% | Region Acc: 98.97%
+  Batch 210/672 - Loss: 0.0069 | Frac Acc: 98.84% | Region Acc: 98.96%
+  Batch 220/672 - Loss: 0.0259 | Frac Acc: 98.84% | Region Acc: 98.92%
+  Batch 230/672 - Loss: 0.1013 | Frac Acc: 98.89% | Region Acc: 98.94%
+  Batch 240/672 - Loss: 0.0258 | Frac Acc: 98.85% | Region Acc: 98.93%
+  Batch 250/672 - Loss: 0.0128 | Frac Acc: 98.85% | Region Acc: 98.85%
+  Batch 260/672 - Loss: 0.0116 | Frac Acc: 98.82% | Region Acc: 98.87%
+  Batch 270/672 - Loss: 0.0498 | Frac Acc: 98.82% | Region Acc: 98.82%
+  Batch 280/672 - Loss: 0.0008 | Frac Acc: 98.79% | Region Acc: 98.84%
+  Batch 290/672 - Loss: 0.0136 | Frac Acc: 98.81% | Region Acc: 98.86%
+  Batch 300/672 - Loss: 0.0060 | Frac Acc: 98.83% | Region Acc: 98.83%
+  [Checkpoint] Saved mid-epoch state at Batch 300/672 to: stage2_latest.pth
+  Batch 310/672 - Loss: 0.1443 | Frac Acc: 98.85% | Region Acc: 98.81%
+  Batch 320/672 - Loss: 0.0105 | Frac Acc: 98.83% | Region Acc: 98.85%
+  Batch 330/672 - Loss: 0.0717 | Frac Acc: 98.83% | Region Acc: 98.83%
+  Batch 340/672 - Loss: 0.0013 | Frac Acc: 98.84% | Region Acc: 98.82%
+  Batch 350/672 - Loss: 0.0112 | Frac Acc: 98.86% | Region Acc: 98.80%
+  Batch 360/672 - Loss: 0.0054 | Frac Acc: 98.87% | Region Acc: 98.82%
+  Batch 370/672 - Loss: 0.0055 | Frac Acc: 98.87% | Region Acc: 98.82%
+  Batch 380/672 - Loss: 0.0172 | Frac Acc: 98.88% | Region Acc: 98.83%
+  Batch 390/672 - Loss: 0.0178 | Frac Acc: 98.91% | Region Acc: 98.85%
+  Batch 400/672 - Loss: 0.0054 | Frac Acc: 98.94% | Region Acc: 98.83%
+  Batch 410/672 - Loss: 0.0044 | Frac Acc: 98.95% | Region Acc: 98.86%
+  Batch 420/672 - Loss: 0.0109 | Frac Acc: 98.97% | Region Acc: 98.87%
+  Batch 430/672 - Loss: 0.0239 | Frac Acc: 98.98% | Region Acc: 98.88%
+  Batch 440/672 - Loss: 0.0521 | Frac Acc: 98.96% | Region Acc: 98.89%
+  Batch 450/672 - Loss: 0.0006 | Frac Acc: 98.94% | Region Acc: 98.88%
+  Batch 460/672 - Loss: 0.0374 | Frac Acc: 98.95% | Region Acc: 98.87%
+  Batch 470/672 - Loss: 0.0620 | Frac Acc: 98.92% | Region Acc: 98.90%
+  Batch 480/672 - Loss: 0.0201 | Frac Acc: 98.92% | Region Acc: 98.91%
+  Batch 490/672 - Loss: 0.0983 | Frac Acc: 98.89% | Region Acc: 98.90%
+  Batch 500/672 - Loss: 0.0010 | Frac Acc: 98.91% | Region Acc: 98.90%
+  Batch 510/672 - Loss: 0.0032 | Frac Acc: 98.91% | Region Acc: 98.90%
+  Batch 520/672 - Loss: 0.0017 | Frac Acc: 98.92% | Region Acc: 98.89%
+  Batch 530/672 - Loss: 0.0085 | Frac Acc: 98.90% | Region Acc: 98.88%
+  Batch 540/672 - Loss: 0.0539 | Frac Acc: 98.89% | Region Acc: 98.89%
+  Batch 550/672 - Loss: 0.0880 | Frac Acc: 98.90% | Region Acc: 98.90%
+  Batch 560/672 - Loss: 0.0072 | Frac Acc: 98.88% | Region Acc: 98.90%
+  Batch 570/672 - Loss: 0.0079 | Frac Acc: 98.87% | Region Acc: 98.91%
+  Batch 580/672 - Loss: 0.0052 | Frac Acc: 98.89% | Region Acc: 98.92%
+  Batch 590/672 - Loss: 0.0134 | Frac Acc: 98.89% | Region Acc: 98.92%
+  Batch 600/672 - Loss: 0.0724 | Frac Acc: 98.90% | Region Acc: 98.91%
+  [Checkpoint] Saved mid-epoch state at Batch 600/672 to: stage2_latest.pth
+  Batch 610/672 - Loss: 0.0815 | Frac Acc: 98.88% | Region Acc: 98.85%
+  Batch 620/672 - Loss: 0.0023 | Frac Acc: 98.88% | Region Acc: 98.86%
+  Batch 630/672 - Loss: 0.0009 | Frac Acc: 98.88% | Region Acc: 98.84%
+  Batch 640/672 - Loss: 0.0021 | Frac Acc: 98.89% | Region Acc: 98.84%
+  Batch 650/672 - Loss: 0.0168 | Frac Acc: 98.90% | Region Acc: 98.83%
+  Batch 660/672 - Loss: 0.0083 | Frac Acc: 98.90% | Region Acc: 98.84%
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Prematu  Batch 670/672 - Loss: 0.0062 | Frac Acc: 98.91% | Region Acc: 98.82%
+  Batch 672/672 - Loss: 0.1377 | Frac Acc: 98.90% | Region Acc: 98.82%
+  -> Train Loss: 0.0296 | Frac Acc: 98.90% | Region Acc: 98.82%
+  -> Val Loss:   0.0680 | Frac Acc: 98.15% | Region Acc: 97.16%
+  Saved latest model state to: stage2_latest.pth
+  *** Val Loss improved! Saved best model to: stage2_best.pth ***
+
+--- Epoch 8/8 ---
+  Batch 10/672 - Loss: 0.0008 | Frac Acc: 98.75% | Region Acc: 97.50%
+  Batch 20/672 - Loss: 0.0218 | Frac Acc: 98.44% | Region Acc: 98.44%
+  Batch 30/672 - Loss: 0.0278 | Frac Acc: 98.96% | Region Acc: 98.54%
+  Batch 40/672 - Loss: 0.0068 | Frac Acc: 99.22% | Region Acc: 98.44%
+  Batch 50/672 - Loss: 0.0256 | Frac Acc: 98.88% | Region Acc: 98.50%
+  Batch 60/672 - Loss: 0.0066 | Frac Acc: 99.06% | Region Acc: 98.44%
+  Batch 70/672 - Loss: 0.0051 | Frac Acc: 99.20% | Region Acc: 98.57%
+  Batch 80/672 - Loss: 0.0040 | Frac Acc: 99.22% | Region Acc: 98.52%
+  Batch 90/672 - Loss: 0.0075 | Frac Acc: 99.24% | Region Acc: 98.61%
+  Batch 100/672 - Loss: 0.0258 | Frac Acc: 99.31% | Region Acc: 98.62%
+  Batch 110/672 - Loss: 0.0025 | Frac Acc: 99.32% | Region Acc: 98.75%
+  Batch 120/672 - Loss: 0.0018 | Frac Acc: 99.38% | Region Acc: 98.65%
+  Batch 130/672 - Loss: 0.1423 | Frac Acc: 99.33% | Region Acc: 98.61%
+  Batch 140/672 - Loss: 0.0230 | Frac Acc: 99.24% | Region Acc: 98.71%
+  Batch 150/672 - Loss: 0.0078 | Frac Acc: 99.25% | Region Acc: 98.75%
+  Batch 160/672 - Loss: 0.0348 | Frac Acc: 99.26% | Region Acc: 98.75%
+  Batch 170/672 - Loss: 0.0073 | Frac Acc: 99.26% | Region Acc: 98.75%
+  Batch 180/672 - Loss: 0.0917 | Frac Acc: 99.24% | Region Acc: 98.75%
+  Batch 190/672 - Loss: 0.0033 | Frac Acc: 99.24% | Region Acc: 98.78%
+  Batch 200/672 - Loss: 0.0032 | Frac Acc: 99.22% | Region Acc: 98.81%
+  Batch 210/672 - Loss: 0.0465 | Frac Acc: 99.20% | Region Acc: 98.84%
+  Batch 220/672 - Loss: 0.0153 | Frac Acc: 99.20% | Region Acc: 98.84%
+  Batch 230/672 - Loss: 0.0032 | Frac Acc: 99.16% | Region Acc: 98.83%
+  Batch 240/672 - Loss: 0.0373 | Frac Acc: 99.17% | Region Acc: 98.85%
+  Batch 250/672 - Loss: 0.0619 | Frac Acc: 99.15% | Region Acc: 98.88%
+  Batch 260/672 - Loss: 0.0268 | Frac Acc: 99.16% | Region Acc: 98.89%
+  Batch 270/672 - Loss: 0.1593 | Frac Acc: 99.12% | Region Acc: 98.87%
+  Batch 280/672 - Loss: 0.0056 | Frac Acc: 99.13% | Region Acc: 98.88%
+  Batch 290/672 - Loss: 0.0616 | Frac Acc: 99.14% | Region Acc: 98.92%
+  Batch 300/672 - Loss: 0.0606 | Frac Acc: 99.12% | Region Acc: 98.90%
+  [Checkpoint] Saved mid-epoch state at Batch 300/672 to: stage2_latest.pth
+  Batch 310/672 - Loss: 0.0025 | Frac Acc: 99.13% | Region Acc: 98.89%
+  Batch 320/672 - Loss: 0.0020 | Frac Acc: 99.14% | Region Acc: 98.89%
+  Batch 330/672 - Loss: 0.0462 | Frac Acc: 99.13% | Region Acc: 98.86%
+  Batch 340/672 - Loss: 0.0075 | Frac Acc: 99.10% | Region Acc: 98.86%
+  Batch 350/672 - Loss: 0.0585 | Frac Acc: 99.11% | Region Acc: 98.88%
+  Batch 360/672 - Loss: 0.0192 | Frac Acc: 99.01% | Region Acc: 98.91%
+  Batch 370/672 - Loss: 0.0294 | Frac Acc: 99.02% | Region Acc: 98.92%
+  Batch 380/672 - Loss: 0.0679 | Frac Acc: 99.01% | Region Acc: 98.91%
+  Batch 390/672 - Loss: 0.0141 | Frac Acc: 99.04% | Region Acc: 98.93%
+  Batch 400/672 - Loss: 0.0754 | Frac Acc: 99.05% | Region Acc: 98.94%
+  Batch 410/672 - Loss: 0.0417 | Frac Acc: 99.07% | Region Acc: 98.90%
+  Batch 420/672 - Loss: 0.0019 | Frac Acc: 99.09% | Region Acc: 98.90%
+  Batch 430/672 - Loss: 0.0055 | Frac Acc: 99.11% | Region Acc: 98.91%
+  Batch 440/672 - Loss: 0.0096 | Frac Acc: 99.12% | Region Acc: 98.93%
+  Batch 450/672 - Loss: 0.1152 | Frac Acc: 99.10% | Region Acc: 98.94%
+  Batch 460/672 - Loss: 0.0767 | Frac Acc: 99.09% | Region Acc: 98.91%
+  Batch 470/672 - Loss: 0.0013 | Frac Acc: 99.11% | Region Acc: 98.92%
+  Batch 480/672 - Loss: 0.0725 | Frac Acc: 99.13% | Region Acc: 98.91%
+  Batch 490/672 - Loss: 0.0299 | Frac Acc: 99.09% | Region Acc: 98.90%
+  Batch 500/672 - Loss: 0.0747 | Frac Acc: 99.10% | Region Acc: 98.89%
+  Batch 510/672 - Loss: 0.0030 | Frac Acc: 99.11% | Region Acc: 98.91%
+  Batch 520/672 - Loss: 0.0633 | Frac Acc: 99.06% | Region Acc: 98.91%
+  Batch 530/672 - Loss: 0.0133 | Frac Acc: 99.06% | Region Acc: 98.93%
+  Batch 540/672 - Loss: 0.0755 | Frac Acc: 99.02% | Region Acc: 98.92%
+  Batch 550/672 - Loss: 0.0197 | Frac Acc: 99.00% | Region Acc: 98.93%
+  Batch 560/672 - Loss: 0.0060 | Frac Acc: 99.02% | Region Acc: 98.92%
+  Batch 570/672 - Loss: 0.0012 | Frac Acc: 99.00% | Region Acc: 98.90%
+  Batch 580/672 - Loss: 0.0046 | Frac Acc: 99.00% | Region Acc: 98.90%
+  Batch 590/672 - Loss: 0.0051 | Frac Acc: 98.97% | Region Acc: 98.91%
+  Batch 600/672 - Loss: 0.0065 | Frac Acc: 98.99% | Region Acc: 98.92%
+  [Checkpoint] Saved mid-epoch state at Batch 600/672 to: stage2_latest.pth
+  Batch 610/672 - Loss: 0.0596 | Frac Acc: 99.01% | Region Acc: 98.92%
+  Batch 620/672 - Loss: 0.0686 | Frac Acc: 98.98% | Region Acc: 98.91%
+  Batch 630/672 - Loss: 0.0132 | Frac Acc: 98.98% | Region Acc: 98.92%
+  Batch 640/672 - Loss: 0.1656 | Frac Acc: 98.96% | Region Acc: 98.93%
+  Batch 650/672 - Loss: 0.0020 | Frac Acc: 98.97% | Region Acc: 98.91%
+  Batch 660/672 - Loss: 0.0044 | Frac Acc: 98.98% | Region Acc: 98.90%
+  Batch 670/672 - Loss: 0.0425 | Frac Acc: 98.99% | Region Acc: 98.90%
+  Batch 672/672 - Loss: 0.0268 | Frac Acc: 98.99% | Region Acc: 98.89%
+  -> Train Loss: 0.0272 | Frac Acc: 98.99% | Region Acc: 98.89%
+  -> Val Loss:   0.0679 | Frac Acc: 98.15% | Region Acc: 97.01%
+  Saved latest model state to: stage2_latest.pth
+  *** Val Loss improved! Saved best model to: stage2_best.pth ***
+
+================================================================================
+STAGE 2 FINAL CLASSIFICATION REPORT (VALIDATION SET)
+================================================================================
+
+--- FRACTURE HEAD CLASSIFICATION REPORT ---
+               precision    recall  f1-score   support
+
+not_fractured       0.98      0.99      0.98      2089
+    fractured       0.99      0.96      0.98      1428
+
+     accuracy                           0.98      3517
+    macro avg       0.98      0.98      0.98      3517
+ weighted avg       0.98      0.98      0.98      3517
+
+
+--- REGION HEAD CLASSIFICATION REPORT ---
+              precision    recall  f1-score   support
+
+        hand       0.95      0.99      0.97       256
+         leg       0.88      0.96      0.92       425
+         hip       0.71      1.00      0.83        36
+    shoulder       0.77      1.00      0.87        20
+     unknown       0.99      0.97      0.98      2780
+
+    accuracy                           0.97      3517
+   macro avg       0.86      0.98      0.91      3517
+weighted avg       0.97      0.97      0.97      3517
+
+================================================================================
+re end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+libpng warning: bKGD: invalid
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file

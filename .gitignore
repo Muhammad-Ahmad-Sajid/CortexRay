@@ -1,37 +1,29 @@
-# Environment variables and secrets
-.env
-.env.local
-
-# Python caches and compiler outputs
-__pycache__/
-*.py[cod]
-*$py.class
-.pytest_cache/
-.mypy_cache/
-
-# Saved PyTorch model checkpoints
-*.pth
-*.pt
-checkpoints/
-
-# User uploads and runtime outputs
-uploads/
-heatmaps/
-
-# Datasets and large raw data folders
+# Datasets
 mura_images/
-mura_images
-fracatlas_images/
-data/mura_images/
-data/fracatlas_images/
 data/
-FracAtlas1/
-Fracatlas/
 archive/
-Bone_Fracture_Binary_Classification/
-venv/
+fracatlas/
 *.csv
 
-# OS-specific files
+# Model checkpoints
+checkpoints/
+*.pth
+
+# Runtime folders
+uploads/
+heatmaps/
+reports/
+mlruns/
+
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# OS
 .DS_Store
 Thumbs.db

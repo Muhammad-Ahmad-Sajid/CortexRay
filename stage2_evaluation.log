@@ -1,0 +1,89 @@
+================================================================================
+STAGE 2 FINE-TUNING ON UNIFIED DATASET (MULTI-HEAD)
+Device: cpu
+================================================================================
+
+Initializing Stage 2 PyTorch Datasets...
+============================================================
+STAGE 2 DATASET SIZES
+============================================================
+Stage 2 Train size: 10746 images
+Stage 2 Val size:   3517 images
+============================================================
+[*] Initializing ResNet-50 backbone with random weights.
+[*] Loading pre-trained MURA backbone weights from checkpoints\mura_pretrained.pth
+[*] Stage 2 Unfreezing Complete: All layers unfrozen for end-to-end fine-tuning.
+[*] Resuming from latest checkpoint: checkpoints\stage2_latest.pth
+[*] Successfully loaded optimizer state.
+[*] Successfully loaded scheduler state.
+[*] Successfully loaded epoch-end checkpoint. Resuming from Epoch 9
+
+[*] Loading best model for final evaluation: checkpoints\stage2_best.pth
+
+============================================================
+STAGE 2 FINAL EVALUATION REPORT
+============================================================
+
+--- FRACTURE DETECTION HEAD ---
+               precision    recall  f1-score   support
+
+not_fractured       0.98      0.99      0.98      2089
+    fractured       0.99      0.96      0.98      1428
+
+     accuracy                           0.98      3517
+    macro avg       0.98      0.98      0.98      3517
+ weighted avg       0.98      0.98      0.98      3517
+
+
+--- BODY REGION HEAD ---
+              precision    recall  f1-score   support
+
+        hand       0.95      0.99      0.97       256
+         leg       0.88      0.96      0.92       425
+         hip       0.71      1.00      0.83        36
+    shoulder       0.77      1.00      0.87        20
+     unknown       0.99      0.97      0.98      2780
+
+    accuracy                           0.97      3517
+   macro avg       0.86      0.98      0.91      3517
+weighted avg       0.97      0.97      0.97      3517
+
+
+--- CONFUSION MATRIX (Fracture Detection) ---
+[[2075   14]
+ [  51 1377]]
+
+--- CONFUSION MATRIX (Body Region) ---
+[[ 253    1    0    1    1]
+ [   2  406    0    0   17]
+ [   0    0   36    0    0]
+ [   0    0    0   20    0]
+ [  10   53   15    5 2697]]
+
+--- TRAINING SUMMARY ---
+Best Fracture Detection Accuracy : 0.00%
+Best Body Region Accuracy        : 0.00%
+Best Epoch                       : 8
+Best Val Loss                    : 0.0680
+Checkpoint saved to              : checkpoints\stage2_best.pth
+Total training time              : 0m 0s
+============================================================
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: known incorrect sRGB profile
+Premature end of JPEG file
+Premature end of JPEG file
+libpng warning: iCCP: profile 'ICC Profile': 0h: PCS illuminant is not D50
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
+Premature end of JPEG file
