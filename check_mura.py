@@ -4,6 +4,7 @@ from pathlib import Path
 import pandas as pd
 from PIL import Image
 
+
 def main():
     print("=" * 80)
     print("MURA DATASET INTEGRITY & USABILITY CHECKER")
@@ -37,9 +38,9 @@ def main():
         "forearm": 0,
         "finger": 0,
         "hand": 0,
-        "unknown": 0
+        "unknown": 0,
     }
-    
+
     total_scanned = 0
 
     if checks["directory_exists"]:
@@ -47,12 +48,12 @@ def main():
             for file in files:
                 file_path = Path(root) / file
                 ext = file_path.suffix.lower()
-                
+
                 # Filter for image extensions we care about
                 if ext in [".png", ".jpg", ".jpeg", ".dcm"]:
                     extensions_count[ext] = extensions_count.get(ext, 0) + 1
                     total_scanned += 1
-                    
+
                     # Identify study type from folder path
                     parts = file_path.parts
                     detected_study = "unknown"
@@ -60,12 +61,12 @@ def main():
                         if part.startswith("XR_"):
                             detected_study = part.replace("XR_", "").lower()
                             break
-                    
+
                     if detected_study in study_type_counts:
                         study_type_counts[detected_study] += 1
                     else:
                         study_type_counts["unknown"] += 1
-                    
+
                     # Check for corruption (PIL read check for standard images, skip DCM PIL opening)
                     if ext in [".png", ".jpg", ".jpeg"]:
                         try:
@@ -80,7 +81,7 @@ def main():
         print(f"  Extensions found: {dict(extensions_count)}")
         if len(other_extensions) > 0:
             print(f"  Other files found: {other_extensions}")
-            
+
         if len(corrupted_files) == 0:
             print("  [PASS] No corrupted or unreadable images found.")
             checks["no_corruption"] = True
@@ -97,7 +98,7 @@ def main():
             df = pd.read_csv(metadata_csv_path)
             print("  [PASS] 'mura_metadata.csv' exists and is readable.")
             checks["csv_exists"] = True
-            
+
             # Check expected columns
             expected_cols = ["file_path", "label", "study_type"]
             missing_cols = [col for col in expected_cols if col not in df.columns]
@@ -134,14 +135,14 @@ def main():
     print("\n" + "=" * 50)
     print("OVERALL CHECKLIST STATUS")
     print("=" * 50)
-    
+
     all_passed = True
     for name, status in checks.items():
         status_str = "PASS" if status else "FAIL"
         print(f"Check {name:<20}: {status_str}")
         if not status:
             all_passed = False
-            
+
     print("-" * 50)
     if all_passed:
         print(">>> OVERALL STATUS: PASS <<<")
@@ -149,6 +150,7 @@ def main():
     else:
         print(">>> OVERALL STATUS: FAIL <<<")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

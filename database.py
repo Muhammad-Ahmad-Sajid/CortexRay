@@ -1,5 +1,5 @@
 """
-Root-level database gateway, exposing SQLAlchemy engine, session maker, 
+Root-level database gateway, exposing SQLAlchemy engine, session maker,
 base class, utility functions, and ORM models.
 """
 
@@ -12,7 +12,7 @@ from src.database.models import (
     Patient,
     XrayScan,
     FracturePrediction,
-    PrognosisResult
+    PrognosisResult,
 )
 
 __all__ = [
@@ -26,5 +26,5 @@ __all__ = [
     "Patient",
     "XrayScan",
     "FracturePrediction",
-    "PrognosisResult"
+    "PrognosisResult",
 ]

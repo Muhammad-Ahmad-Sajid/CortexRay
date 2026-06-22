@@ -17,7 +17,7 @@ with open(log_file, "a") as f:
 time.sleep(sleep_time)
 
 # Execute PowerShell command to find and terminate the training python process
-cmd = 'powershell -Command "Get-CimInstance Win32_Process -Filter \\"Name = \'python.exe\' AND CommandLine LIKE \'%train_stage2.py%\'\\" | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }"'
+cmd = "powershell -Command \"Get-CimInstance Win32_Process -Filter \\\"Name = 'python.exe' AND CommandLine LIKE '%train_stage2.py%'\\\" | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }\""
 result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
 
 # Log end

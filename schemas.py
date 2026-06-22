@@ -1,7 +1,8 @@
-from pydantic import BaseModel, Field, field_validator, ConfigDict, EmailStr
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 from uuid import UUID
 from datetime import datetime
 from typing import List, Optional
+
 
 # ------------------------------------------------------------------------------
 # Patient Schemas
@@ -10,14 +11,17 @@ class PatientCreate(BaseModel):
     full_name: str = Field(..., description="Full legal name of the patient")
     age: int = Field(..., description="Age in years")
     gender: str = Field(..., description="Gender of the patient (e.g. Male, Female, Other)")
-    comorbidities: List[str] = Field(default_factory=list, description="Array of health comorbidities")
+    comorbidities: List[str] = Field(
+        default_factory=list, description="Array of health comorbidities"
+    )
 
-    @field_validator('age')
+    @field_validator("age")
     @classmethod
     def validate_age(cls, v: int) -> int:
         if not (1 <= v <= 120):
             raise ValueError("Age must be between 1 and 120")
         return v
+
 
 class PatientResponse(BaseModel):
     id: UUID
@@ -28,6 +32,7 @@ class PatientResponse(BaseModel):
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
 
 # ------------------------------------------------------------------------------
 # Scan Upload & Inference Schemas
@@ -49,12 +54,16 @@ class ScanUploadResponse(BaseModel):
     report_url: Optional[str] = None
     model_version: str
 
+
 # ------------------------------------------------------------------------------
 # Prognosis Override Schemas
 # ------------------------------------------------------------------------------
 class PrognosisOverrideRequest(BaseModel):
-    clinician_override: str = Field(..., description="Name or identifier of the clinician authorizing the override")
+    clinician_override: str = Field(
+        ..., description="Name or identifier of the clinician authorizing the override"
+    )
     override_notes: str = Field(..., description="Clinical justification notes for the override")
+
 
 class PrognosisOverrideResponse(BaseModel):
     id: UUID
@@ -70,6 +79,7 @@ class PrognosisOverrideResponse(BaseModel):
     override_timestamp: Optional[datetime] = None
 
     model_config = ConfigDict(from_attributes=True)
+
 
 # ------------------------------------------------------------------------------
 # Patient History Detail Schemas
@@ -88,6 +98,7 @@ class PrognosisDetail(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
+
 class PredictionDetail(BaseModel):
     id: UUID
     fracture_detected: bool
@@ -99,6 +110,7 @@ class PredictionDetail(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
+
 class ScanDetail(BaseModel):
     id: UUID
     upload_timestamp: datetime
@@ -109,6 +121,7 @@ class ScanDetail(BaseModel):
     prediction: Optional[PredictionDetail] = None
 
     model_config = ConfigDict(from_attributes=True)
+
 
 class PatientHistoryResponse(BaseModel):
     patient_id: UUID

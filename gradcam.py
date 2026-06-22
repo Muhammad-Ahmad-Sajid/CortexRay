@@ -1,4 +1,3 @@
-import os
 import cv2
 import numpy as np
 import torch
@@ -13,28 +12,31 @@ from src.model_training.model import FractureModel
 from src.data_preparation.preprocess import get_inference_transform
 from src.config import MODEL_CHECKPOINT_PATH
 
+
 class ModelWrapper(nn.Module):
     """
     Wraps the multi-task FractureModel to return only the severity logits
     so that pytorch-grad-cam can compute gradients for explainability heatmaps.
     """
+
     def __init__(self, model):
         super().__init__()
         self.model = model
-        
+
     def forward(self, x):
         severity_logits, _ = self.model(x)
         return severity_logits
 
+
 def generate_heatmap(image_path: str, model_path: str = None) -> str:
     """
-    Loads the trained multi-task FractureModel from model_path, generates a Grad-CAM 
+    Loads the trained multi-task FractureModel from model_path, generates a Grad-CAM
     heatmap for the predicted severity class, overlays it on the image, and saves it.
-    
+
     Args:
         image_path (str): Path to the input X-ray image (PNG or JPG).
         model_path (str): Path to the model checkpoints file.
-        
+
     Returns:
         str: Absolute or relative path to the saved heatmap overlay image.
     """
@@ -55,16 +57,15 @@ def generate_heatmap(image_path: str, model_path: str = None) -> str:
     model = FractureModel(pretrained=False)
     try:
         checkpoint = torch.load(model_file, map_location=device)
-        state_dict = checkpoint['model_state_dict']
-        
+        state_dict = checkpoint["model_state_dict"]
+
         # Check if this is the old single-head checkpoint
-        is_old_checkpoint = "backbone.fc.1.weight" in state_dict and "severity_head.0.weight" not in state_dict
-        
+        is_old_checkpoint = (
+            "backbone.fc.1.weight" in state_dict and "severity_head.0.weight" not in state_dict
+        )
+
         if is_old_checkpoint:
-            model.severity_head = torch.nn.Sequential(
-                torch.nn.Identity(),
-                torch.nn.Linear(2048, 4)
-            )
+            model.severity_head = torch.nn.Sequential(torch.nn.Identity(), torch.nn.Linear(2048, 4))
             new_state_dict = {}
             for k, v in state_dict.items():
                 if k == "backbone.fc.1.weight":
@@ -74,7 +75,7 @@ def generate_heatmap(image_path: str, model_path: str = None) -> str:
                 else:
                     new_state_dict[k] = v
             state_dict = new_state_dict
-            
+
         model.load_state_dict(state_dict, strict=False)
         model.to(device)
         model.eval()
@@ -97,7 +98,7 @@ def generate_heatmap(image_path: str, model_path: str = None) -> str:
     # Apply standard inference transform (normalization + ToTensorV2)
     transform = get_inference_transform()
     transformed = transform(image=img_resized)
-    input_tensor = transformed['image'].unsqueeze(0).to(device) # Shape: (1, 3, 224, 224)
+    input_tensor = transformed["image"].unsqueeze(0).to(device)  # Shape: (1, 3, 224, 224)
 
     # 5. Determine predicted severity category for CAM targeting
     with torch.no_grad():
@@ -118,7 +119,9 @@ def generate_heatmap(image_path: str, model_path: str = None) -> str:
     # 8. Overlay the heatmap on the float32 RGB original image
     rgb_img_float = np.float32(img_resized) / 255.0
     # show_cam_on_image defaults to cv2.COLORMAP_JET
-    cam_image = show_cam_on_image(rgb_img_float, grayscale_cam, use_rgb=True, colormap=cv2.COLORMAP_JET)
+    cam_image = show_cam_on_image(
+        rgb_img_float, grayscale_cam, use_rgb=True, colormap=cv2.COLORMAP_JET
+    )
 
     # Convert back to BGR for saving with OpenCV
     cam_image_bgr = cv2.cvtColor(cam_image, cv2.COLOR_RGB2BGR)
@@ -133,5 +136,5 @@ def generate_heatmap(image_path: str, model_path: str = None) -> str:
     output_path = heatmaps_dir / output_filename
 
     cv2.imwrite(str(output_path), cam_image_bgr)
-    
+
     return str(output_path)

@@ -30,6 +30,7 @@ FRACTURE_CLASSES = ["not_fractured", "fractured"]
 REGION_CLASSES = ["hand", "leg", "hip", "shoulder", "unknown"]
 MODEL_VERSION = "v1.0-stage2-epoch8"
 
+
 # Structured result representation
 @dataclass
 class InferenceResult:
@@ -43,11 +44,13 @@ class InferenceResult:
     prediction_time_ms: float
     message: str
 
+
 # ------------------------------------------------------------------------------
 # Module-level Model Load (Loads ONCE when module is imported)
 # ------------------------------------------------------------------------------
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = None
+
 
 def load_global_model():
     global model
@@ -64,7 +67,7 @@ def load_global_model():
         # Load Model architecture and set strictly to False for backbone, then load weights
         model = Stage2FractureModel(pretrained=False)
         checkpoint = torch.load(CHECKPOINT_PATH, map_location=device)
-        model.load_state_dict(checkpoint['model_state_dict'])
+        model.load_state_dict(checkpoint["model_state_dict"])
         model.to(device)
         model.eval()
         logger.info("Stage 2 model loaded successfully at module level.")
@@ -72,31 +75,37 @@ def load_global_model():
         logger.error(f"Failed to load Stage 2 model: {e}")
         raise RuntimeError(f"Failed to initialize global model: {e}")
 
+
 # Load the model once on import
 load_global_model()
+
 
 # ------------------------------------------------------------------------------
 # Model Wrapper for pytorch-grad-cam library
 # ------------------------------------------------------------------------------
 class ModelWrapper(nn.Module):
     """
-    Wraps model to return only the fracture_head logits so Grad-CAM 
+    Wraps model to return only the fracture_head logits so Grad-CAM
     calculates gradients specifically for the fracture detection task.
     """
+
     def __init__(self, base_model):
         super().__init__()
         self.base_model = base_model
-        
+
     def forward(self, x):
         fracture_logits, _ = self.base_model(x)
         return fracture_logits
 
+
 # ------------------------------------------------------------------------------
 # Grad-CAM Heatmap Generation Helper
 # ------------------------------------------------------------------------------
-def generate_gradcam_heatmap(image_path: str, input_tensor: torch.Tensor, predicted_class_idx: int, img_resized: np.ndarray) -> str:
+def generate_gradcam_heatmap(
+    image_path: str, input_tensor: torch.Tensor, predicted_class_idx: int, img_resized: np.ndarray
+) -> str:
     """
-    Generates a Grad-CAM heatmap highlighting regions contributing to the prediction 
+    Generates a Grad-CAM heatmap highlighting regions contributing to the prediction
     and overlays it on the 224x224 grayscale X-ray using cv2.COLORMAP_JET.
     """
     try:
@@ -117,7 +126,9 @@ def generate_gradcam_heatmap(image_path: str, input_tensor: torch.Tensor, predic
         rgb_img_float = np.float32(cv2.cvtColor(img_gray_resized, cv2.COLOR_GRAY2RGB)) / 255.0
 
         # show_cam_on_image overlays CAM mask on the image using COLORMAP_JET
-        cam_image = show_cam_on_image(rgb_img_float, grayscale_cam, use_rgb=True, colormap=cv2.COLORMAP_JET)
+        cam_image = show_cam_on_image(
+            rgb_img_float, grayscale_cam, use_rgb=True, colormap=cv2.COLORMAP_JET
+        )
         cam_image_bgr = cv2.cvtColor(cam_image, cv2.COLOR_RGB2BGR)
 
         # Save to heatmaps/{uuid}_{timestamp}.png
@@ -135,6 +146,7 @@ def generate_gradcam_heatmap(image_path: str, input_tensor: torch.Tensor, predic
         logger.error(f"Error during Grad-CAM generation: {e}")
         raise e
 
+
 # ------------------------------------------------------------------------------
 # MLflow Logging Helper
 # ------------------------------------------------------------------------------
@@ -145,18 +157,19 @@ def log_inference_to_mlflow(
     fracture_confidence: float,
     bone_confidence: float,
     confidence_flag: str,
-    prediction_time_ms: float
+    prediction_time_ms: float,
 ):
     """
     Logs metadata, metrics, and parameters of the inference run to MLflow.
     """
     try:
         import mlflow
+
         mlflow.set_experiment("fracture_inference")
-        
+
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         run_name = f"inference_{timestamp}"
-        
+
         with mlflow.start_run(run_name=run_name):
             # Parameters
             mlflow.log_param("model_version", MODEL_VERSION)
@@ -164,19 +177,22 @@ def log_inference_to_mlflow(
             mlflow.log_param("bone_predicted", bone_predicted)
             mlflow.log_param("fracture_predicted", fracture_predicted)
             mlflow.log_param("confidence_flag", confidence_flag)
-            
+
             # Metrics
             mlflow.log_metric("fracture_confidence", fracture_confidence)
             mlflow.log_metric("bone_confidence", bone_confidence)
             mlflow.log_metric("prediction_time_ms", prediction_time_ms)
-            
+
             # Numeric encoding of the flag to satisfy metric standard (must be floats)
-            flag_numeric = {"inconclusive": 0.0, "low_confidence": 1.0, "clear": 2.0}[confidence_flag]
+            flag_numeric = {"inconclusive": 0.0, "low_confidence": 1.0, "clear": 2.0}[
+                confidence_flag
+            ]
             mlflow.log_metric("confidence_flag_numeric", flag_numeric)
-            
+
             logger.info("Logged inference run details to MLflow.")
     except Exception as e:
         logger.warning(f"MLflow logging bypassed/failed: {e}")
+
 
 # ------------------------------------------------------------------------------
 # Core Inference Function
@@ -189,15 +205,15 @@ def run_inference(image_path: str) -> InferenceResult:
     3. Handles confidence thresholding and early returns for inconclusive results.
     4. Generates explainable Grad-CAM heatmaps.
     5. Logs metadata to MLflow.
-    
+
     Args:
         image_path (str): File path to input X-ray image.
-        
+
     Returns:
         InferenceResult: Data object containing predictions, confidences, heatmap, and messages.
     """
     start_time = time.time()
-    
+
     # 1. Image Preprocessing with Error Handling
     try:
         # Load as grayscale
@@ -208,32 +224,32 @@ def run_inference(image_path: str) -> InferenceResult:
         err_msg = f"Failed to load image file: {e}"
         logger.error(err_msg)
         raise ValueError(err_msg)
-        
+
     # Apply CLAHE (clipLimit=2.0, tileGridSize=(8,8))
     clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
     img_enhanced = clahe.apply(img_gray)
-    
+
     # Convert to 3-channel RGB (repeating grayscale) and resize
     img_rgb = cv2.cvtColor(img_enhanced, cv2.COLOR_GRAY2RGB)
     img_resized = cv2.resize(img_rgb, (224, 224), interpolation=cv2.INTER_LINEAR)
-    
+
     # Normalize with ImageNet mean/std
     img_float = img_resized.astype(np.float32) / 255.0
     mean = np.array([0.485, 0.456, 0.406], dtype=np.float32)
     std = np.array([0.229, 0.224, 0.225], dtype=np.float32)
     img_normalized = (img_float - mean) / std
-    
+
     # Transpose HWC -> CHW, unsqueeze batch dim, and send to device
     input_tensor = torch.from_numpy(img_normalized.transpose(2, 0, 1)).unsqueeze(0).to(device)
-    
+
     # 2. Forward Pass for Fracture Head
     with torch.no_grad():
         fracture_logits, region_logits = model(input_tensor)
-        
+
         # Softmax on fracture head
         fracture_probs = F.softmax(fracture_logits, dim=1)
         fracture_conf_tensor, fracture_pred_tensor = fracture_probs.max(1)
-        
+
         fracture_confidence = float(fracture_conf_tensor.item())
         fracture_pred_idx = int(fracture_pred_tensor.item())
         fracture_detected = bool(fracture_pred_idx == 1)
@@ -251,7 +267,7 @@ def run_inference(image_path: str) -> InferenceResult:
         prediction_time_ms = (time.time() - start_time) * 1000.0
         msg = "Inconclusive result. Manual radiologist review required."
         logger.info(f"Inference completed with flag: {confidence_flag}. Early exiting.")
-        
+
         # Log to MLflow
         log_inference_to_mlflow(
             image_path=image_path,
@@ -260,9 +276,9 @@ def run_inference(image_path: str) -> InferenceResult:
             fracture_confidence=fracture_confidence,
             bone_confidence=0.0,
             confidence_flag=confidence_flag,
-            prediction_time_ms=prediction_time_ms
+            prediction_time_ms=prediction_time_ms,
         )
-        
+
         return InferenceResult(
             fracture_detected=False,
             fracture_confidence=round(fracture_confidence, 4),
@@ -272,14 +288,14 @@ def run_inference(image_path: str) -> InferenceResult:
             heatmap_path=None,
             model_version=MODEL_VERSION,
             prediction_time_ms=round(prediction_time_ms, 2),
-            message=msg
+            message=msg,
         )
 
     # 5. Process Body Region Head (Runs only if not inconclusive)
     with torch.no_grad():
         region_probs = F.softmax(region_logits, dim=1)
         region_conf_tensor, region_pred_tensor = region_probs.max(1)
-        
+
         bone_confidence = float(region_conf_tensor.item())
         region_pred_idx = int(region_pred_tensor.item())
         bone_region = REGION_CLASSES[region_pred_idx]
@@ -291,7 +307,7 @@ def run_inference(image_path: str) -> InferenceResult:
             image_path=image_path,
             input_tensor=input_tensor,
             predicted_class_idx=fracture_pred_idx,
-            img_resized=img_resized
+            img_resized=img_resized,
         )
     except Exception as e:
         logger.warning(f"Grad-CAM generation failed, continuing: {e}")
@@ -317,10 +333,12 @@ def run_inference(image_path: str) -> InferenceResult:
         fracture_confidence=fracture_confidence,
         bone_confidence=bone_confidence,
         confidence_flag=confidence_flag,
-        prediction_time_ms=prediction_time_ms
+        prediction_time_ms=prediction_time_ms,
     )
 
-    logger.info(f"Inference complete: fracture_detected={fracture_detected}, bone_region={bone_region}, flag={confidence_flag}")
+    logger.info(
+        f"Inference complete: fracture_detected={fracture_detected}, bone_region={bone_region}, flag={confidence_flag}"
+    )
 
     return InferenceResult(
         fracture_detected=fracture_detected,
@@ -331,8 +349,9 @@ def run_inference(image_path: str) -> InferenceResult:
         heatmap_path=heatmap_path,
         model_version=MODEL_VERSION,
         prediction_time_ms=round(prediction_time_ms, 2),
-        message=msg
+        message=msg,
     )
+
 
 # ------------------------------------------------------------------------------
 # Test Block
@@ -344,12 +363,12 @@ if __name__ == "__main__":
         logger.info(f"Testing inference module on: {test_image}")
         try:
             result = run_inference(test_image)
-            print("\n" + "="*50)
+            print("\n" + "=" * 50)
             print("TEST INFERENCE RESULT:")
-            print("="*50)
+            print("=" * 50)
             for k, v in result.__dict__.items():
                 print(f"{k:<25}: {v}")
-            print("="*50)
+            print("=" * 50)
         except Exception as err:
             logger.error(f"Inference test run failed: {err}")
     else:
