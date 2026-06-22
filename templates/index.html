@@ -3,356 +3,481 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bone Fracture Diagnostics & Prognosis Dashboard</title>
-    <link rel="stylesheet" href="/templates/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>CortexRay - Bone Fracture Detection</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-
-    <!-- Loading Spinner Overlay -->
-    <div id="loadingOverlay" class="spinner-overlay">
-        <div class="spinner"></div>
-    </div>
+    <nav class="navbar">
+        <div class="nav-brand">&#x1F9B4; CortexRay</div>
+        <div class="nav-right hidden" id="nav-user-info">
+            <span id="user-name"></span>
+            <span id="user-role" class="role-badge"></span>
+            <button id="btn-logout" class="btn-logout">Logout</button>
+        </div>
+    </nav>
 
     <div class="container">
-        <!-- Dashboard Navigation Header -->
-        <header>
-            <h1><i class="fa-solid fa-file-medical"></i> Fracture diagnostics & prognosis</h1>
-            <div class="nav-links">
-                <a href="/" class="active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-                <a href="/history"><i class="fa-solid fa-clock-rotate-left"></i> Patient History</a>
+        <!-- LOGIN SECTION -->
+        <section id="login-section">
+            <div class="card login-card">
+                <h2>&#x1F9B4; CortexRay Login</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <div id="login-error" class="msg-error hidden"></div>
+                </form>
             </div>
-        </header>
+        </section>
 
-        <div class="dashboard-grid">
-            <!-- Left Panel: Patient Registration -->
-            <div class="panel">
-                <h2>1. Patient Registration</h2>
-                <form id="patientForm">
-                    <div class="form-group">
-                        <label for="fullName">Full Name</label>
-                        <input type="text" id="fullName" class="form-control" required placeholder="e.g. John Miller">
+        <!-- MAIN DASHBOARD -->
+        <section id="dashboard-section" class="hidden">
+            <div class="dashboard-grid">
+                <!-- LEFT COLUMN -->
+                <div class="card">
+                    <h2>Register Patient</h2>
+                    <form id="register-form" style="margin-top: 1.5rem;">
+                        <div class="form-group">
+                            <label for="patient-name">Full Name</label>
+                            <input type="text" id="patient-name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-age">Age</label>
+                            <input type="number" id="patient-age" class="form-control" min="1" max="120" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-gender">Gender</label>
+                            <select id="patient-gender" class="form-control" required>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Comorbidities</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" id="comorb-osteo" value="Osteoporosis"> Osteoporosis</label>
+                                <label><input type="checkbox" id="comorb-diabetes" value="Diabetes"> Diabetes</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register Patient</button>
+                        <div id="register-msg" class="hidden"></div>
+                    </form>
+                </div>
+
+                <!-- RIGHT COLUMN -->
+                <div class="card">
+                    <h2>Upload X-ray</h2>
+                    <div id="current-patient-label" style="margin: 1rem 0; color: var(--text-light);">
+                        No patient registered yet
                     </div>
                     
-                    <div class="form-group">
-                        <label for="patientAge">Age</label>
-                        <input type="number" id="patientAge" class="form-control" required min="1" max="120" placeholder="e.g. 42">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="patientGender">Gender</label>
-                        <select id="patientGender" class="form-control" required>
-                            <option value="">Select Gender...</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Comorbidities</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-item">
-                                <input type="checkbox" id="comorbOsteo" value="Osteoporosis"> Osteoporosis
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" id="comorbDiab" value="Diabetes"> Diabetes
-                            </label>
+                    <!-- Upload Area -->
+                    <div id="upload-panel">
+                        <div id="drop-area" class="upload-area">
+                            <div class="upload-icon">&#x1F9B4;</div>
+                            <div class="upload-text">Drag & drop X-ray here or click to browse</div>
+                            <div style="font-size: 0.875rem; color: var(--text-light);">Accepts PNG and JPG only</div>
+                            <input type="file" id="file-input" accept=".png, .jpg, .jpeg" class="hidden">
+                            <div id="file-name" class="file-name hidden"></div>
+                        </div>
+                        <button id="btn-analyze" class="btn btn-primary" disabled>Analyze X-ray</button>
+                        <div id="upload-error" class="msg-error hidden"></div>
+                        
+                        <div id="loading-spinner" class="loading-container hidden">
+                            <div class="spinner"></div>
+                            <div>Analyzing X-ray...</div>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Register Patient</button>
-                </form>
+                    <!-- Results Panel -->
+                    <div id="results-panel" class="results-panel hidden">
+                        <div class="results-header">
+                            <h3>Analysis Results</h3>
+                            <button id="btn-new-scan" class="btn btn-outline" style="padding: 0.5rem;">New Scan</button>
+                        </div>
+                        
+                        <div class="images-container">
+                            <div class="image-card">
+                                <div style="margin-bottom: 0.5rem; font-weight: 500;">Original</div>
+                                <img id="res-img-original" src="" alt="Original X-ray">
+                            </div>
+                            <div class="image-card">
+                                <div style="margin-bottom: 0.5rem; font-weight: 500;">Heatmap</div>
+                                <img id="res-img-heatmap" src="" alt="Grad-CAM Heatmap">
+                                <div id="res-no-heatmap" class="hidden" style="padding: 2rem; background: #f1f5f9; border-radius: 4px;">Heatmap unavailable</div>
+                            </div>
+                        </div>
 
-                <!-- Patient UUID Storage Indicator -->
-                <div id="patientIDBox" class="meta-item" style="margin-top: 20px; display: none;">
-                    <div class="meta-label">Active Patient ID (UUID)</div>
-                    <div id="activePatientID" class="meta-value" style="font-family: monospace; font-size: 13px; color: var(--primary-color);"></div>
-                </div>
-            </div>
+                        <div class="card" style="margin-bottom: 1rem; padding: 1.5rem;">
+                            <div id="res-badge-fracture" class="badge badge-large"></div>
+                            
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Body Region</span>
+                                    <span id="res-region" class="detail-value"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Confidence</span>
+                                    <span id="res-confidence" class="detail-value"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Flag</span>
+                                    <span id="res-flag" class="badge"></span>
+                                </div>
+                            </div>
+                            <div style="background: #f8fafc; padding: 1rem; border-radius: 4px; font-style: italic; border: 1px solid var(--border-color);">
+                                <span class="detail-label">AI Message:</span>
+                                <span id="res-ai-message" style="color: var(--text-dark);"></span>
+                            </div>
+                        </div>
 
-            <!-- Right Panel: X-Ray Scan Analysis -->
-            <div class="panel">
-                <h2>2. X-Ray Scan Analysis</h2>
-                <div class="form-group">
-                    <label>Drag & Drop Scan Image</label>
-                    <div id="dropZone" class="upload-area">
-                        <div class="upload-icon"><i class="fa-solid fa-bone"></i></div>
-                        <div class="upload-text">Drag & drop X-ray image here or click to browse</div>
-                        <div class="upload-text" style="font-size: 11px;">Supports PNG, JPG, JPEG</div>
-                        <div id="selectedFilename" class="upload-filename" style="display: none;"></div>
-                        <input type="file" id="fileInput" accept="image/png, image/jpeg, image/jpg">
+                        <div id="prognosis-card" class="card hidden" style="margin-bottom: 1rem; padding: 1.5rem;">
+                            <h4 style="margin-bottom: 1rem;">Prognosis & Treatment</h4>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Rest Duration</span>
+                                    <span id="prog-rest" class="detail-value"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Immobilisation</span>
+                                    <span id="prog-cast" class="detail-value"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Plaster Required</span>
+                                    <span id="prog-plaster" class="detail-value"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Weight Bearing</span>
+                                    <span id="prog-weight" class="detail-value"></span>
+                                </div>
+                                <div class="detail-item" style="grid-column: span 2;">
+                                    <span class="detail-label">Referral</span>
+                                    <span id="prog-referral" class="badge"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="btn-download-report" class="btn btn-primary" style="margin-bottom: 1rem;">&#x1F4E5; Download Report</button>
+                        
+                        <div style="text-align: center; margin-top: 1rem;">
+                            <a href="/history" id="link-history" style="color: var(--primary-color); font-weight: 600; text-decoration: none;">View Patient History &rarr;</a>
+                        </div>
                     </div>
                 </div>
-
-                <button id="analyzeBtn" class="btn btn-primary" disabled>Analyze X-Ray Scan</button>
             </div>
-        </div>
-
-        <!-- Hidden Results Panel -->
-        <div id="resultsPanel" class="results-panel">
-            <div class="results-header">
-                <h3><i class="fa-solid fa-square-poll-vertical"></i> Diagnostics & Prognosis Results</h3>
-                <span id="fractureBadge" class="badge"></span>
-            </div>
-
-            <!-- Diagnostic Metadata Grid -->
-            <div class="meta-grid">
-                <div class="meta-item">
-                    <div class="meta-label">Severity Level</div>
-                    <span id="severityBadge" class="badge"></span>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Model Confidence</div>
-                    <div id="confidenceVal" class="meta-value">0%</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Predicted Bone</div>
-                    <div id="predictedBone" class="meta-value">-</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Rest Duration</div>
-                    <div id="restDuration" class="meta-value">-</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Recommended Cast</div>
-                    <div id="castType" class="meta-value">-</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Plaster Required</div>
-                    <div id="plasterReq" class="meta-value">-</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Weight-Bearing Instructions</div>
-                    <div id="weightBearing" class="meta-value">-</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Clinical Pathway</div>
-                    <span id="pathwayBadge" class="badge"></span>
-                </div>
-            </div>
-
-            <!-- Side-by-Side Images Display -->
-            <div class="image-compare">
-                <div class="img-box">
-                    <label>Original X-Ray Scan</label>
-                    <img id="originalImg" src="" alt="Original Image Scan">
-                </div>
-                <div class="img-box">
-                    <label>Grad-CAM Explainability Heatmap</label>
-                    <img id="heatmapImg" src="" alt="Grad-CAM Heatmap">
-                </div>
-            </div>
-        </div>
+        </section>
     </div>
 
-    <!-- Frontend Scripting Logic -->
     <script>
-        const patientForm = document.getElementById('patientForm');
-        const dropZone = document.getElementById('dropZone');
-        const fileInput = document.getElementById('fileInput');
-        const selectedFilename = document.getElementById('selectedFilename');
-        const analyzeBtn = document.getElementById('analyzeBtn');
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const resultsPanel = document.getElementById('resultsPanel');
-        const patientIDBox = document.getElementById('patientIDBox');
-        const activePatientIDText = document.getElementById('activePatientID');
-
-        let activePatientID = null;
+        const API_BASE = "http://localhost:8000";
+        let currentPatientId = null;
         let selectedFile = null;
+        let currentScanId = null;
 
-        // 1. Patient Registration submission calling POST /patients/
-        patientForm.addEventListener('submit', async (e) => {
+        function checkAuth() {
+            const token = sessionStorage.getItem("cortexray_token");
+            if (token) {
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('dashboard-section').classList.remove('hidden');
+                document.getElementById('nav-user-info').classList.remove('hidden');
+                document.getElementById('user-name').innerText = sessionStorage.getItem("cortexray_name") || "User";
+                document.getElementById('user-role').innerText = sessionStorage.getItem("cortexray_role") || "Staff";
+            } else {
+                document.getElementById('login-section').classList.remove('hidden');
+                document.getElementById('dashboard-section').classList.add('hidden');
+                document.getElementById('nav-user-info').classList.add('hidden');
+            }
+        }
+
+        async function fetchWithAuth(url, options = {}) {
+            const token = sessionStorage.getItem("cortexray_token");
+            if (!options.headers) options.headers = {};
+            if (token) {
+                options.headers['Authorization'] = `Bearer ${token}`;
+            }
+            const response = await fetch(url, options);
+            if (response.status === 401) {
+                sessionStorage.removeItem("cortexray_token");
+                checkAuth();
+                throw new Error("Session expired. Please login again.");
+            }
+            if (response.status === 403) {
+                throw new Error("Access denied.");
+            }
+            return response;
+        }
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('login-error');
+            const submitBtn = e.target.querySelector('button');
             
-            const name = document.getElementById('fullName').value;
-            const age = parseInt(document.getElementById('patientAge').value);
-            const gender = document.getElementById('patientGender').value;
+            errorDiv.classList.add('hidden');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Logging in...";
             
-            // Build comorbidities list
-            const comorbidities = [];
-            if (document.getElementById('comorbOsteo').checked) comorbidities.push('Osteoporosis');
-            if (document.getElementById('comorbDiab').checked) comorbidities.push('Diabetes');
-
-            showLoading(true);
             try {
-                const response = await fetch('/patients/', {
+                const formData = new URLSearchParams();
+                formData.append('username', email);
+                formData.append('password', password);
+
+                const response = await fetch(`${API_BASE}/auth/login`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        full_name: name,
-                        age: age,
-                        gender: gender,
-                        comorbidities: comorbidities
-                    })
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
                 });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.detail || 'Failed to register patient');
-                }
-
-                const patient = await response.json();
-                activePatientID = patient.id;
                 
-                // Show Patient UUID Box
-                activePatientIDText.innerHTML = `<a href="/history?patient_id=${activePatientID}" style="color: var(--primary-color); text-decoration: underline;">${activePatientID}</a>`;
-                patientIDBox.style.display = 'block';
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.detail || "Login failed");
                 
-                // Enable Upload button if file is selected
-                checkUploadReady();
-                alert(`Patient ${patient.full_name} registered successfully!`);
+                sessionStorage.setItem("cortexray_token", data.access_token);
+                sessionStorage.setItem("cortexray_name", data.user?.full_name || email.split('@')[0]);
+                sessionStorage.setItem("cortexray_role", data.user?.role || "Doctor");
+                
+                checkAuth();
             } catch (err) {
-                alert(`Error: ${err.message}`);
+                errorDiv.innerText = err.message;
+                errorDiv.classList.remove('hidden');
             } finally {
-                showLoading(false);
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Login";
             }
         });
 
-        // 2. Drag and drop file upload event bindings
-        dropZone.addEventListener('click', () => fileInput.click());
-        
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('dragover');
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            sessionStorage.removeItem("cortexray_token");
+            sessionStorage.removeItem("cortexray_name");
+            sessionStorage.removeItem("cortexray_role");
+            checkAuth();
         });
 
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('dragover');
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const msgDiv = document.getElementById('register-msg');
+            const submitBtn = e.target.querySelector('button');
+            msgDiv.className = 'hidden';
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Registering...";
+
+            const payload = {
+                full_name: document.getElementById('patient-name').value,
+                age: parseInt(document.getElementById('patient-age').value),
+                gender: document.getElementById('patient-gender').value,
+                comorbidities: []
+            };
+
+            if (document.getElementById('comorb-osteo').checked) payload.comorbidities.push("Osteoporosis");
+            if (document.getElementById('comorb-diabetes').checked) payload.comorbidities.push("Diabetes");
+
+            try {
+                const response = await fetchWithAuth(`${API_BASE}/patients/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.detail || "Registration failed");
+                
+                currentPatientId = data.id || data.patient_id;
+                msgDiv.innerText = `Successfully registered: ${payload.full_name}`;
+                msgDiv.className = 'msg-success';
+                
+                const currentLabel = document.getElementById('current-patient-label');
+                currentLabel.innerHTML = `<strong>Active Patient:</strong> ${payload.full_name}`;
+                currentLabel.style.color = "var(--text-dark)";
+                
+                document.getElementById('btn-analyze').disabled = !selectedFile;
+                
+                // Clear form
+                e.target.reset();
+            } catch (err) {
+                msgDiv.innerText = err.message;
+                msgDiv.className = 'msg-error';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Register Patient";
+            }
         });
 
-        dropZone.addEventListener('drop', (e) => {
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('file-input');
+        const fileNameDisplay = document.getElementById('file-name');
+        const btnAnalyze = document.getElementById('btn-analyze');
+
+        dropArea.addEventListener('click', () => fileInput.click());
+        dropArea.addEventListener('dragover', (e) => { e.preventDefault(); dropArea.classList.add('dragover'); });
+        dropArea.addEventListener('dragleave', () => dropArea.classList.remove('dragover'));
+        dropArea.addEventListener('drop', (e) => {
             e.preventDefault();
-            dropZone.classList.remove('dragover');
-            if (e.dataTransfer.files.length > 0) {
+            dropArea.classList.remove('dragover');
+            if (e.dataTransfer.files.length) {
                 handleFileSelect(e.dataTransfer.files[0]);
             }
         });
-
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                handleFileSelect(e.target.files[0]);
-            }
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length) handleFileSelect(fileInput.files[0]);
         });
 
         function handleFileSelect(file) {
-            if (!file.type.match('image.*')) {
-                alert('Please select a valid image file (PNG/JPG)');
-                return;
-            }
+            if (!file.type.startsWith('image/')) return;
             selectedFile = file;
-            selectedFilename.textContent = file.name;
-            selectedFilename.style.display = 'block';
-            checkUploadReady();
+            fileNameDisplay.innerText = file.name;
+            fileNameDisplay.classList.remove('hidden');
+            btnAnalyze.disabled = !currentPatientId;
         }
 
-        function checkUploadReady() {
-            if (activePatientID && selectedFile) {
-                analyzeBtn.disabled = false;
-            } else {
-                analyzeBtn.disabled = true;
-            }
-        }
-
-        // 3. Scan analysis submission calling POST /scan/upload
-        analyzeBtn.addEventListener('click', async () => {
-            if (!activePatientID || !selectedFile) return;
+        btnAnalyze.addEventListener('click', async () => {
+            if (!selectedFile || !currentPatientId) return;
+            
+            const errorDiv = document.getElementById('upload-error');
+            errorDiv.classList.add('hidden');
+            document.getElementById('btn-analyze').classList.add('hidden');
+            dropArea.classList.add('hidden');
+            document.getElementById('loading-spinner').classList.remove('hidden');
 
             const formData = new FormData();
-            formData.append('patient_id', activePatientID);
+            formData.append('patient_id', currentPatientId);
             formData.append('file', selectedFile);
 
-            showLoading(true);
-            resultsPanel.style.display = 'none'; // Hide former results
-
             try {
-                const response = await fetch('/scan/upload', {
+                const response = await fetchWithAuth(`${API_BASE}/scan/upload`, {
                     method: 'POST',
                     body: formData
                 });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.detail || 'Diagnostic analysis failed');
-                }
-
-                const result = await response.json();
-                displayResults(result);
+                
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.detail || "Analysis failed");
+                
+                showResults(data);
             } catch (err) {
-                alert(`Error during scan analysis: ${err.message}`);
+                errorDiv.innerText = err.message;
+                errorDiv.classList.remove('hidden');
+                document.getElementById('btn-analyze').classList.remove('hidden');
+                dropArea.classList.remove('hidden');
             } finally {
-                showLoading(false);
+                document.getElementById('loading-spinner').classList.add('hidden');
             }
         });
 
-        // 4. Render diagnostic outputs into DOM
-        function displayResults(data) {
-            const fractureBadge = document.getElementById('fractureBadge');
-            const severityBadge = document.getElementById('severityBadge');
-            const confidenceVal = document.getElementById('confidenceVal');
-            const predictedBone = document.getElementById('predictedBone');
-            const restDuration = document.getElementById('restDuration');
-            const castType = document.getElementById('castType');
-            const plasterReq = document.getElementById('plasterReq');
-            const weightBearing = document.getElementById('weightBearing');
-            const pathwayBadge = document.getElementById('pathwayBadge');
+        function showResults(data) {
+            document.getElementById('upload-panel').classList.add('hidden');
+            document.getElementById('results-panel').classList.remove('hidden');
             
-            const originalImg = document.getElementById('originalImg');
-            const heatmapImg = document.getElementById('heatmapImg');
+            currentScanId = data.scan_id || data.id;
 
-            // Set Fracture detected status
-            if (data.fracture_detected) {
-                fractureBadge.textContent = "Fracture Detected";
-                fractureBadge.className = "badge badge-danger";
+            const originalPath = data.file_path || data.image_path;
+            const heatmapPath = data.heatmap_path;
+
+            document.getElementById('res-img-original').src = originalPath ? `${API_BASE}/${originalPath}` : '';
+            if (heatmapPath) {
+                document.getElementById('res-img-heatmap').src = `${API_BASE}/${heatmapPath}`;
+                document.getElementById('res-img-heatmap').classList.remove('hidden');
+                document.getElementById('res-no-heatmap').classList.add('hidden');
             } else {
-                fractureBadge.textContent = "No Fracture Detected";
-                fractureBadge.className = "badge badge-success";
+                document.getElementById('res-img-heatmap').classList.add('hidden');
+                document.getElementById('res-no-heatmap').classList.remove('hidden');
             }
 
-            // Set Severity badge and color coding
-            severityBadge.textContent = data.severity;
-            if (data.severity.toLowerCase() === 'normal') {
-                severityBadge.className = "badge badge-success";
-            } else if (['hairline', 'simple'].includes(data.severity.toLowerCase())) {
-                severityBadge.className = "badge badge-warning";
+            const fractureDetected = data.fracture_detected || data.prediction === 1;
+            const badgeFracture = document.getElementById('res-badge-fracture');
+            badgeFracture.innerText = fractureDetected ? "FRACTURE DETECTED" : "NO FRACTURE";
+            badgeFracture.className = fractureDetected ? "badge badge-large badge-red" : "badge badge-large badge-green";
+
+            document.getElementById('res-region').innerText = data.bone_region || "Unknown";
+            document.getElementById('res-confidence').innerText = `${(data.confidence * 100).toFixed(1)}%`;
+            document.getElementById('res-ai-message').innerText = data.ai_message || "Analysis complete.";
+
+            const flagBadge = document.getElementById('res-flag');
+            const flag = data.confidence_flag || "clear";
+            if (flag === "clear") {
+                flagBadge.innerText = "CLEAR";
+                flagBadge.className = "badge badge-green";
+            } else if (flag === "low_confidence") {
+                flagBadge.innerText = "LOW CONFIDENCE";
+                flagBadge.className = "badge badge-amber";
             } else {
-                severityBadge.className = "badge badge-danger";
+                flagBadge.innerText = "INCONCLUSIVE";
+                flagBadge.className = "badge badge-red";
             }
 
-            // Set meta-items values
-            confidenceVal.textContent = `${Math.round(data.severity_confidence * 100)}%`;
-            predictedBone.textContent = data.bone_affected.replace('_', ' ').toUpperCase();
+            const progCard = document.getElementById('prognosis-card');
+            const btnReport = document.getElementById('btn-download-report');
             
-            if (data.rest_weeks_min === 0 && data.rest_weeks_max === 0) {
-                restDuration.textContent = "0 weeks (Full Recovery)";
+            if (flag === "clear" && data.prognosis) {
+                progCard.classList.remove('hidden');
+                document.getElementById('prog-rest').innerText = `${data.prognosis.rest_weeks_min}–${data.prognosis.rest_weeks_max} weeks`;
+                document.getElementById('prog-cast').innerText = data.prognosis.cast_type || "None";
+                document.getElementById('prog-plaster').innerText = data.prognosis.plaster_required ? "Yes" : "No";
+                document.getElementById('prog-weight').innerText = data.prognosis.weight_bearing_status || "Full";
+                
+                const refBadge = document.getElementById('prog-referral');
+                if (data.prognosis.referral === "SURGICAL") {
+                    refBadge.innerText = "SURGICAL";
+                    refBadge.className = "badge badge-red";
+                } else {
+                    refBadge.innerText = "CONSERVATIVE";
+                    refBadge.className = "badge badge-green";
+                }
             } else {
-                restDuration.textContent = `${data.rest_weeks_min} - ${data.rest_weeks_max} weeks`;
+                progCard.classList.add('hidden');
             }
-            
-            castType.textContent = data.cast_type;
-            plasterReq.textContent = data.plaster_required ? "Yes (Rigid Casting)" : "No (Soft splinting / Sling)";
-            weightBearing.textContent = data.weight_bearing_status;
 
-            // Set Pathway badge
-            pathwayBadge.textContent = data.referral_flag;
-            if (data.referral_flag.toLowerCase() === 'conservative') {
-                pathwayBadge.className = "badge badge-primary";
+            if (flag === "inconclusive") {
+                btnReport.classList.add('hidden');
             } else {
-                pathwayBadge.className = "badge badge-danger";
+                btnReport.classList.remove('hidden');
             }
-
-            // Render original image & Grad-CAM heatmap
-            originalImg.src = `/${data.original_file_path}`;
-            heatmapImg.src = data.heatmap_url ? data.heatmap_url : '';
-
-            // Display panel
-            resultsPanel.style.display = 'block';
-            resultsPanel.scrollIntoView({ behavior: 'smooth' });
         }
 
-        function showLoading(show) {
-            loadingOverlay.style.display = show ? 'flex' : 'none';
-        }
+        document.getElementById('btn-new-scan').addEventListener('click', () => {
+            selectedFile = null;
+            fileNameDisplay.classList.add('hidden');
+            document.getElementById('results-panel').classList.add('hidden');
+            document.getElementById('upload-panel').classList.remove('hidden');
+            dropArea.classList.remove('hidden');
+            btnAnalyze.classList.remove('hidden');
+            btnAnalyze.disabled = true;
+        });
+
+        document.getElementById('btn-download-report').addEventListener('click', async () => {
+            if (!currentScanId) return;
+            const btn = document.getElementById('btn-download-report');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Downloading...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetchWithAuth(`${API_BASE}/scan/${currentScanId}/report`);
+                if (!response.ok) throw new Error("Report generation failed");
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `CortexRay_Report_${currentScanId}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            } catch (err) {
+                const errorDiv = document.getElementById('upload-error');
+                errorDiv.innerText = err.message;
+                errorDiv.classList.remove('hidden');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
+
+        checkAuth();
     </script>
 </body>
 </html>

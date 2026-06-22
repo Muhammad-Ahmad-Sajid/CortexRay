@@ -3,452 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient History - Bone Fracture Diagnostics</title>
-    <link rel="stylesheet" href="/templates/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>CortexRay - Patient History</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-
-    <!-- Loading Spinner Overlay -->
-    <div id="loadingOverlay" class="spinner-overlay">
-        <div class="spinner"></div>
-    </div>
-
-    <!-- Fullscreen Heatmap Modal -->
-    <div id="heatmapModal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="modal-close" id="modalClose">&times;</span>
-            <img id="modalImg" src="" alt="Fullscreen Grad-CAM Heatmap">
-            <div class="modal-title" id="modalTitle">Grad-CAM Explanation Heatmap</div>
+    <nav class="navbar">
+        <div class="nav-brand">&#x1F9B4; CortexRay</div>
+        <div class="nav-right hidden" id="nav-user-info">
+            <span id="user-name"></span>
+            <span id="user-role" class="role-badge"></span>
+            <button id="btn-logout" class="btn-logout">Logout</button>
         </div>
-    </div>
+    </nav>
 
     <div class="container">
-        <!-- Dashboard Navigation Header -->
-        <header>
-            <h1><i class="fa-solid fa-file-medical"></i> Fracture diagnostics & prognosis</h1>
-            <div class="nav-links">
-                <a href="/"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-                <a href="/history" class="active"><i class="fa-solid fa-clock-rotate-left"></i> Patient History</a>
+        <!-- LOGIN SECTION -->
+        <section id="login-section" class="hidden">
+            <div class="card login-card">
+                <h2>&#x1F9B4; CortexRay Login</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <div id="login-error" class="msg-error hidden"></div>
+                </form>
             </div>
-        </header>
+        </section>
 
-        <!-- Search Bar Section -->
-        <div class="search-bar">
-            <input type="text" id="patientSearchInput" class="form-control" placeholder="Enter Patient ID (UUID) to search history..." required>
-            <button id="searchBtn" class="btn btn-primary" style="width: auto;"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
-        </div>
+        <!-- HISTORY SECTION -->
+        <section id="history-section" class="hidden">
+            <div class="history-controls">
+                <a href="/" id="link-dashboard" style="color: var(--primary-color); font-weight: 500; display: inline-block; margin-bottom: 1rem; text-decoration: none;">&larr; Back to Dashboard</a>
+                <div class="card" style="display: flex; gap: 1rem; align-items: flex-end; margin-bottom: 1rem;">
+                    <div class="form-group" style="margin-bottom: 0; flex-grow: 1;">
+                        <label for="search-patient-id">Patient ID</label>
+                        <input type="text" id="search-patient-id" class="form-control" placeholder="Enter Patient ID (e.g. 1)">
+                    </div>
+                    <button id="btn-search" class="btn btn-primary" style="width: auto;">Search History</button>
+                </div>
+                <div id="search-error" class="msg-error hidden"></div>
+            </div>
 
-        <!-- Patient Info Card -->
-        <div id="patientCard" class="patient-card">
-            <h3><i class="fa-solid fa-user-doctor"></i> Patient Profile</h3>
-            <div class="patient-details">
-                <div><strong>Full Name:</strong> <span id="patientName">-</span></div>
-                <div><strong>Age:</strong> <span id="patientAge">-</span></div>
-                <div><strong>Gender:</strong> <span id="patientGender">-</span></div>
-                <div><strong>Comorbidities:</strong> <span id="patientComorbidities">-</span></div>
+            <div id="patient-info" class="card hidden">
+                <h2 id="hist-patient-name" style="color: var(--primary-color);"></h2>
+                <div style="color: var(--text-light); margin-bottom: 1rem; font-weight: 500;">
+                    <span id="hist-patient-age"></span> yrs | <span id="hist-patient-gender"></span>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <strong>Comorbidities:</strong> <span id="hist-patient-comorb"></span>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <div style="background: var(--bg-color); padding: 1.5rem 1rem; border-radius: 4px; flex: 1; text-align: center; border: 1px solid var(--border-color);">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color); line-height: 1;" id="stat-total">0</div>
+                        <div style="color: var(--text-light); font-size: 0.875rem; margin-top: 0.5rem; font-weight: 500;">Total Scans</div>
+                    </div>
+                    <div style="background: var(--bg-color); padding: 1.5rem 1rem; border-radius: 4px; flex: 1; text-align: center; border: 1px solid var(--border-color);">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: var(--danger-red); line-height: 1;" id="stat-fractures">0</div>
+                        <div style="color: var(--text-light); font-size: 0.875rem; margin-top: 0.5rem; font-weight: 500;">Fractures Detected</div>
+                    </div>
+                    <div style="background: var(--bg-color); padding: 1.5rem 1rem; border-radius: 4px; flex: 1; text-align: center; border: 1px solid var(--border-color);">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: var(--warning-amber); line-height: 1;" id="stat-surgical">0</div>
+                        <div style="color: var(--text-light); font-size: 0.875rem; margin-top: 0.5rem; font-weight: 500;">Surgical Referrals</div>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <!-- Stats Summary Row -->
-        <div id="statsRow" class="stats-row">
-            <div class="stat-card">
-                <div class="num" id="totalScansCount">0</div>
-                <div class="label">Total Scans</div>
+            <h3 style="margin-bottom: 1rem; color: var(--text-dark);">Scan History</h3>
+            <div id="scan-list">
+                <!-- Scans injected here -->
+                <div class="card" style="text-align: center; color: var(--text-light); padding: 3rem;">Enter a Patient ID and click search to view scan history.</div>
             </div>
-            <div class="stat-card">
-                <div class="num" id="recentDiagnosis" style="font-size: 20px; padding: 5px 0;">N/A</div>
-                <div class="label">Most Recent Diagnosis</div>
-            </div>
-            <div class="stat-card">
-                <div class="num" id="surgicalReferralsCount">0</div>
-                <div class="label">Surgical Referrals</div>
-            </div>
-        </div>
+        </section>
+    </div>
 
-        <!-- Scan History Section -->
-        <div id="historySection" class="history-section">
-            <h2><i class="fa-solid fa-notes-medical"></i> Historical Scans</h2>
-            <div id="scanHistoryContainer">
-                <!-- Scan Cards will be inserted here dynamically -->
-            </div>
-        </div>
-        
-        <!-- Empty / No Data State -->
-        <div id="noDataState" style="text-align: center; padding: 40px; color: var(--dark-gray); display: none;">
-            <i class="fa-solid fa-folder-open" style="font-size: 48px; margin-bottom: 15px; display: block;"></i>
-            No history found. Enter a valid patient UUID to view clinical records.
+    <!-- FULLSCREEN MODAL -->
+    <div id="heatmap-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="modal-close" class="modal-close">&times;</button>
+            <img id="modal-image" src="" alt="Heatmap Fullscreen">
         </div>
     </div>
 
-    <!-- Frontend Scripting Logic -->
     <script>
-        // DOM Elements
-        const patientSearchInput = document.getElementById('patientSearchInput');
-        const searchBtn = document.getElementById('searchBtn');
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const patientCard = document.getElementById('patientCard');
-        const statsRow = document.getElementById('statsRow');
-        const historySection = document.getElementById('historySection');
-        const scanHistoryContainer = document.getElementById('scanHistoryContainer');
-        const noDataState = document.getElementById('noDataState');
+        const API_BASE = "http://localhost:8000";
 
-        const patientName = document.getElementById('patientName');
-        const patientAge = document.getElementById('patientAge');
-        const patientGender = document.getElementById('patientGender');
-        const patientComorbidities = document.getElementById('patientComorbidities');
-
-        const totalScansCount = document.getElementById('totalScansCount');
-        const recentDiagnosis = document.getElementById('recentDiagnosis');
-        const surgicalReferralsCount = document.getElementById('surgicalReferralsCount');
-
-        const heatmapModal = document.getElementById('heatmapModal');
-        const modalImg = document.getElementById('modalImg');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalClose = document.getElementById('modalClose');
-
-        // Modal event listeners
-        modalClose.addEventListener('click', closeModal);
-        heatmapModal.addEventListener('click', (e) => {
-            if (e.target === heatmapModal) closeModal();
-        });
-
-        function openModal(imgSrc, title) {
-            modalImg.src = imgSrc;
-            modalTitle.textContent = title;
-            heatmapModal.style.display = 'flex';
+        function checkAuth() {
+            const token = sessionStorage.getItem("cortexray_token");
+            if (token) {
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('history-section').classList.remove('hidden');
+                document.getElementById('nav-user-info').classList.remove('hidden');
+                document.getElementById('user-name').innerText = sessionStorage.getItem("cortexray_name") || "User";
+                document.getElementById('user-role').innerText = sessionStorage.getItem("cortexray_role") || "Staff";
+            } else {
+                document.getElementById('login-section').classList.remove('hidden');
+                document.getElementById('history-section').classList.add('hidden');
+                document.getElementById('nav-user-info').classList.add('hidden');
+            }
         }
 
-        function closeModal() {
-            heatmapModal.style.display = 'none';
-            modalImg.src = '';
+        async function fetchWithAuth(url, options = {}) {
+            const token = sessionStorage.getItem("cortexray_token");
+            if (!options.headers) options.headers = {};
+            if (token) {
+                options.headers['Authorization'] = `Bearer ${token}`;
+            }
+            const response = await fetch(url, options);
+            if (response.status === 401) {
+                sessionStorage.removeItem("cortexray_token");
+                checkAuth();
+                throw new Error("Session expired. Please login again.");
+            }
+            if (response.status === 403) {
+                throw new Error("Access denied.");
+            }
+            return response;
         }
 
-        function showLoading(show) {
-            loadingOverlay.style.display = show ? 'flex' : 'none';
-        }
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('login-error');
+            const submitBtn = e.target.querySelector('button');
+            
+            errorDiv.classList.add('hidden');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Logging in...";
+            
+            try {
+                const formData = new URLSearchParams();
+                formData.append('username', email);
+                formData.append('password', password);
 
-        // Search trigger on button click
-        searchBtn.addEventListener('click', performSearch);
-
-        // Search trigger on Enter key
-        patientSearchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                performSearch();
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.detail || "Login failed");
+                sessionStorage.setItem("cortexray_token", data.access_token);
+                sessionStorage.setItem("cortexray_name", data.user?.full_name || email.split('@')[0]);
+                sessionStorage.setItem("cortexray_role", data.user?.role || "Doctor");
+                checkAuth();
+            } catch (err) {
+                errorDiv.innerText = err.message;
+                errorDiv.classList.remove('hidden');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Login";
             }
         });
 
-        // Check for patient_id in URL query parameter on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const patientIdParam = urlParams.get('patient_id');
-            if (patientIdParam) {
-                patientSearchInput.value = patientIdParam;
-                performSearch();
-            }
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            sessionStorage.removeItem("cortexray_token");
+            checkAuth();
         });
 
-        // Main Search Action calling GET /patients/{id}/history
-        async function performSearch() {
-            const patientIdVal = patientSearchInput.value.trim();
-            if (!patientIdVal) {
-                alert('Please enter a valid Patient ID.');
-                return;
-            }
+        document.getElementById('btn-search').addEventListener('click', async () => {
+            const patientId = document.getElementById('search-patient-id').value.trim();
+            if (!patientId) return;
 
-            // Simple validation of UUID shape (e.g., 36 chars or similar)
-            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-            if (!uuidRegex.test(patientIdVal)) {
-                alert('Please enter a valid UUID format (e.g., xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).');
-                return;
-            }
+            const errorDiv = document.getElementById('search-error');
+            const btnSearch = document.getElementById('btn-search');
+            errorDiv.classList.add('hidden');
+            const scanList = document.getElementById('scan-list');
+            scanList.innerHTML = '<div class="loading-container"><div class="spinner"></div><div>Loading history...</div></div>';
+            document.getElementById('patient-info').classList.add('hidden');
 
-            showLoading(true);
-            // Hide panels initially
-            patientCard.style.display = 'none';
-            statsRow.style.display = 'none';
-            historySection.style.display = 'none';
-            noDataState.style.display = 'none';
-            scanHistoryContainer.innerHTML = '';
+            btnSearch.disabled = true;
+            btnSearch.innerText = "Searching...";
 
             try {
-                const response = await fetch(`/patients/${patientIdVal}/history`);
-                if (response.status === 404) {
-                    noDataState.style.display = 'block';
-                    noDataState.innerHTML = `
-                        <i class="fa-solid fa-user-slash" style="font-size: 48px; margin-bottom: 15px; display: block;"></i>
-                        Patient record with ID <strong>${patientIdVal}</strong> not found.
-                    `;
-                    return;
-                }
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.detail || 'Failed to fetch patient history');
-                }
-
+                const response = await fetchWithAuth(`${API_BASE}/patients/${patientId}/history`);
                 const data = await response.json();
-                renderPatientHistory(data);
-            } catch (err) {
-                alert(`Error: ${err.message}`);
-                noDataState.style.display = 'block';
-                noDataState.textContent = `Error loading patient history: ${err.message}`;
-            } finally {
-                showLoading(false);
-            }
-        }
+                if (!response.ok) throw new Error(data.detail || "Failed to load patient history");
 
-        // Render Patient History Data
-        function renderPatientHistory(data) {
-            // 1. Render Patient Card
-            patientName.textContent = data.full_name;
-            patientAge.textContent = data.age;
-            patientGender.textContent = data.gender;
-            patientComorbidities.textContent = data.comorbidities && data.comorbidities.length > 0 
-                ? data.comorbidities.join(', ') 
-                : 'None';
-            patientCard.style.display = 'block';
+                renderHistory(data);
+            } catch (err) {
+                errorDiv.innerText = err.message;
+                errorDiv.classList.remove('hidden');
+                scanList.innerHTML = '';
+            } finally {
+                btnSearch.disabled = false;
+                btnSearch.innerText = "Search History";
+            }
+        });
+
+        function renderHistory(data) {
+            document.getElementById('patient-info').classList.remove('hidden');
+            document.getElementById('hist-patient-name').innerText = data.full_name || "Unknown Patient";
+            document.getElementById('hist-patient-age').innerText = data.age || "N/A";
+            document.getElementById('hist-patient-gender').innerText = data.gender || "N/A";
+            document.getElementById('hist-patient-comorb').innerText = (data.comorbidities && data.comorbidities.length > 0) ? data.comorbidities.join(', ') : "None";
 
             const scans = data.scans || [];
-
-            // 2. Render Stat Cards
-            totalScansCount.textContent = scans.length;
             
-            // Get most recent scan prediction
-            let mostRecentDiagStr = 'N/A';
-            let surgicalCount = 0;
+            document.getElementById('stat-total').innerText = scans.length;
+            document.getElementById('stat-fractures').innerText = scans.filter(s => s.fracture_detected || s.prediction === 1).length;
+            document.getElementById('stat-surgical').innerText = scans.filter(s => s.prognosis && s.prognosis.referral === "SURGICAL").length;
 
-            if (scans.length > 0) {
-                // Sort scans by date descending (most recent first)
-                scans.sort((a, b) => new Date(b.upload_timestamp) - new Date(a.upload_timestamp));
-                
-                const latestScan = scans[0];
-                if (latestScan.prediction) {
-                    if (latestScan.prediction.fracture_detected) {
-                        mostRecentDiagStr = latestScan.prediction.severity.toUpperCase();
-                    } else {
-                        mostRecentDiagStr = 'NORMAL';
-                    }
-                }
+            const scanList = document.getElementById('scan-list');
+            scanList.innerHTML = '';
 
-                // Count surgical referrals
-                scans.forEach(scan => {
-                    if (scan.prediction && scan.prediction.prognosis) {
-                        if (scan.prediction.prognosis.referral_flag.toLowerCase() === 'surgical') {
-                            surgicalCount++;
-                        }
-                    }
-                });
-            }
-
-            recentDiagnosis.textContent = mostRecentDiagStr;
-            // Apply text color to recent diagnosis
-            if (mostRecentDiagStr === 'NORMAL') {
-                recentDiagnosis.style.color = 'var(--success-color)';
-            } else if (['HAIRLINE', 'SIMPLE'].includes(mostRecentDiagStr)) {
-                recentDiagnosis.style.color = 'var(--warning-color)';
-            } else if (mostRecentDiagStr !== 'N/A') {
-                recentDiagnosis.style.color = 'var(--danger-color)';
-            } else {
-                recentDiagnosis.style.color = 'var(--text-color)';
-            }
-
-            surgicalReferralsCount.textContent = surgicalCount;
-            statsRow.style.display = 'grid';
-
-            // 3. Render Scan Cards
             if (scans.length === 0) {
-                scanHistoryContainer.innerHTML = `
-                    <div style="text-align: center; padding: 30px; color: var(--dark-gray); background-color: var(--light-gray); border: 1px dashed var(--border-color); border-radius: 4px;">
-                        No scan history recorded for this patient.
-                    </div>
-                `;
-            } else {
-                scans.forEach(scan => {
-                    const card = createScanCard(scan);
-                    scanHistoryContainer.appendChild(card);
-                });
-            }
-            historySection.style.display = 'block';
-        }
-
-        // Create a single scan card DOM element
-        function createScanCard(scan) {
-            const scanDateFormatted = new Date(scan.upload_timestamp).toLocaleString();
-            const boneFormatted = scan.bone_affected.replace('_', ' ').toUpperCase();
-            
-            const pred = scan.prediction || {};
-            const prog = pred.prognosis || {};
-
-            const card = document.createElement('div');
-            card.className = 'scan-card';
-
-            // Set up severity badge color
-            let severityBadgeHtml = '';
-            let fractureBadgeHtml = '';
-            if (pred.fracture_detected) {
-                fractureBadgeHtml = `<span class="badge badge-danger">Fracture Detected</span>`;
-                const sev = (pred.severity || 'hairline').toLowerCase();
-                let sevClass = 'badge-danger';
-                if (['hairline', 'simple'].includes(sev)) {
-                    sevClass = 'badge-warning';
-                }
-                severityBadgeHtml = `<span class="badge ${sevClass}">${pred.severity}</span>`;
-            } else {
-                fractureBadgeHtml = `<span class="badge badge-success">No Fracture</span>`;
-                severityBadgeHtml = `<span class="badge badge-success">NORMAL</span>`;
-            }
-
-            // Pathway (referral flag)
-            let pathwayBadgeHtml = 'N/A';
-            if (prog.referral_flag) {
-                const ref = prog.referral_flag.toLowerCase();
-                const pathClass = ref === 'conservative' ? 'badge-primary' : 'badge-danger';
-                pathwayBadgeHtml = `<span class="badge ${pathClass}">${prog.referral_flag}</span>`;
-            }
-
-            // Clinician override display if any
-            let overrideHtml = '';
-            if (prog.clinician_override) {
-                overrideHtml = `
-                    <div style="margin-top: 15px; padding: 12px; background-color: rgba(29, 111, 164, 0.05); border-left: 4px solid var(--primary-color); border-radius: 4px; font-size: 13px;">
-                        <strong><i class="fa-solid fa-user-shield"></i> Clinician Override Applied:</strong>
-                        <div style="margin-top: 4px; color: var(--text-color); font-style: italic;">
-                            "${prog.override_notes || 'No notes provided.'}"
-                        </div>
-                        <div style="margin-top: 6px; font-size: 11px; color: var(--dark-gray);">
-                            Override logged on: ${new Date(prog.override_timestamp).toLocaleString()}
-                        </div>
-                    </div>
-                `;
-            }
-
-            // Check if there's a Grad-CAM heatmap
-            const hasHeatmap = !!pred.heatmap_path;
-            const heatmapUrl = hasHeatmap ? `/${pred.heatmap_path}` : '';
-            const heatmapButtonDisabled = !hasHeatmap ? 'disabled' : '';
-
-            // Construct card body
-            card.innerHTML = `
-                <div class="scan-header">
-                    <div class="scan-date"><i class="fa-regular fa-calendar-days"></i> Uploaded: ${scanDateFormatted}</div>
-                    <div style="display: flex; gap: 8px;">
-                        ${fractureBadgeHtml}
-                        ${severityBadgeHtml}
-                    </div>
-                </div>
-                <div class="scan-body">
-                    <div class="scan-info">
-                        <div class="scan-info-grid">
-                            <div class="meta-item">
-                                <div class="meta-label">Bone Affected</div>
-                                <div class="meta-value">${boneFormatted}</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Severity Confidence</div>
-                                <div class="meta-value">${pred.confidence_score ? Math.round(pred.confidence_score * 100) : 0}%</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Rest Duration</div>
-                                <div class="meta-value">${prog.rest_weeks_min !== undefined ? `${prog.rest_weeks_min} - ${prog.rest_weeks_max} weeks` : 'N/A'}</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Recommended Cast</div>
-                                <div class="meta-value">${prog.cast_type || 'None'}</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Weight-Bearing Instructions</div>
-                                <div class="meta-value">${prog.weight_bearing_status || 'Full weight-bearing'}</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Clinical Pathway</div>
-                                <div class="meta-value">${pathwayBadgeHtml}</div>
-                            </div>
-                        </div>
-                        ${overrideHtml}
-                    </div>
-                    <div class="scan-actions">
-                        <button class="btn btn-primary" onclick="openHeatmapModal('${heatmapUrl}', '${boneFormatted} Scan Heatmap')" ${heatmapButtonDisabled}>
-                            <i class="fa-regular fa-image"></i> View Heatmap
-                        </button>
-                        <button class="btn btn-secondary" onclick="toggleOverrideForm('${prog.id}')" ${!prog.id ? 'disabled' : ''}>
-                            <i class="fa-solid fa-user-pen"></i> Clinician Override
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Clinician Override Form Box -->
-                <div id="overrideBox_${prog.id}" class="override-form-box">
-                    <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--text-color);"><i class="fa-solid fa-user-pen"></i> Enter Prognosis Override Details</h4>
-                    <form id="overrideForm_${prog.id}" onsubmit="submitOverride(event, '${prog.id}')">
-                        <div class="form-group">
-                            <label for="clinician_${prog.id}">Clinician ID / Name</label>
-                            <input type="text" id="clinician_${prog.id}" class="form-control" placeholder="e.g. Dr. Jane Foster" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="notes_${prog.id}">Override Justification Notes</label>
-                            <textarea id="notes_${prog.id}" class="form-control" rows="3" placeholder="Provide clinical justification (minimum 5 characters)..." required minlength="5"></textarea>
-                        </div>
-                        <div style="display: flex; gap: 10px; margin-top: 10px;">
-                            <button type="submit" class="btn btn-primary" style="width: auto; padding: 8px 16px;">Save Override</button>
-                            <button type="button" class="btn btn-secondary" style="width: auto; padding: 8px 16px;" onclick="toggleOverrideForm('${prog.id}')">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            `;
-
-            return card;
-        }
-
-        // Global functions for card action triggers
-        window.openHeatmapModal = function(url, title) {
-            openModal(url, title);
-        };
-
-        window.toggleOverrideForm = function(prognosisId) {
-            const formBox = document.getElementById(`overrideBox_${prognosisId}`);
-            if (!formBox) return;
-            if (formBox.style.display === 'block') {
-                formBox.style.display = 'none';
-            } else {
-                formBox.style.display = 'block';
-            }
-        };
-
-        window.submitOverride = async function(event, prognosisId) {
-            event.preventDefault();
-            const clinicianVal = document.getElementById(`clinician_${prognosisId}`).value.trim();
-            const notesVal = document.getElementById(`notes_${prognosisId}`).value.trim();
-
-            if (!clinicianVal || notesVal.length < 5) {
-                alert("Please provide a valid Clinician ID and notes (min 5 characters).");
+                scanList.innerHTML = '<div class="card" style="text-align: center; color: var(--text-light); padding: 3rem;">No scans found for this patient</div>';
                 return;
             }
 
-            showLoading(true);
-            try {
-                const response = await fetch(`/prognosis/${prognosisId}/override`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        clinician_override: clinicianVal,
-                        override_notes: notesVal
-                    })
-                });
+            scans.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
 
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.detail || 'Failed to submit override.');
+            scans.forEach(scan => {
+                const isFracture = scan.fracture_detected || scan.prediction === 1;
+                const fracBadge = isFracture 
+                    ? `<span class="badge badge-red">FRACTURE DETECTED</span>`
+                    : `<span class="badge badge-green">NO FRACTURE</span>`;
+                
+                let flagClass = "badge-green";
+                let flagText = "CLEAR";
+                if (scan.confidence_flag === "low_confidence") { flagClass = "badge-amber"; flagText = "LOW CONFIDENCE"; }
+                if (scan.confidence_flag === "inconclusive") { flagClass = "badge-red"; flagText = "INCONCLUSIVE"; }
+                const flagBadge = `<span class="badge ${flagClass}">${flagText}</span>`;
+
+                const dateStr = scan.created_at ? new Date(scan.created_at).toLocaleString() : "Unknown date";
+                
+                let progHtml = "";
+                let refBadge = "";
+                if (scan.prognosis) {
+                    progHtml = `<div style="margin-top: 0.5rem;"><strong>Rest:</strong> ${scan.prognosis.rest_weeks_min}-${scan.prognosis.rest_weeks_max} weeks &nbsp;|&nbsp; <strong>Immobilisation:</strong> ${scan.prognosis.cast_type}</div>`;
+                    const rClass = scan.prognosis.referral === "SURGICAL" ? "badge-red" : "badge-green";
+                    refBadge = `<span class="badge ${rClass}">${scan.prognosis.referral}</span>`;
                 }
 
-                alert('Clinician override logged successfully!');
-                // Reload history to reflect changes
-                await performSearch();
+                let dlButton = "";
+                if (scan.confidence_flag !== "inconclusive") {
+                    dlButton = `<button class="btn btn-outline" onclick="downloadReport(${scan.id || scan.scan_id}, this)">&#x1F4E5; Download Report</button>`;
+                }
+
+                const cardHtml = `
+                    <div class="scan-card">
+                        <div class="scan-header">
+                            <div>
+                                <div style="font-weight: 600; font-size: 1.125rem;">${dateStr}</div>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+                                <span class="badge" style="background: #F1F5F9; border: 1px solid #CBD5E1; color: var(--text-dark);">${scan.bone_region || "Unknown"}</span>
+                                ${fracBadge}
+                            </div>
+                        </div>
+                        <div class="details-grid" style="margin-bottom: 0;">
+                            <div class="detail-item">
+                                <span class="detail-label">Confidence</span>
+                                <span class="detail-value">${(scan.confidence * 100).toFixed(1)}%</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Flag</span>
+                                ${flagBadge}
+                            </div>
+                        </div>
+                        <div style="font-size: 0.875rem;">
+                            ${progHtml}
+                            ${refBadge ? `<div style="margin-top: 0.5rem;"><strong>Referral:</strong> ${refBadge}</div>` : ''}
+                        </div>
+                        <div class="scan-actions">
+                            <button class="btn btn-primary" style="width: auto;" onclick="openHeatmap('${scan.heatmap_path}')">View Heatmap</button>
+                            ${dlButton}
+                        </div>
+                        <div id="dl-error-${scan.id || scan.scan_id}" class="msg-error hidden" style="margin-top: 1rem;"></div>
+                    </div>
+                `;
+                scanList.innerHTML += cardHtml;
+            });
+        }
+
+        const modal = document.getElementById('heatmap-modal');
+        window.openHeatmap = (path) => {
+            if (!path || path === 'null' || path === 'undefined') return;
+            document.getElementById('modal-image').src = `${API_BASE}/${path}`;
+            modal.classList.remove('hidden');
+        };
+
+        document.getElementById('modal-close').addEventListener('click', () => modal.classList.add('hidden'));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.add('hidden');
+        });
+
+        window.downloadReport = async (scanId, btnEl) => {
+            if (!scanId) return;
+            const originalText = btnEl.innerHTML;
+            btnEl.innerHTML = 'Downloading...';
+            btnEl.disabled = true;
+            
+            const errDiv = document.getElementById(`dl-error-${scanId}`);
+            if(errDiv) errDiv.classList.add('hidden');
+
+            try {
+                const response = await fetchWithAuth(`${API_BASE}/scan/${scanId}/report`);
+                if (!response.ok) throw new Error("Report download failed");
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `CortexRay_Report_${scanId}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
             } catch (err) {
-                alert(`Error logging override: ${err.message}`);
+                if(errDiv) {
+                    errDiv.innerText = err.message;
+                    errDiv.classList.remove('hidden');
+                }
             } finally {
-                showLoading(false);
+                btnEl.innerHTML = originalText;
+                btnEl.disabled = false;
             }
         };
+
+        checkAuth();
     </script>
 </body>
 </html>
