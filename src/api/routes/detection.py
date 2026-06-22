@@ -12,17 +12,20 @@ from inference import run_inference
 
 router = APIRouter(prefix="/api/detection", tags=["Fracture Detection"])
 
+
 @router.post("/scan")
 async def detect_fracture(
     request: Request,
     patient_id: str = Form(..., description="UUID string of the patient"),
-    bone_affected: str = Form(..., description="Clinician-designated bone affected (e.g., Radius, Tibia, Femur)"),
+    bone_affected: str = Form(
+        ..., description="Clinician-designated bone affected (e.g., Radius, Tibia, Femur)"
+    ),
     dataset_source: str = Form("uploaded", description="Source: MURA, FracAtlas, or uploaded"),
     file: UploadFile = File(..., description="Grayscale X-ray image (PNG or JPG)"),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
     """
-    Uploads an X-ray scan, delegates prediction and heatmap generation to the 
+    Uploads an X-ray scan, delegates prediction and heatmap generation to the
     inference module, executes the prognosis rules engine, and logs everything to PostgreSQL.
     """
     # 1. Verify patient exists in database
@@ -31,14 +34,13 @@ async def detect_fracture(
     except ValueError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid patient_id format. Must be a UUID."
+            detail="Invalid patient_id format. Must be a UUID.",
         )
 
     patient = db.query(db_models.Patient).filter(db_models.Patient.id == patient_uuid).first()
     if not patient:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Patient with ID {patient_id} not found."
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Patient with ID {patient_id} not found."
         )
 
     # 2. Save uploaded file to the UPLOAD_FOLDER
@@ -50,16 +52,17 @@ async def detect_fracture(
     try:
         with open(saved_file_path, "wb") as buffer:
             import shutil
+
             shutil.copyfileobj(file.file, buffer)
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Could not save file to disk: {e}"
+            detail=f"Could not save file to disk: {e}",
         )
 
     # 3. Create database scan log record
     rel_file_path = f"uploads/{unique_filename}"
-    
+
     # Map dataset source string to enum value
     try:
         ds_source_enum = db_models.DatasetSource(dataset_source)
@@ -71,7 +74,7 @@ async def detect_fracture(
         original_file_path=rel_file_path,
         bone_affected=bone_affected,
         image_quality_flag="Good",
-        dataset_source=ds_source_enum
+        dataset_source=ds_source_enum,
     )
     db.add(new_scan)
     db.flush()  # Populates new_scan.id
@@ -85,7 +88,7 @@ async def detect_fracture(
             os.remove(saved_file_path)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Fracture Model inference execution failed: {e}"
+            detail=f"Fracture Model inference execution failed: {e}",
         )
 
     # Adjust paths returned by generate_heatmap to be relative web URLs
@@ -108,7 +111,7 @@ async def detect_fracture(
         severity=db_severity,
         confidence_score=inference_result.severity_confidence,
         heatmap_path=rel_heatmap_path if rel_heatmap_path else None,
-        model_version="v2.0.0"  # v2 corresponds to the multi-task FractureModel
+        model_version="v2.0.0",  # v2 corresponds to the multi-task FractureModel
     )
     db.add(new_prediction)
     db.flush()  # Populates new_prediction.id
@@ -117,16 +120,18 @@ async def detect_fracture(
     try:
         # Use severity class for prognosis (default to hairline if normal to estimate base metrics,
         # but in a real system we only calculate prognosis if fracture is detected)
-        severity_for_prognosis = inference_result.severity if inference_result.fracture_detected else "hairline"
-        
+        severity_for_prognosis = (
+            inference_result.severity if inference_result.fracture_detected else "hairline"
+        )
+
         prog_data = calculate_prognosis(
             severity=severity_for_prognosis,
             confidence=inference_result.severity_confidence,
             age=patient.age,
             comorbidities=patient.comorbidities,
-            bone_affected=bone_affected  # Use clinician-designated bone affected
+            bone_affected=bone_affected,  # Use clinician-designated bone affected
         )
-        
+
         # If no fracture is detected, reset rest weeks and cast type to reflect normal scan
         if not inference_result.fracture_detected:
             prog_data["rest_weeks_min"] = 0
@@ -144,7 +149,7 @@ async def detect_fracture(
             plaster_required=prog_data["plaster_required"],
             weight_bearing_status=prog_data["weight_bearing_status"],
             referral_flag=db_models.ReferralFlag(prog_data["referral_flag"]),
-            clinician_override=False
+            clinician_override=False,
         )
         db.add(new_prognosis)
     except Exception as e:
@@ -158,7 +163,7 @@ async def detect_fracture(
                 os.remove(abs_heatmap)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Prognosis calculation execution failed: {e}"
+            detail=f"Prognosis calculation execution failed: {e}",
         )
 
     # Commit all database records
@@ -170,12 +175,12 @@ async def detect_fracture(
         "patient": {
             "name": patient.full_name,
             "age": patient.age,
-            "comorbidities": patient.comorbidities
+            "comorbidities": patient.comorbidities,
         },
         "scan": {
             "original_file_path": rel_file_path,
             "bone_affected": bone_affected,
-            "dataset_source": dataset_source
+            "dataset_source": dataset_source,
         },
         "prediction": {
             "prediction_id": new_prediction.id,
@@ -184,7 +189,7 @@ async def detect_fracture(
             "bone_predicted": inference_result.bone_affected,
             "confidence_score": inference_result.severity_confidence,
             "heatmap_path": rel_heatmap_path,
-            "model_version": "v2.0.0"
+            "model_version": "v2.0.0",
         },
         "prognosis": {
             "rest_weeks_min": new_prognosis.rest_weeks_min,
@@ -192,6 +197,6 @@ async def detect_fracture(
             "cast_type": new_prognosis.cast_type,
             "plaster_required": new_prognosis.plaster_required,
             "weight_bearing_status": new_prognosis.weight_bearing_status,
-            "referral_flag": new_prognosis.referral_flag.value
-        }
+            "referral_flag": new_prognosis.referral_flag.value,
+        },
     }

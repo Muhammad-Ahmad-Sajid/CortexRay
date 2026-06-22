@@ -8,6 +8,7 @@ from sqlalchemy.types import TypeDecorator, TEXT
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+
 class SQLiteARRAY(TypeDecorator):
     impl = TEXT
     cache_ok = True
@@ -22,8 +23,10 @@ class SQLiteARRAY(TypeDecorator):
             return []
         return json.loads(value)
 
+
 # Import models
 from src.database.models import Base, Patient
+
 Patient.comorbidities.property.columns[0].type = SQLiteARRAY()
 
 # Create engine and keep connection open
@@ -37,12 +40,7 @@ Base.metadata.create_all(bind=connection)
 
 # Use one session to insert
 db1 = TestingSessionLocal()
-p = Patient(
-    full_name="Alice Wayne",
-    age=32,
-    gender="Female",
-    comorbidities=[]
-)
+p = Patient(full_name="Alice Wayne", age=32, gender="Female", comorbidities=[])
 db1.add(p)
 db1.commit()
 p_id = p.id

@@ -17,7 +17,7 @@ from src.api.routes import auth, records, detection, prognosis
 app = FastAPI(
     title="Bone Fracture Detection & Prognosis API",
     description="Backend API serving PyTorch fracture classification, Grad-CAM overlays, and prognosis rules.",
-    version="1.0.0"
+    version="1.0.0",
 )
 
 # ------------------------------------------------------------------------------
@@ -37,6 +37,7 @@ app.add_middleware(
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = FractureModel(pretrained=False)
 
+
 # Load weights on startup
 @app.on_event("startup")
 def load_ml_model():
@@ -44,21 +45,22 @@ def load_ml_model():
     try:
         if MODEL_CHECKPOINT_PATH.exists():
             checkpoint = torch.load(MODEL_CHECKPOINT_PATH, map_location=device)
-            model.load_state_dict(checkpoint['model_state_dict'])
+            model.load_state_dict(checkpoint["model_state_dict"])
             print(f"[*] PyTorch Model loaded successfully from: {MODEL_CHECKPOINT_PATH}")
         else:
             print(f"[!] Warning: Pretrained checkpoint not found at: {MODEL_CHECKPOINT_PATH}")
             print("[*] Running API with randomly initialized weights for debugging.")
-            
+
         model.to(device)
         model.eval()  # Crucial: set model to evaluation mode
-        
+
         # Save model and device in app state for access in endpoints
         app.state.model = model
         app.state.device = device
         print(f"[*] Model successfully bound to device: {device}")
     except Exception as e:
         print(f"[X] CRITICAL: Failed to load PyTorch model weights: {e}")
+
 
 # ------------------------------------------------------------------------------
 # Static Files & Directory Mounting
@@ -84,6 +86,7 @@ app.include_router(records.router)
 app.include_router(detection.router)
 app.include_router(prognosis.router)
 
+
 # ------------------------------------------------------------------------------
 # Frontend Integration Endpoint
 # ------------------------------------------------------------------------------
@@ -95,10 +98,12 @@ def serve_dashboard():
         return FileResponse(html_path)
     return {
         "message": "Welcome to the Bone Fracture Detection API. Frontend templates folder not found.",
-        "docs_url": "/docs"
+        "docs_url": "/docs",
     }
+
 
 if __name__ == "__main__":
     import uvicorn
+
     # Start uvicorn server on port 8000
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=DEBUG)

@@ -1,6 +1,5 @@
-import os
 import subprocess
-from pathlib import Path
+
 
 def find_git():
     possible_paths = [
@@ -8,7 +7,7 @@ def find_git():
         r"C:\Program Files\Git\cmd\git.exe",
         r"C:\Program Files\Git\bin\git.exe",
         r"C:\Program Files (x86)\Git\bin\git.exe",
-        r"C:\Users\HP\AppData\Local\Programs\Git\cmd\git.exe"
+        r"C:\Users\HP\AppData\Local\Programs\Git\cmd\git.exe",
     ]
     for path in possible_paths:
         try:
@@ -20,6 +19,7 @@ def find_git():
             continue
     print("FOUND_GIT:None")
     return None
+
 
 if __name__ == "__main__":
     find_git()

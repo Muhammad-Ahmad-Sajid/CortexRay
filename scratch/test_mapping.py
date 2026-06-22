@@ -13,18 +13,17 @@ checkpoint = torch.load(checkpoint_path, map_location="cpu")
 state_dict = checkpoint["model_state_dict"]
 
 # Check if it is the old single-head checkpoint
-is_old_checkpoint = "backbone.fc.1.weight" in state_dict and "severity_head.0.weight" not in state_dict
+is_old_checkpoint = (
+    "backbone.fc.1.weight" in state_dict and "severity_head.0.weight" not in state_dict
+)
 print(f"Is old single-head checkpoint: {is_old_checkpoint}")
 
 model = FractureModel(pretrained=False)
 
 if is_old_checkpoint:
     # Dynamically adapt severity_head to match the checkpoint's classification layer
-    model.severity_head = nn.Sequential(
-        nn.Identity(),
-        nn.Linear(2048, 4)
-    )
-    
+    model.severity_head = nn.Sequential(nn.Identity(), nn.Linear(2048, 4))
+
     # Map the keys in state_dict
     new_state_dict = {}
     for k, v in state_dict.items():
@@ -42,7 +41,7 @@ try:
     print("Success loading model!")
     print(f"Missing keys (should not contain backbone layers): {len(missing)}")
     print(f"Unexpected keys: {len(unexpected)}")
-    
+
     # Verify that the severity head is loaded
     # Check if weights are not zero/random
     weight_sum = model.severity_head[1].weight.sum().item()

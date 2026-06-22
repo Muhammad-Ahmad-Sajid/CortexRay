@@ -10,6 +10,7 @@ from src.database import models as db_models
 
 router = APIRouter(prefix="/api/prognosis", tags=["Prognosis Management"])
 
+
 # ------------------------------------------------------------------------------
 # Pydantic Schema for Override Input
 # ------------------------------------------------------------------------------
@@ -20,30 +21,33 @@ class PrognosisOverride(BaseModel):
     plaster_required: Optional[bool] = None
     weight_bearing_status: Optional[str] = Field(None, max_length=100)
     referral_flag: Optional[str] = Field(None, description="'conservative' or 'surgical'")
-    override_notes: str = Field(..., min_length=5, description="Justification for clinical override")
+    override_notes: str = Field(
+        ..., min_length=5, description="Justification for clinical override"
+    )
+
 
 # ------------------------------------------------------------------------------
 # Endpoints
 # ------------------------------------------------------------------------------
 
+
 @router.put("/{prognosis_id}/override")
 def override_prognosis(
-    prognosis_id: UUID,
-    override_in: PrognosisOverride,
-    db: Session = Depends(get_db)
+    prognosis_id: UUID, override_in: PrognosisOverride, db: Session = Depends(get_db)
 ):
     """
     Allows a clinician to manually override recovery prognosis recommendations.
     Logs clinician details, override notes, and updates the database record.
     """
-    prognosis = db.query(db_models.PrognosisResult).filter(
-        db_models.PrognosisResult.id == prognosis_id
-    ).first()
-    
+    prognosis = (
+        db.query(db_models.PrognosisResult)
+        .filter(db_models.PrognosisResult.id == prognosis_id)
+        .first()
+    )
+
     if not prognosis:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Prognosis record not found."
+            status_code=status.HTTP_404_NOT_FOUND, detail="Prognosis record not found."
         )
 
     # Validate referral flag if provided
@@ -54,7 +58,7 @@ def override_prognosis(
         except ValueError:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Invalid referral_flag. Must be 'conservative' or 'surgical'."
+                detail="Invalid referral_flag. Must be 'conservative' or 'surgical'.",
             )
 
     # Apply clinical overrides
@@ -91,6 +95,6 @@ def override_prognosis(
             "referral_flag": prognosis.referral_flag.value,
             "clinician_override": prognosis.clinician_override,
             "override_notes": prognosis.override_notes,
-            "override_timestamp": prognosis.override_timestamp
-        }
+            "override_timestamp": prognosis.override_timestamp,
+        },
     }

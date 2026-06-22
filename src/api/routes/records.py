@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from uuid import UUID
-from typing import List, Dict, Any
+from typing import List
 from pydantic import BaseModel, Field
 from datetime import datetime
 
@@ -9,6 +9,7 @@ from src.database.connection import get_db
 from src.database import models as db_models
 
 router = APIRouter(prefix="/api/records", tags=["Patient Records"])
+
 
 # ------------------------------------------------------------------------------
 # Pydantic Schemas for Input Validation and Serialization
@@ -18,6 +19,7 @@ class PatientCreate(BaseModel):
     age: int = Field(..., ge=0, le=120, example=34)
     gender: str = Field(..., example="Female")
     comorbidities: List[str] = Field(default_factory=list, example=["None"])
+
 
 class PatientOut(BaseModel):
     id: UUID
@@ -30,9 +32,11 @@ class PatientOut(BaseModel):
     class Config:
         from_attributes = True
 
+
 # ------------------------------------------------------------------------------
 # Endpoints
 # ------------------------------------------------------------------------------
+
 
 @router.get("/patients", response_model=List[PatientOut])
 def get_patients(db: Session = Depends(get_db)):
@@ -40,19 +44,17 @@ def get_patients(db: Session = Depends(get_db)):
     patients = db.query(db_models.Patient).all()
     return patients
 
+
 @router.get("/patients/{patient_id}")
 def get_patient_detail(patient_id: UUID, db: Session = Depends(get_db)):
     """
-    Retrieves detailed clinical profile of a patient including their 
+    Retrieves detailed clinical profile of a patient including their
     historical X-ray scans, predictions, and prognosis plans.
     """
     patient = db.query(db_models.Patient).filter(db_models.Patient.id == patient_id).first()
     if not patient:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Patient not found"
-        )
-    
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Patient not found")
+
     # Gather related records
     scans_list = []
     for scan in patient.scans:
@@ -63,9 +65,9 @@ def get_patient_detail(patient_id: UUID, db: Session = Depends(get_db)):
             "bone_affected": scan.bone_affected,
             "image_quality_flag": scan.image_quality_flag,
             "dataset_source": scan.dataset_source.value,
-            "prediction": None
+            "prediction": None,
         }
-        
+
         # If prediction exists
         if scan.prediction:
             pred = scan.prediction
@@ -76,9 +78,9 @@ def get_patient_detail(patient_id: UUID, db: Session = Depends(get_db)):
                 "confidence_score": pred.confidence_score,
                 "heatmap_path": pred.heatmap_path,
                 "model_version": pred.model_version,
-                "prognosis": None
+                "prognosis": None,
             }
-            
+
             # If prognosis exists
             if pred.prognosis:
                 prog = pred.prognosis
@@ -92,9 +94,9 @@ def get_patient_detail(patient_id: UUID, db: Session = Depends(get_db)):
                     "referral_flag": prog.referral_flag.value,
                     "clinician_override": prog.clinician_override,
                     "override_notes": prog.override_notes,
-                    "override_timestamp": prog.override_timestamp
+                    "override_timestamp": prog.override_timestamp,
                 }
-        
+
         scans_list.append(scan_data)
 
     return {
@@ -104,8 +106,9 @@ def get_patient_detail(patient_id: UUID, db: Session = Depends(get_db)):
         "gender": patient.gender,
         "comorbidities": patient.comorbidities,
         "created_at": patient.created_at,
-        "scans": scans_list
+        "scans": scans_list,
     }
+
 
 @router.post("/patients", response_model=PatientOut, status_code=status.HTTP_201_CREATED)
 def create_patient(patient_in: PatientCreate, db: Session = Depends(get_db)):
@@ -114,7 +117,7 @@ def create_patient(patient_in: PatientCreate, db: Session = Depends(get_db)):
         full_name=patient_in.full_name,
         age=patient_in.age,
         gender=patient_in.gender,
-        comorbidities=patient_in.comorbidities
+        comorbidities=patient_in.comorbidities,
     )
     db.add(new_patient)
     db.commit()

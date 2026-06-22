@@ -3,15 +3,18 @@ from pydantic import BaseModel, Field
 
 router = APIRouter(prefix="/api/auth", tags=["Clinician Authentication"])
 
+
 class ClinicianLogin(BaseModel):
     username: str = Field(..., example="doctor_sajid")
     password: str = Field(..., example="securepass123")
+
 
 class ClinicianRegister(BaseModel):
     username: str = Field(..., example="doctor_sajid")
     full_name: str = Field(..., example="Dr. Ahmad Sajid")
     license_number: str = Field(..., example="MC-987654")
     password: str = Field(..., example="securepass123")
+
 
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 def register_clinician(clinician: ClinicianRegister):
@@ -20,8 +23,9 @@ def register_clinician(clinician: ClinicianRegister):
     return {
         "status": "success",
         "message": f"Clinician account for {clinician.full_name} registered successfully.",
-        "username": clinician.username
+        "username": clinician.username,
     }
+
 
 @router.post("/login")
 def login_clinician(credentials: ClinicianLogin):
@@ -35,10 +39,10 @@ def login_clinician(credentials: ClinicianLogin):
             "clinician": {
                 "username": "doctor_sajid",
                 "name": "Dr. Ahmad Sajid",
-                "role": "Clinician"
-            }
+                "role": "Clinician",
+            },
         }
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Invalid credentials. Try doctor_sajid / securepass123."
+        detail="Invalid credentials. Try doctor_sajid / securepass123.",
     )

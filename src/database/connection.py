@@ -14,8 +14,7 @@ load_dotenv(dotenv_path=dotenv_path)
 
 # Retrieve DATABASE_URL from .env
 DATABASE_URL = os.getenv(
-    "DATABASE_URL", 
-    "postgresql://postgres:postgres@localhost:5432/fracture_db"
+    "DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/fracture_db"
 )
 
 # Create engine for connecting to the PostgreSQL server
@@ -37,6 +36,7 @@ except Exception as e:
     print("  3. Configured the correct credentials in your '.env' file.")
     print(f"Error details: {e}")
     print("=" * 80)
+
 
 # Dependency generator to obtain a DB session and clean it up after the request finishes
 def get_db():

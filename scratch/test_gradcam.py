@@ -9,6 +9,7 @@ from gradcam import generate_heatmap
 # Create a dummy image
 import cv2
 import numpy as np
+
 dummy_img_path = "scratch/dummy_test.png"
 cv2.imwrite(dummy_img_path, np.zeros((300, 300), dtype=np.uint8))
 

@@ -502,7 +502,7 @@ async def get_prognosis_overrides(
 ):
     overrides = (
         db.query(db_models.PrognosisResult)
-        .filter(db_models.PrognosisResult.clinician_override == True)
+        .filter(db_models.PrognosisResult.clinician_override is True)
         .all()
     )
     return overrides

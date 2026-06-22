@@ -14,8 +14,7 @@ load_dotenv(dotenv_path=dotenv_path)
 # ------------------------------------------------------------------------------
 # PostgreSQL database connection URL (managed via pgAdmin 4)
 DATABASE_URL: str = os.getenv(
-    "DATABASE_URL", 
-    "postgresql://postgres:postgres@localhost:5432/bone_fracture_db"
+    "DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/bone_fracture_db"
 )
 
 # ------------------------------------------------------------------------------

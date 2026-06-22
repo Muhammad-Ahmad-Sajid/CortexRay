@@ -8,6 +8,7 @@ from sqlalchemy.types import TypeDecorator, TEXT
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+
 class SQLiteARRAY(TypeDecorator):
     impl = TEXT
     cache_ok = True
@@ -21,6 +22,7 @@ class SQLiteARRAY(TypeDecorator):
         if value is None:
             return []
         return json.loads(value)
+
 
 # Import models
 from src.database.models import Base, Patient
@@ -36,10 +38,7 @@ Base.metadata.create_all(bind=engine)
 db = TestingSessionLocal()
 try:
     p = Patient(
-        full_name="Bruce Wayne",
-        age=35,
-        gender="Male",
-        comorbidities=["Osteoporosis", "Diabetes"]
+        full_name="Bruce Wayne", age=35, gender="Male", comorbidities=["Osteoporosis", "Diabetes"]
     )
     db.add(p)
     db.commit()
