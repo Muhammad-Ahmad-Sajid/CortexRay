@@ -1,5 +1,6 @@
 # Bone Fracture Detection & Prognosis System
 
+[![CI Pipeline](https://github.com/Muhammad-Ahmad-Sajid/CortexRay/actions/workflows/ci.yml/badge.svg)](https://github.com/Muhammad-Ahmad-Sajid/CortexRay/actions/workflows/ci.yml)
 An AI-powered clinical decision support system that detects bone fractures from X-ray scans, classifies their severity level, identifies the affected bone, and calculates patient-specific recovery guidelines based on the AO Foundation orthopedic healing principles. The system includes a dual-head ResNet-50 deep learning model, a robust rules-based prognosis engine, a PostgreSQL database for persistent logging, and a clinical dashboard displaying comparative explainability heatmaps (Grad-CAM) alongside a complete, searchable history timeline with clinician override support.
 
 ---
