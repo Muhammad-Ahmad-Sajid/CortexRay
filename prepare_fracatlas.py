@@ -78,7 +78,7 @@ def main():
     # 3. Mapping logic
     # (The following code represents the expected processing if the keys were present)
 
-    severity_map = {
+    severity_map = {  # noqa: F841
         "stress": "hairline",
         "hairline": "hairline",
         "transverse": "simple",
@@ -90,7 +90,7 @@ def main():
         "segmental": "comminuted",
     }
 
-    bone_map = {
+    bone_map = {  # noqa: F841
         "wrist": "distal_radius",
         "radius": "distal_radius",
         "distal radius": "distal_radius",

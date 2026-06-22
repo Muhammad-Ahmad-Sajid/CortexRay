@@ -89,7 +89,7 @@ async def health_check():
     db_status = "connected"
     try:
         # Check DB connection
-        with engine.connect() as conn:
+        with engine.connect() as conn:  # noqa: F841
             pass
     except Exception as e:
         logger.error(f"DB health check failed: {e}")

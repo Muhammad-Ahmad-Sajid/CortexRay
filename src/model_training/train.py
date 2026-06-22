@@ -97,7 +97,7 @@ def main():
 
     # Configure device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Training Environment Initialized.")
+    print("Training Environment Initialized.")
     print(f"Device: {device}")
 
     # Load loaders (set num_workers=0 on Windows to prevent multiprocessing DLL spawn errors)
@@ -117,7 +117,7 @@ def main():
         num_classes = 4
         checkpoint_name = "fracatlas_best.pth"
 
-    print(f"\nModel Configuration:")
+    print("\nModel Configuration:")
     print(f"  Dataset: {args.dataset.upper()}")
     print(f"  Target Classes: {num_classes}")
     print(f"  Epochs: {args.epochs}")
