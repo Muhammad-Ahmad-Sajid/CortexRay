@@ -1,45 +1,43 @@
-# MediScan AI
+# CortexRay: Clinical Fracture Detection Platform
 
-Multi-specialty medical imaging intelligence platform with 9 AI diagnostic modules.
+CortexRay is an advanced, AI-powered medical imaging platform designed specifically for the detection, classification, and prognostic evaluation of bone fractures in musculoskeletal radiographs (X-rays).
 
-## Modules
+## Project Overview
 
-| # | Module | Task | Key Metric |
-|---|--------|------|------------|
-| 1 | Bone Fracture Detection | Binary classification + body region | 98.15% accuracy |
-| 2 | Arthritis Grading | 5-class KL scale | Multi-class grading |
-| 3 | Osteoporosis Screening | Binary classification | 91% sensitivity |
-| 4 | TB Screening | Binary classification | 97% sensitivity |
-| 5 | Lung Nodule Detection | Binary classification | 100% sensitivity |
-| 6 | Brain Tumor Classification | 4-class | 95% accuracy |
-| 7 | Brain Hemorrhage Detection | Binary classification | Emergency protocol |
-| 8 | Bone Age Estimation | Regression | 7.34-month MAE |
-| 9 | Diabetic Retinopathy Grading | 5-class ordinal | QWK 0.8708 |
+Musculoskeletal fractures are among the most common injuries requiring medical attention. CortexRay was built to assist radiologists and emergency room physicians by providing a fast, highly accurate, and explainable AI second opinion.
 
-## Datasets Used
+The platform uses a two-stage deep learning pipeline:
+1. **Stage 1 (Pretraining):** A ResNet50 model is pretrained on a massive corpus of musculoskeletal radiographs to learn generalized bone features and anomalies.
+2. **Stage 2 (Fine-tuning):** The model is then fine-tuned on a targeted dataset of annotated bone fractures to precisely classify X-rays into `fractured` or `not_fractured` categories.
 
-This platform leverages several publicly available, high-quality medical imaging datasets for training the 9 diagnostic modules. Since the datasets are massive, they are not included in this repository. You can download them directly from their original sources:
+Beyond binary classification, CortexRay includes a **Prognosis Engine** which estimates the severity of the fracture based on confidence scores and region data, generating actionable clinical recommendations. It also integrates **Grad-CAM**, an explainable AI (XAI) technique that produces heatmaps over the original X-ray, highlighting the exact visual regions the AI focused on to make its diagnosis.
 
-1. **Bone Fracture (Modules 1 & 2):** [Stanford MURA Dataset](https://stanfordmlgroup.github.io/competitions/mura/) & [FracAtlas Dataset](https://figshare.com/articles/dataset/The_FracAtlas_Dataset/22363063)
-2. **Arthritis Grading (Module 2):** [Knee Osteoarthritis Dataset with KL Grading (Kaggle)](https://www.kaggle.com/datasets/shashwatwork/knee-osteoarthritis-dataset-with-severity)
-3. **Osteoporosis Screening (Module 3):** [Osteoporosis Knee X-Ray Dataset (Kaggle)](https://www.kaggle.com/datasets/smritisingh1997/osteoporosis-knee-xray-dataset)
-4. **TB Screening (Module 4):** [Tuberculosis (TB) Chest X-ray Database (Kaggle)](https://www.kaggle.com/datasets/tawsifurrahman/tuberculosis-tb-chest-xray-dataset)
-5. **Lung Nodule Detection (Module 5):** Chest X-Ray / CT Lung Nodule Datasets (e.g., LUNA16 / Kaggle equivalents)
-6. **Brain Tumor Classification (Module 6):** [Brain Tumor MRI Dataset (Kaggle)](https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri)
-7. **Brain Hemorrhage Detection (Module 7):** [RSNA Intracranial Hemorrhage Detection (Kaggle)](https://www.kaggle.com/c/rsna-intracranial-hemorrhage-detection)
-8. **Bone Age Estimation (Module 8):** [RSNA Pediatric Bone Age Challenge (Kaggle)](https://www.kaggle.com/datasets/kmader/rsna-bone-age)
-9. **Diabetic Retinopathy Grading (Module 9):** [APTOS 2019 Blindness Detection (Kaggle)](https://www.kaggle.com/c/aptos2019-blindness-detection)
+## Datasets
 
-## Tech Stack
+CortexRay relies on two major publicly available medical datasets for training its deep learning models:
 
-- **ML**: PyTorch, ResNet-50, Transfer Learning, Grad-CAM, CLAHE
-- **Backend**: FastAPI, PostgreSQL, SQLAlchemy, JWT Auth
-- **DevOps**: Docker, Docker Compose, GitHub Actions, MLflow
+1. **MURA (Musculoskeletal Radiographs) Dataset**
+   - *Description:* A massive dataset of over 40,000 X-ray images of the elbow, finger, forearm, hand, humerus, shoulder, and wrist, provided by the Stanford ML Group. It is used in Stage 1 to teach the model to distinguish between normal and abnormal bone structures.
+   - *Link:* [Stanford MURA Dataset](https://stanfordmlgroup.github.io/competitions/mura/)
 
-## Quick Start
+2. **FracAtlas Dataset**
+   - *Description:* A highly curated dataset designed specifically for fracture classification, localization, and segmentation. It contains detailed annotations for thousands of X-rays, which CortexRay uses during Stage 2 fine-tuning to perfect its fracture detection capabilities.
+   - *Link:* [FracAtlas Dataset on Figshare](https://figshare.com/articles/dataset/FracAtlas_A_Dataset_for_Fracture_Classification_Localization_and_Segmentation_of_Musculoskeletal_Radiographs/22353277)
 
-```bash
-docker-compose up --build
-```
+## Features Included in this Repository
 
-API available at `http://localhost:8000` | Docs at `http://localhost:8000/docs`
+- **Frontend Application:** Contains the vanilla JavaScript and HTML/CSS web interface for CortexRay.
+- **Model Training Pipelines:** Scripts for both Stage 1 and Stage 2 training (`train_stage1.py`, `train_stage2.py`).
+- **Data Preparation:** Scripts to parse and organize the MURA and FracAtlas datasets (`prepare_mura.py`, `prepare_fracatlas.py`).
+- **Inference Engine:** The core `inference.py` script that loads the trained model and evaluates new patient X-rays.
+- **Prognosis & XAI:** The `prognosis_engine.py` generates clinical recommendations, while `gradcam.py` produces visual heatmaps.
+- **API & Database:** Fully configured FastAPI backend (`main.py`, `database.py`) with PostgreSQL schemas and models for storing patient records securely.
+
+## Getting Started
+
+1. Install the requirements: `pip install -r requirements.txt`
+2. Configure your database in `.env`
+3. Download the MURA and FracAtlas datasets using the links above and place them in the appropriate data directories.
+4. Run the data preparation scripts.
+5. Train the models sequentially (Stage 1, then Stage 2).
+6. Start the API server: `uvicorn main:app --reload`
